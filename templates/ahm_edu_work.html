@@ -1,0 +1,842 @@
+{% extends 'layout.html' %}
+{% block title %}AHM Profile - {{ super() }}{% endblock %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center w-100">
+                    <h5 class="m-0">Education Status</h5>
+                    <a class="btn btn-sm btn-outline-primary" data-bs-toggle='modal' data-bs-target='#addModal'>Add Education</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name of Institute</th>
+                                    <th>Position</th>
+                                    <th>Time Frame</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="education_table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center w-100">
+                    <h5 class="m-0">Working Status</h5>
+                    <a class="btn btn-sm btn-outline-primary" data-bs-toggle='modal' data-bs-target='#addModal'>Add Work</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name of Institute</th>
+                                    <th>Degree</th>
+                                    <th>Time Frame</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="work_table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center w-100">
+                    <h5 class="m-0">Training Status</h5>
+                    <a class="btn btn-sm btn-outline-primary" data-bs-toggle='modal' data-bs-target='#addModal'>Add Traning</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name of Institute</th>
+                                    <th>Degree</th>
+                                    <th>Time Frame</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="training_table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_edu_work" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Institute Name</label>
+                        <input type="text" class="form-control edu_name" name="institute_name" id="basic-default-company" >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Position Name</label>
+                        <textarea id="basic-default-message" name="position_name" class="form-control edu_textarea" style="resize: none;"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <input class="form-control start_date_input" name="start_date" type="month" value="2021-06" id="html5-month-input">
+                        </div>
+                        <div class="col-lg-6">
+                            <input class="form-control end_date_input" name="end_date" type="month" id="html5-month-input">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-light fw-semibold d-block">Category</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" type="radio" name="addcategory" id="inlineRadio1" value="education" checked />
+                            <label class="form-check-label" for="inlineRadio1">Education</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="addcategory" id="inlineRadio2" value="work" />
+                            <label class="form-check-label" for="inlineRadio2">Work</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="addcategory" id="inlineRadio2" value="training" />
+                            <label class="form-check-label" for="inlineRadio2">Training</label>
+                        </div>
+                    </div>
+                    <div class="col-md mb-3">
+                        <small class="text-light fw-semibold d-block">Show</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" name="show_name" type="checkbox" id="inlineCheckbox1" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox1">Name</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="show_position" type="checkbox" id="inlineCheckbox2" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox2">Position</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="show_time" type="checkbox" id="inlineCheckbox3" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox3">Time Frame</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="showModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content show_modal_content">
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center">Show Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h5 class="modal-title" id="edu_work_title">Edit Form</h5>
+                    <p  class=""  id="edu_work_position">Edit Form</p>
+                    <p class="badge bg-label-primary me-1" id="edu_work_title_time">Edit Form</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="update_edu_work" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Institute Name</label>
+                        <input type="text" class="form-control edu_name_input" name="institute_name" id="basic-default-company">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Position Name</label>
+                        <textarea id="basic-default-message" name="position_name" class="form-control edu_textarea_input" style="resize: none;"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <input class="form-control start_date" name="start_date" type="month" value="2021-06" id="html5-month-input">
+                        </div>
+                        <div class="col-lg-6">
+                            <input class="form-control end_date" name="end_date" type="month" id="html5-month-input">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-light fw-semibold d-block">Category</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio1" value="education" />
+                            <label class="form-check-label" for="inlineRadio1">Education</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio2" value="work" />
+                            <label class="form-check-label" for="inlineRadio2">Work</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio2" value="training" />
+                            <label class="form-check-label" for="inlineRadio2">Training</label>
+                        </div>
+                    </div>
+                    <div class="col-md mb-3">
+                        <small class="text-light fw-semibold d-block">Show</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" name="show_name" type="checkbox" id="inlineCheckbox1" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox1">Name</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="show_position" type="checkbox" id="inlineCheckbox2" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox2">Position</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="show_time" type="checkbox" id="inlineCheckbox3" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox3">Time Frame</label>
+                        </div>
+                    </div>
+                    
+                    
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content delete_show_modal"></div>
+    </div>
+</div>
+<script>
+
+    function displayMonthYear(dateString) {
+        const date = new Date(dateString);
+        if (isNaN(date)) {
+            return "Present";
+        }
+        const options = { year: 'numeric', month: 'short' };
+        return date.toLocaleDateString('en-US', options);
+    }
+    function showEducation(){
+        var formData = new FormData();
+        fetch('/all_data', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log(data);
+            if(data.user_profile){
+                document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+            }
+            const edu_table = document.querySelector('.education_table');
+            const work_table = document.querySelector('.work_table');
+            const training_table = document.querySelector('.training_table');
+            if(data.edu_work){
+                data.edu_work.forEach(eduElements => {
+                if(eduElements.category == 'education'){
+                    // Create elements
+                    const tr = document.createElement('tr');
+
+                    const td1 = document.createElement('td');
+
+                    if(eduElements.name_show == 1){
+                        const icon = document.createElement('i');
+                        icon.style.fontSize = "12px";
+                        icon.className = "bx bxs-circle text-success me-2";
+                        td1.appendChild(icon);
+                    }
+                    else{
+                        const icon = document.createElement('i');
+                        icon.style.fontSize = "12px";
+                        icon.className = "bx bxs-circle text-danger me-2";
+                        td1.appendChild(icon);
+                    }
+
+                    const strong = document.createElement('strong');
+                    strong.textContent = eduElements.institute_name;
+                    
+                    const td2 = document.createElement('td');
+
+                    if(eduElements.position_show == 1){
+                        const icon2 = document.createElement('i');
+                        icon2.style.fontSize = "12px";
+                        icon2.className = "bx bxs-circle text-success me-2";
+                        td2.appendChild(icon2);
+                    }
+                    else{
+                        const icon2 = document.createElement('i');
+                        icon2.style.fontSize = "12px";
+                        icon2.className = "bx bxs-circle text-danger me-2";
+                        td2.appendChild(icon2);
+                    }
+
+                    const position_strong = document.createElement('span')
+                    position_strong.innerHTML = eduElements.degree_or_position;
+
+                    const td3 = document.createElement('td');
+
+                    if(eduElements.time_frame_show == 1){
+                        const icon3 = document.createElement('i');
+                        icon3.style.fontSize = "12px";
+                        icon3.className = "bx bxs-circle text-success me-2";
+                        td3.appendChild(icon3);
+                    }
+                    else{
+                        const icon3 = document.createElement('i');
+                        icon3.style.fontSize = "12px";
+                        icon3.className = "bx bxs-circle text-danger me-2";
+                        td3.appendChild(icon3);
+                    }
+
+                    const span = document.createElement('span');
+                    span.className = 'badge bg-label-primary me-1';
+                    span.textContent = `${displayMonthYear(eduElements.start_date)}-${displayMonthYear(eduElements.end_date)}`;
+
+                    const td4 = document.createElement('td');
+
+                    const div = document.createElement('div');
+                    div.className = 'd-flex justify-content-center w-100';
+
+                    const a1 = document.createElement('a');
+                    a1.href = 'javascript:void(0);';
+                    a1.className = '';
+                    a1.setAttribute('data-bs-toggle','modal');
+                    a1.setAttribute('data-bs-target','#showModal');
+                    a1.addEventListener('click', function(){
+                        showData(eduElements);
+                    })
+
+                    const a2 = document.createElement('a');
+                    a2.href = 'javascript:void(0);';
+                    a2.className = '';
+                    a2.setAttribute('data-bs-toggle','modal');
+                    a2.setAttribute('data-bs-target','#editModal');
+                    a2.addEventListener('click', function(){
+                        editData(eduElements);
+                    })
+
+                    const a3 = document.createElement('a');
+                    a3.href = 'javascript:void(0);';
+                    a3.className = '';
+                    a3.setAttribute('data-bs-toggle','modal');
+                    a3.setAttribute('data-bs-target','#deleteModal');
+                    a3.addEventListener('click', function(){
+                        deleteData(eduElements);
+                    })
+
+                    const i1 = document.createElement('i');
+                    i1.className = 'bx bx-show me-1';
+
+                    const i2 = document.createElement('i');
+                    i2.className = 'bx bx-edit-alt me-1';
+
+                    const i3 = document.createElement('i');
+                    i3.className = 'bx bx-trash me-1';
+
+                    
+                    td1.appendChild(strong);
+                    td2.appendChild(position_strong);
+                    td3.appendChild(span);
+                    a1.appendChild(i1);
+                    a2.appendChild(i2);
+                    a3.appendChild(i3);
+
+                    div.appendChild(a1);
+                    div.appendChild(a2);
+                    div.appendChild(a3);
+                    td4.appendChild(div);
+
+                    // Append elements to the row
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+
+                    edu_table.appendChild(tr);
+                }
+                
+                if(eduElements.category == 'work'){
+                    const tr = document.createElement('tr');
+
+                    const td1 = document.createElement('td');
+
+                    if(eduElements.name_show == 1){
+                        const icon = document.createElement('i');
+                        icon.style.fontSize = "12px";
+                        icon.className = "bx bxs-circle text-success me-2";
+                        td1.appendChild(icon);
+                    }
+                    else{
+                        const icon = document.createElement('i');
+                        icon.style.fontSize = "12px";
+                        icon.className = "bx bxs-circle text-danger me-2";
+                        td1.appendChild(icon);
+                    }
+
+                    const strong = document.createElement('strong');
+                    strong.textContent = eduElements.institute_name;
+                    
+                    const td2 = document.createElement('td');
+
+                    if(eduElements.position_show == 1){
+                        const icon2 = document.createElement('i');
+                        icon2.style.fontSize = "12px";
+                        icon2.className = "bx bxs-circle text-success me-2";
+                        td2.appendChild(icon2);
+                    }
+                    else{
+                        const icon2 = document.createElement('i');
+                        icon2.style.fontSize = "12px";
+                        icon2.className = "bx bxs-circle text-danger me-2";
+                        td2.appendChild(icon2);
+                    }
+
+                    const position_strong = document.createElement('span')
+                    position_strong.innerHTML = eduElements.degree_or_position;
+
+                    const td3 = document.createElement('td');
+
+                    if(eduElements.time_frame_show == 1){
+                        const icon3 = document.createElement('i');
+                        icon3.style.fontSize = "12px";
+                        icon3.className = "bx bxs-circle text-success me-2";
+                        td3.appendChild(icon3);
+                    }
+                    else{
+                        const icon3 = document.createElement('i');
+                        icon3.style.fontSize = "12px";
+                        icon3.className = "bx bxs-circle text-danger me-2";
+                        td3.appendChild(icon3);
+                    }
+
+                    const span = document.createElement('span');
+                    span.className = 'badge bg-label-primary me-1';
+                    span.textContent = `${displayMonthYear(eduElements.start_date)}-${displayMonthYear(eduElements.end_date)}`;
+
+                    const td4 = document.createElement('td');
+
+                    const div = document.createElement('div');
+                    div.className = 'd-flex justify-content-center w-100';
+
+                    const a1 = document.createElement('a');
+                    a1.href = 'javascript:void(0);';
+                    a1.className = '';
+                    a1.setAttribute('data-bs-toggle','modal');
+                    a1.setAttribute('data-bs-target','#showModal');
+                    a1.addEventListener('click', function(){
+                        showData(eduElements);
+                    })
+
+                    const a2 = document.createElement('a');
+                    a2.href = 'javascript:void(0);';
+                    a2.className = '';
+                    a2.setAttribute('data-bs-toggle','modal');
+                    a2.setAttribute('data-bs-target','#editModal');
+                    a2.addEventListener('click', function(){
+                        editData(eduElements);
+                    })
+
+                    const a3 = document.createElement('a');
+                    a3.href = 'javascript:void(0);';
+                    a3.className = '';
+                    a3.setAttribute('data-bs-toggle','modal');
+                    a3.setAttribute('data-bs-target','#deleteModal');
+                    a3.addEventListener('click', function(){
+                        deleteData(eduElements);
+                    })
+
+                    const i1 = document.createElement('i');
+                    i1.className = 'bx bx-show me-1';
+
+                    const i2 = document.createElement('i');
+                    i2.className = 'bx bx-edit-alt me-1';
+
+                    const i3 = document.createElement('i');
+                    i3.className = 'bx bx-trash me-1';
+
+                    
+                    td1.appendChild(strong);
+                    td2.appendChild(position_strong);
+                    td3.appendChild(span);
+                    a1.appendChild(i1);
+                    a2.appendChild(i2);
+                    a3.appendChild(i3);
+
+                    div.appendChild(a1);
+                    div.appendChild(a2);
+                    div.appendChild(a3);
+                    td4.appendChild(div);
+
+                    // Append elements to the row
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+
+                    work_table.appendChild(tr);
+                }
+                if(eduElements.category == 'training'){
+                    const tr = document.createElement('tr');
+
+                    const td1 = document.createElement('td');
+
+                    if(eduElements.name_show == 1){
+                        const icon = document.createElement('i');
+                        icon.style.fontSize = "12px";
+                        icon.className = "bx bxs-circle text-success me-2";
+                        td1.appendChild(icon);
+                    }
+                    else{
+                        const icon = document.createElement('i');
+                        icon.style.fontSize = "12px";
+                        icon.className = "bx bxs-circle text-danger me-2";
+                        td1.appendChild(icon);
+                    }
+
+                    const strong = document.createElement('strong');
+                    strong.textContent = eduElements.institute_name;
+                    
+                    const td2 = document.createElement('td');
+                    td2.style.maxWidth = '550px';
+                    td2.className = 'text-truncate'
+
+                    if(eduElements.position_show == 1){
+                        const icon2 = document.createElement('i');
+                        icon2.style.fontSize = "12px";
+                        icon2.className = "bx bxs-circle text-success me-2";
+                        td2.appendChild(icon2);
+                    }
+                    else{
+                        const icon2 = document.createElement('i');
+                        icon2.style.fontSize = "12px";
+                        icon2.className = "bx bxs-circle text-danger me-2";
+                        td2.appendChild(icon2);
+                    }
+
+                    const position_strong = document.createElement('span');
+                    position_strong.innerHTML = eduElements.degree_or_position;
+
+                    const td3 = document.createElement('td');
+
+                    if(eduElements.time_frame_show == 1){
+                        const icon3 = document.createElement('i');
+                        icon3.style.fontSize = "12px";
+                        icon3.className = "bx bxs-circle text-success me-2";
+                        td3.appendChild(icon3);
+                    }
+                    else{
+                        const icon3 = document.createElement('i');
+                        icon3.style.fontSize = "12px";
+                        icon3.className = "bx bxs-circle text-danger me-2";
+                        td3.appendChild(icon3);
+                    }
+
+                    const span = document.createElement('span');
+                    span.className = 'badge bg-label-primary me-1';
+                    span.textContent = `${displayMonthYear(eduElements.start_date)}-${displayMonthYear(eduElements.end_date)}`;
+
+                    const td4 = document.createElement('td');
+
+                    const div = document.createElement('div');
+                    div.className = 'd-flex justify-content-center w-100';
+
+                    const a1 = document.createElement('a');
+                    a1.href = 'javascript:void(0);';
+                    a1.className = '';
+                    a1.setAttribute('data-bs-toggle','modal');
+                    a1.setAttribute('data-bs-target','#showModal');
+                    a1.addEventListener('click', function(){
+                        showData(eduElements);
+                    })
+
+                    const a2 = document.createElement('a');
+                    a2.href = 'javascript:void(0);';
+                    a2.className = '';
+                    a2.setAttribute('data-bs-toggle','modal');
+                    a2.setAttribute('data-bs-target','#editModal');
+                    a2.addEventListener('click', function(){
+                        editData(eduElements);
+                    })
+
+                    const a3 = document.createElement('a');
+                    a3.href = 'javascript:void(0);';
+                    a3.className = '';
+                    a3.setAttribute('data-bs-toggle','modal');
+                    a3.setAttribute('data-bs-target','#deleteModal');
+                    a3.addEventListener('click', function(){
+                        deleteData(eduElements);
+                    })
+
+                    const i1 = document.createElement('i');
+                    i1.className = 'bx bx-show me-1';
+
+                    const i2 = document.createElement('i');
+                    i2.className = 'bx bx-edit-alt me-1';
+
+                    const i3 = document.createElement('i');
+                    i3.className = 'bx bx-trash me-1';
+                    
+                    td1.appendChild(strong);
+                    td2.appendChild(position_strong);
+                    td3.appendChild(span);
+                    a1.appendChild(i1);
+                    a2.appendChild(i2);
+                    a3.appendChild(i3);
+
+                    div.appendChild(a1);
+                    div.appendChild(a2);
+                    div.appendChild(a3);
+                    td4.appendChild(div);
+
+                    // Append elements to the row
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+                    training_table.appendChild(tr);
+                }
+            });
+            }
+           
+        })
+    }
+    showEducation();
+
+    function showData(eduData){
+        document.getElementById('edu_work_title').textContent = eduData.institute_name;
+        document.getElementById('edu_work_position').textContent = eduData.degree_or_position;
+        document.getElementById('edu_work_title_time').textContent = `${displayMonthYear(eduData.start_date)}-${displayMonthYear(eduData.end_date)}`;
+    }
+
+    function getCategoryValue() {
+        const categoryInputs = document.getElementsByName('category');
+        for (const input of categoryInputs) {
+            if (input.checked) {
+                return input.value;
+            }
+        }
+        return '';
+    }
+    
+    function getAddCategoryValue() {
+        const categoryInputs = document.getElementsByName('addcategory');
+        for (const input of categoryInputs) {
+            if (input.checked) {
+                return input.value;
+            }
+        }
+        return '';
+    }
+    function editData(eduData){
+        document.querySelector('.edu_name_input').value = eduData.institute_name || '';
+        document.querySelector('.edu_textarea_input').value = eduData.degree_or_position || '';
+        document.querySelector('.start_date').value = eduData.start_date || '';
+        document.querySelector('.end_date').value = eduData.end_date || '';
+
+        const categoryRadioButtons = document.getElementsByName('category');
+        for (const radioButton of categoryRadioButtons) {
+            if (radioButton.value === eduData.category) {
+                radioButton.checked = true;
+                break; // Stop checking once the correct radio button is found
+            }
+        }
+        
+        const showNameCheckbox = document.querySelector('input[name="show_name"]');
+        if (eduData.name_show === 1) {
+            showNameCheckbox.checked = true;
+        } else {
+            showNameCheckbox.checked = false;
+        }
+        const showPositionCheckbox = document.querySelector('input[name="show_position"]');
+        if (eduData.name_show === 1) {
+            showPositionCheckbox.checked = true;
+        } else {
+            showPositionCheckbox.checked = false;
+        }
+        const showTimeCheckbox = document.querySelector('input[name="show_time"]');
+        if (eduData.time_frame_show === 1) {
+            showTimeCheckbox.checked = true;
+        } else {
+            showTimeCheckbox.checked = false;
+        }
+
+        const form = document.getElementById('update_edu_work');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const checkboxes = document.querySelectorAll('input[name^="show_"]');
+            const showNotValues = {};
+
+            checkboxes.forEach(checkbox => {
+                const name = checkbox.name.replace('show_', ''); // Extract the variable name
+                showNotValues[name] = checkbox.checked ? checkbox.value : '0';
+            });
+            console.log(showNotValues)
+
+            const jsonData = {
+                edu_work_id: eduData.edu_work_id,
+                name: document.querySelector('.edu_name_input').value,
+                position: document.querySelector('.edu_textarea_input').value,
+                start_time: document.querySelector('.start_date').value,
+                end_time: document.querySelector('.end_date').value,
+                category: getCategoryValue(),
+                show: showNotValues,
+            };
+            formData.append('json_data', JSON.stringify(jsonData));
+
+            fetch('/edu_work_update', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if(data.success){
+                    location.reload();
+                }
+                console.log('Received data from server:', data);
+                // Handle the response data from the server
+            })
+        })
+    }
+
+    function deleteData(eduData){
+        document.querySelector('.delete_show_modal').innerHTML = '';
+        const modal_header_show = document.createElement('div');
+        modal_header_show.className = 'modal-header';
+
+        const modal_title_name = document.createElement("h5");
+        modal_title_name.className = "modal-title w-100 text-center";
+        modal_title_name.id = "modalShowLabel";
+        modal_title_name.textContent = eduData.institute_name;
+
+        const modal_close_button = document.createElement('button');
+        modal_close_button.className = 'btn-close';
+        modal_close_button.type = 'button';
+        modal_close_button.setAttribute('data-bs-dismiss','modal');
+        modal_close_button.setAttribute('aria-label','Close');
+
+        modal_header_show.appendChild(modal_title_name);
+        modal_header_show.appendChild(modal_close_button);
+
+        const modal_body = document.createElement("div");
+        modal_body.className = "modal-body";
+
+        const modal_action_div = document.createElement("div");
+        modal_action_div.className = "d-flex justify-content-center align-items-center w-100 mb-3";
+
+        const modal_delete_button = document.createElement("a");
+        modal_delete_button.href = "javascript:void(0)";
+        modal_delete_button.className = "btn btn-sm btn-success mx-2";
+        modal_delete_button.textContent = "Delete";
+
+        modal_delete_button.addEventListener('click', function(){
+            const formData = new FormData();
+            formData.append('deleted_id', eduData.edu_work_id);
+            fetch('/edu_work_delete', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if(data.success){
+                    location.reload()
+                }
+                console.log('Received data from server:', data);
+                // Handle the response data from the server
+            })
+        })
+
+        const modal_cencel_button = document.createElement("a");
+        modal_cencel_button.href = "javascript:void(0)";
+        modal_cencel_button.className = "btn btn-sm btn-danger mx-2";
+        modal_cencel_button.textContent = "Cencel";
+        modal_cencel_button.setAttribute('data-bs-dismiss','modal');
+
+        modal_action_div.appendChild(modal_delete_button);
+        modal_action_div.appendChild(modal_cencel_button);
+        modal_body.appendChild(modal_action_div);
+
+        document.querySelector('.delete_show_modal').appendChild(modal_header_show)
+        document.querySelector('.delete_show_modal').appendChild(modal_body)
+    }
+    
+    const addform = document.getElementById('add_edu_work');
+    addform.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Create FormData object to handle file and additional form data
+        const addFormData = new FormData(addform);
+
+        const checkboxes = document.querySelectorAll('input[name^="show_"]');
+        const showNotValues = {};
+
+        checkboxes.forEach(checkbox => {
+            const name = checkbox.name.replace('show_', '');
+            showNotValues[name] = checkbox.checked ? checkbox.value : '0';
+        });
+        console.log(showNotValues)
+
+        // Add JSON data to the FormData object
+        const jsonData = {
+            name: document.querySelector('.edu_name').value,
+            position: document.querySelector('.edu_textarea').value,
+            start_time: document.querySelector('.start_date_input').value,
+            end_time: document.querySelector('.end_date_input').value,
+            category: getAddCategoryValue(),
+            show: showNotValues
+
+        };
+        addFormData.append('json_data', JSON.stringify(jsonData));
+
+        fetch('/edu_work_add', {
+            method: 'POST',
+            body: addFormData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if(data.success){
+                location.reload();
+            }
+            console.log('Received data from server:', data);
+            // Handle the response data from the server
+        })
+    })
+
+</script>
+{% endblock %}
+{% set active_page = 'ahm_edu_work' %}

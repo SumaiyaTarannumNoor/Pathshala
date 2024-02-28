@@ -1,0 +1,226 @@
+.row.merged20 {
+    margin: 0 -11px;
+}
+.row.merged20 > div {
+    padding: 0 10px;
+}
+.main-wraper .blog-posts:nth-last-child(2) {
+    margin-bottom: 0;
+}
+.main-wraper .uk-pagination {
+    margin: 0;
+}
+.main-wraper, aside .widget {
+    background: #fafafa none repeat scroll 0 0;
+    border: 1px solid #e1e8ed;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 30px;
+    padding: 15px 20px 20px;
+    position: relative;
+    width: 100%;
+    z-index: 9;
+}
+.main-wraper .exp-col:last-child {
+    border-bottom: 0 none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.main-wraper > h6 {
+    font-weight: 400;
+	font-size: 14px;
+}
+/*--- about section ---*/
+.main-title {
+    border-bottom: 1px solid #eaeaea;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    position: relative;
+    text-transform: capitalize;
+    width: 100%;
+}
+.main-title > i{color: #92929e;}
+.main-title > a {
+    float: right;
+    font-size: 11px;
+    margin-top: 4px;
+	text-decoration: underline;
+}
+.main-title > span {
+    color: #898989;
+    font-size: 14px;
+}
+.main-title::before {
+    background: red none repeat scroll 0 0;
+    content: "";
+    height: 70%;
+    left: -20px;
+    position: absolute;
+    top: 0;
+    width: 3px;
+}
+.group-box {
+    display: inline-block;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+.group-box > figure {
+    display: inline-block;
+    width: 100%;
+}
+.group-box > a {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+}
+.group-box > figure img {
+    border-radius: 100%;
+    width: 120px;
+}
+.group-box > span {
+    font-size: 12px;
+    font-weight: 400;
+	color: #92929e;
+}
+.group-box > button {
+    background: #deebf3 none repeat scroll 0 0;
+    border: 1px solid #66bef5;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 20px;
+    padding: 4px 10px;
+    text-transform: capitalize;
+    transition: all 0.2s linear 0s;
+    width: 100%;
+}
+.group-box > button:hover{
+	color: #fff;
+}
+.load {
+    display: inline-block;
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+.pagination {
+    display: block;
+    margin-bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+.pagination > li {
+    display: inline-block;
+    margin: 0 2px;
+}
+.pagination > li > a {
+    background: #deebf3 none repeat scroll 0 0;
+    border: 1px solid #c9d6de;
+    border-radius: 100%;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    transition: all 0.2s linear 0s;
+    width: 35px;
+}
+.pagination > li > a:hover {
+    transform: scale(1.1);
+}
+.pagination > li > a.active {
+    background: rgba(8, 141, 205, 0.6) none repeat scroll 0 0;
+    border-color: #088dcd;
+    color: #fff;
+}
+.sidebar {
+    margin: 0 auto;
+    width: 100%;
+	float: left;
+}
+.widget {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+.widget-title {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    vertical-align: middle;
+    width: 100%;
+	position: relative;
+}
+.widget-title > h4 {
+    display: inline-block;
+    font-size: 17px;
+    margin-bottom: 0;
+    padding-left: 0;
+    position: relative;
+    width: 100%;
+	font-weight: 700;
+}
+.widget-title > h4::before {
+    bottom: -4px;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 40px;
+}
+.widget-title > h4::after {
+    bottom: -8px;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 30px;
+}
+.widget .main-btn {
+    font-size: 13px;
+    padding: 7px 15px;
+    text-transform: capitalize;
+}
+/*--- books page ----*/
+.popular-book {
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.popular-book > figure {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+    width: 80px;
+}
+.book-about {
+    display: inline-block;
+    padding-left: 7px;
+    vertical-align: middle;
+    width: 60%;
+}
+.popular-book > figure img {
+    border-radius: 4px;
+}
+.book-about > h6 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.book-about > span {
+    font-size: 12px;
+}
+.book-about > a {
+    float: right;
+    font-size: 16px;
+	color: #b2b2be;
+}
+.popular-book:last-child {
+    margin-bottom: 0;
+}

@@ -1,0 +1,155 @@
+{% extends 'layout.html' %}
+{% block title %}Desboard - {{ super() }}{% endblock %}
+{% block content %}
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+      <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+                  <div class="">
+                    <div class="card-title">
+                      <h5 class="text-nowrap mb-2">Ahmedul Islam Babu Profile</h5>
+                      <span class="badge bg-label-warning rounded-pill">Year 
+                        <script>
+                          document.write(new Date().getFullYear());
+                        </script>
+                      </span>
+                    </div>
+                    <div class="mt-auto">
+                      <a href="{{ url_for('ahm_profile') }}" class="mb-0 btn btn-sm btn-outline-primary">View and Update</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+                  <div class="">
+                    <div class="card-title">
+                      <h5 class="text-nowrap mb-2">Ahmedul Education & Work</h5>
+                      <span class="badge bg-label-warning rounded-pill">Year 
+                        <script>
+                          document.write(new Date().getFullYear());
+                        </script>
+                      </span>
+                    </div>
+                    <div class="mt-auto">
+                      <a href="{{ url_for('ahm_edu_work') }}" class="mb-0 btn btn-sm btn-outline-success">View and Update</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+                  <div class="">
+                    <div class="card-title">
+                      <h5 class="text-nowrap mb-2">Ahmedul Servies & Products</h5>
+                      <span class="badge bg-label-warning rounded-pill">Year 
+                        <script>
+                          document.write(new Date().getFullYear());
+                        </script>
+                      </span>
+                    </div>
+                    <div class="mt-auto">
+                      <a href="{{ url_for('ahm_service_products') }}" class="mb-0 btn btn-sm btn-outline-info">View and Update</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+                  <div class="">
+                    <div class="card-title">
+                      <h5 class="text-nowrap mb-2">Ahmedul Gallary & Partners</h5>
+                      <span class="badge bg-label-warning rounded-pill">Year 
+                        <script>
+                          document.write(new Date().getFullYear());
+                        </script>
+                      </span>
+                    </div>
+                    <div class="mt-auto">
+                      <a href="{{ url_for('ahm_gallery_part') }}" class="mb-0 btn btn-sm btn-outline-warning">View and Update</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+                  <div class="">
+                    <div class="card-title">
+                      <h5 class="text-nowrap mb-2">Ahmedul Show & Hide</h5>
+                      <span class="badge bg-label-warning rounded-pill">Year 
+                        <script>
+                          document.write(new Date().getFullYear());
+                        </script>
+                      </span>
+                    </div>
+                    <div class="mt-auto">
+                      <a href="{{ url_for('ahm_show_hide') }}" class="mb-0 btn btn-sm btn-outline-info">View and Update</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+  <script>
+    function showEducation(){
+        var formData = new FormData();
+        fetch('/all_data', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if(data.user_profile){
+                document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+            }
+          })
+        }
+        showEducation()
+  </script>
+  {% endblock %}

@@ -1,0 +1,546 @@
+{% extends 'layout.html' %}
+{% block title %}AHM Profile - {{ super() }}{% endblock %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h5 class="m-0">Gallary Images</h5>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadImage">Add Images</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Show</th>
+                                    <th>Activity Name</th>
+                                    <th>Short Details</th>
+                                    <th class="text-center">Photos</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="education_table">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h5 class="m-0">Partners Images</h5>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadImage">Add Images</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Show</th>
+                                    <th>Company Name</th>
+                                    <th>Short Details</th>
+                                    <th class="text-center">Photo</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="work_table">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal fade" id="uploadImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content show_modal_content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="upload_gallary" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Image Name</label>
+                        <input type="text" class="form-control service_name_input" name="image_name" id="basic-default-company" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Short Details</label>
+                        <textarea id="basic-default-message" name="short_details" class="form-control service_textarea_input" required ></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Images</label>
+                        <input class="form-control service_file_input" name="file_photo" type="file" id="formFile" required />
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-light fw-semibold d-block">Category</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio1" value="gallary" checked />
+                            <label class="form-check-label" for="inlineRadio1">Gallary</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio2" value="partners" />
+                            <label class="form-check-label" for="inlineRadio2">Partners</label>
+                        </div>
+                    </div>
+                    <div class="col-md mb-3">
+                        <small class="text-light fw-semibold d-block">Show</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" name="show_gallery" type="checkbox" id="inlineCheckbox1" value="1" checked />
+                            <label class="form-check-label" for="inlineCheckbox1">Show Or Not</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Insert</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="modal fade" id="uploadImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content show_modal_content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="upload_gallary" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Image Name</label>
+                        <input type="text" class="form-control service_name_input" name="image_name" id="basic-default-company" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Short Details</label>
+                        <textarea id="basic-default-message" name="short_details" class="form-control service_textarea_input" required ></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Images</label>
+                        <input class="form-control service_file_input" name="file_photo" type="file" id="formFile" required />
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-light fw-semibold d-block">Category</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio1" value="gallary" checked />
+                            <label class="form-check-label" for="inlineRadio1">Gallary</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio2" value="partners" />
+                            <label class="form-check-label" for="inlineRadio2">Partners</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editGallary" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content show_modal_content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_gallary" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Image Name</label>
+                        <input type="text" class="form-control service_name_input_update" name="image_name" id="basic-default-company">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Short Details</label>
+                        <textarea id="basic-default-message" name="short_details" class="form-control service_textarea_input_update"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Images</label>
+                        <input class="form-control service_file_input_update" name="file_photo" type="file" id="formFile" />
+                    </div>
+                    <div class="col-md mb-3">
+                        <small class="text-light fw-semibold d-block">Show</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" name="update_show_gallery" type="checkbox" id="inlineCheckbox1" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox1">Show Or Not</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="modal fade" id="uploadImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content show_modal_content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="upload_gallary" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Image Name</label>
+                        <input type="text" class="form-control service_name_input" name="image_name" id="basic-default-company">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Short Details</label>
+                        <textarea id="basic-default-message" name="short_details" class="form-control service_textarea_input"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Images</label>
+                        <input class="form-control service_file_input" name="file_photo" type="file" id="formFile" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<script>
+    function showGallery(){
+        var formData = new FormData();
+        fetch('/all_data', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if(data.user_profile){
+                document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+            }
+            console.log(data)
+            if(data.gallary_partners && data.gallary_partners.length > 0){
+                let gallary_count = 0;
+                let partners_count = 0;
+                data.gallary_partners.forEach(gallary => {
+                    if(gallary.category == 'gallary'){
+
+                        const tr = document.createElement('tr');
+
+                        const tdshow = document.createElement('td');
+                        tdshow.className = 'text-center'
+
+                        if(gallary.show === 1){
+                            const showicon = document.createElement('i');
+                            showicon.style.fontSize = "12px";
+                            showicon.className = "bx bxs-circle text-success me-2";
+                            tdshow.appendChild(showicon);
+                        }
+                        else{
+                            const showicon = document.createElement('i');
+                            showicon.style.fontSize = "12px";
+                            showicon.className = "bx bxs-circle text-danger me-2";
+                            tdshow.appendChild(showicon);
+                        }
+
+                        const td = document.createElement("td");
+                        const gallary_image_title = document.createElement("strong");
+                        gallary_image_title.textContent = gallary.image_title;
+                        td.appendChild(gallary_image_title);
+
+                        const position = document.createElement('td');
+                        position.textContent = gallary.image_short_details;
+
+                        const image_td = document.createElement("td");
+
+                        const avatar_image_div = document.createElement("div");
+                        avatar_image_div.className = "d-flex justify-content-center align-items-center";
+
+                        const avatar_div = document.createElement('div');
+                        avatar_div.className = 'avatar';
+                        
+                        const avatar_image = document.createElement('img');
+                        avatar_image.className = 'rounded-circle';
+                        const baseUrl = '../static/mainassets/images/media/';
+                        avatar_image.src = baseUrl + gallary.image_name;
+
+                        avatar_div.appendChild(avatar_image);
+                        avatar_image_div.appendChild(avatar_div);
+                        image_td.appendChild(avatar_image_div);
+
+                        const action_td = document.createElement("td");
+
+                        const action_div = document.createElement('div');
+                        action_div.className = 'd-flex justify-content-center w-100';
+
+                        const edit_action_button = document.createElement('a');
+                        edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                        edit_action_button.href = 'javascript:void(0);';
+                        edit_action_button.setAttribute('data-bs-toggle','modal');
+                        edit_action_button.setAttribute('data-bs-target','#editGallary');
+                        edit_action_button.addEventListener('click', function(){
+                            editGallaryData(gallary);
+                        })
+                        
+                        const edit_action_button_icon = document.createElement('i');
+                        edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+
+                        edit_action_button.appendChild(edit_action_button_icon);
+
+                        const delete_action_button = document.createElement('a');
+                        delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
+                        delete_action_button.href = 'javascript:void(0);';
+                        delete_action_button.addEventListener('click', function(){
+                            deleteGallaryData(gallary);
+                        })
+
+                        const delete_action_button_icon = document.createElement('i');
+                        delete_action_button_icon.className = 'bx bx-trash me-1';
+
+                        delete_action_button.appendChild(delete_action_button_icon);
+                        action_div.appendChild(edit_action_button);
+                        action_div.appendChild(delete_action_button);
+                        action_td.appendChild(action_div);
+                        tr.appendChild(tdshow)
+                        tr.appendChild(td)
+                        tr.appendChild(position)
+                        tr.appendChild(image_td)
+                        tr.appendChild(action_td);
+                        document.querySelector('.education_table').appendChild(tr)
+                        gallary_count++;
+                    }
+                    if(gallary.category == 'partners'){
+                        
+                        const tr = document.createElement('tr');
+
+                        const tdshow = document.createElement('td');
+                        tdshow.className = 'text-center'
+
+                        if(gallary.show === 1){
+                            const showicon = document.createElement('i');
+                            showicon.style.fontSize = "12px";
+                            showicon.className = "bx bxs-circle text-success me-2";
+                            tdshow.appendChild(showicon);
+                        }
+                        else{
+                            const showicon = document.createElement('i');
+                            showicon.style.fontSize = "12px";
+                            showicon.className = "bx bxs-circle text-danger me-2";
+                            tdshow.appendChild(showicon);
+                        }
+
+                        const td = document.createElement("td");
+
+                        const gallary_image_title = document.createElement("strong");
+                        gallary_image_title.textContent = gallary.image_title;
+
+                        td.appendChild(gallary_image_title);
+
+                        const position = document.createElement('td');
+                        position.textContent = gallary.image_short_details;
+
+                        const image_td = document.createElement("td");
+
+                        const avatar_image_div = document.createElement("div");
+                        avatar_image_div.className = "d-flex justify-content-center align-items-center";
+
+                        const avatar_div = document.createElement('div');
+                        avatar_div.className = '';
+                        
+                        const avatar_image = document.createElement('img');
+                        avatar_image.className = '';
+                        avatar_image.style.maxWidth = '150px';
+                        const baseUrl = '../static/mainassets/images/media/'; // Replace with your base URL
+                        avatar_image.src = baseUrl + gallary.image_name;
+
+                        avatar_div.appendChild(avatar_image);
+                        avatar_image_div.appendChild(avatar_div);
+                        image_td.appendChild(avatar_image_div);
+
+                        const action_td = document.createElement("td");
+
+                        const action_div = document.createElement('div');
+                        action_div.className = 'd-flex justify-content-center w-100';
+
+                        const edit_action_button = document.createElement('a');
+                        edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                        edit_action_button.href = 'javascript:void(0);';
+                        edit_action_button.setAttribute('data-bs-toggle','modal');
+                        edit_action_button.setAttribute('data-bs-target','#editGallary');
+                        edit_action_button.addEventListener('click', function(){
+                            editGallaryData(gallary);
+                        })
+                        
+                        const edit_action_button_icon = document.createElement('i');
+                        edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+
+                        edit_action_button.appendChild(edit_action_button_icon);
+
+                        const delete_action_button = document.createElement('a');
+                        delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
+                        delete_action_button.href = 'javascript:void(0);';
+                        delete_action_button.addEventListener('click', function(){
+                            deleteGallaryData(gallary);
+                        })
+
+                        const delete_action_button_icon = document.createElement('i');
+                        delete_action_button_icon.className = 'bx bx-trash me-1';
+
+                        delete_action_button.appendChild(delete_action_button_icon);
+                        action_div.appendChild(edit_action_button);
+                        action_div.appendChild(delete_action_button);
+                        action_td.appendChild(action_div);
+                        tr.appendChild(tdshow)
+                        tr.appendChild(td)
+                        tr.appendChild(position)
+                        tr.appendChild(image_td)
+                        tr.appendChild(action_td);
+                        document.querySelector('.work_table').appendChild(tr)
+                        partners_count++
+                    }
+                });
+                if(partners_count == 0){
+                    const noResultDiv = document.createElement("tr");
+                    noResultDiv.className = "text-center h5 ";
+
+                    const noResultDivText = document.createElement("td");
+                    noResultDivText.colSpan = "4";
+                    noResultDivText.textContent = "No Content Here";
+                    noResultDiv.appendChild(noResultDivText);
+                    document.querySelector('.work_table'). appendChild(noResultDiv);
+                }
+            }
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch or processing
+            console.error('Error:', error);
+        });
+    }
+    showGallery();
+    
+    document.getElementById('upload_gallary').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/upload_gellary', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if (data && data.success) {
+                location.reload();
+            } else {
+                console.error('Upload failed:', data.error || 'Unknown error occurred');
+                // Handle error or display a message to the user
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+    function editGallaryData(ImageData){
+        console.log(ImageData)
+        document.querySelector('.service_name_input_update').value = ImageData.image_title || '';
+        document.querySelector('.service_textarea_input_update').value = ImageData.image_short_details || '';
+        const showGalleryCheckbox = document.querySelector('input[name="update_show_gallery"]');
+        if (ImageData.show === 1) {
+            showGalleryCheckbox.checked = true;
+        } else {
+            showGalleryCheckbox.checked = false;
+        }
+
+        const editform = document.getElementById('edit_gallary');
+        editform.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(editform);
+            const fileInput = document.getElementById('formFile');
+
+            const checkboxes = document.querySelectorAll('input[name^="update_show_gallery"]');
+            const showNotValues = {};
+
+            checkboxes.forEach(checkbox => {
+                const name = checkbox.name.replace('update_show_', ''); // Extract the variable name
+                showNotValues[name] = checkbox.checked ? checkbox.value : '0';
+            });
+
+            // Add the file to the FormData object if a file is selected
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                formData.append('file_photo', file);
+            }
+
+            // Add other form data or JSON data here (if needed)
+            const jsonData = {
+                gallary_id: ImageData.g_p_id,
+                image_name: document.querySelector('.service_name_input_update').value,
+                short_details: document.querySelector('.service_textarea_input_update').value,
+                show: showNotValues
+            };
+            formData.append('json_data', JSON.stringify(jsonData));
+
+            // Send data to the backend using Fetch API
+            fetch('/gallary_edit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if (data && data.success) {
+                    location.reload();
+                } else {
+                    console.error('Edit operation failed:', data);
+                    // Handle error or display a message to the user
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+  
+    }
+
+    function deleteGallaryData(ImageData){
+        const deleteFormData = new FormData();
+        deleteFormData.append('gallary_id', ImageData.g_p_id);
+        fetch('/gallary_delete', {
+            method: 'POST',
+            body: deleteFormData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if (data && data.success) {
+                location.reload();
+            } else {
+                console.error('Upload failed:', data.error || 'Unknown error occurred');
+                // Handle error or display a message to the user
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+</script>
+{% endblock %}
+{% set active_page = 'ahm_gallery_part' %}
