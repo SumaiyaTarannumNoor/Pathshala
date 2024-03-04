@@ -72,7 +72,7 @@
           </li>
 
           <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Ahmedul Islam Babu</span>
+            <span class="menu-header-text">Pathshala</span>
           </li>
           <li class="menu-item {% if active_page == 'ahm_profile' %}active{% endif %}">
             <a href="{{ url_for('ahm_profile') }}" class="menu-link">
@@ -108,6 +108,12 @@
             <a href="{{ url_for('ahm_gallery_part') }}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-images"></i>
               <div data-i18n="Analytics">Gallary & Partners</div>
+            </a>
+          </li>
+          <li class="menu-item {% if active_page == 'ahm_gallery_part' %}active{% endif %}">
+            <a href="{{ url_for('trainee_list') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-group"></i>
+              <div data-i18n="Analytics">Trainee List</div>
             </a>
           </li>
 
@@ -213,26 +219,27 @@
           {% endblock %}
           <!-- / Content -->
 
-          <!-- Footer -->
-          <footer class="content-footer footer bg-footer-theme">
-            <div class="container-xxl d-flex flex-wrap justify-content-center py-2">
-              <div class="mb-2 mb-md-0">
-                ©
-                <script>
-                  document.write(new Date().getFullYear());
-                </script>
-                , made with ❤️ by
-                <a href="https://techknowgram.com" target="_blank" class="footer-link fw-bolder">TechKnowGram</a>
-              </div>
-            </div>
-          </footer>
-          <!-- / Footer -->
 
           <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
+        
       </div>
       <!-- / Layout page -->
+      <!-- Footer -->
+      <footer class="content-footer footer bg-footer-theme">
+        <div class="container-xxl d-flex flex-wrap justify-content-center py-2">
+          <div class="mb-2 mb-md-0">
+            ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            , made with ❤️ by
+            <a href="https://techknowgram.com" target="_blank" class="footer-link fw-bolder">TechKnowGram</a>
+          </div>
+        </div>
+      </footer>
+      <!-- / Footer -->
     </div>
 
     <!-- Overlay -->

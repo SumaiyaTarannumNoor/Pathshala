@@ -85,7 +85,7 @@ def registration():
             course_joining_date = request.form.get('course_joining_date')
 
         # Check for required fields
-            if not all([full_name, email, phone_number, address, educational_level, institution, educational_certificates, availability, course_joining_date]):
+            if not ([full_name, email, phone_number, address, educational_level, institution, educational_certificates, availability, course_joining_date]):
                 return jsonify({"message": "You must fill up these required fields."}), 400
             
             # Perform database operations
@@ -802,6 +802,20 @@ def gallary_delete():
         return jsonify({'error': 'Invalid request'})
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})
+    
+
+@app.route('/trainee_list', methods=['GET', 'POST'])
+def trainee_list():
+    try:
+        with connection.cursor() as cursor:
+            # SQL query to fetch data from the users table
+            trainee_sql = "SELECT * FROM trainees"
+            cursor.execute(trainee_sql)
+            trainee_data = cursor.fetchall()
+        # print(service_products_data)
+        return jsonify(trainee_data)  
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})
 
 
 @app.route('/email_send', methods=['GET','POST'])
@@ -922,6 +936,10 @@ def logout():
 @app.route('/trainee_registration')
 def trainee_registration():
     return render_template('trainee_registration.html')
+
+# @app.route('/trainee_list')
+# def trainee_registration():
+#     return render_template('trainee_list.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -8029,6 +8029,7 @@ ul.labels-info li a i {
     padding-inline-start: 0;
     margin-block-end: 0;
     list-style: none;
+    height: 600px;
 }
 
 .nav-link {
@@ -19592,6 +19593,8 @@ img {
 
 .landing-page .navbar .navbar-brand {
     padding: 8px 15px;
+    height: 80px;
+    margin-bottom: 10px;
 }
 
 .landing-page.horizontal .slide {
