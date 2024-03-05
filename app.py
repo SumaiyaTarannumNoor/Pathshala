@@ -804,18 +804,35 @@ def gallary_delete():
         return jsonify({'error': f"Request error: {str(e)}"})
     
 
+# @app.route('/trainee_list', methods=['GET', 'POST'])
+# def trainee_list():
+#     try:
+#         with connection.cursor() as cursor:
+#             # SQL query to fetch data from the users table
+#             trainee_sql = "SELECT * FROM trainees"
+#             cursor.execute(trainee_sql)
+#             trainee_data = cursor.fetchall()
+#             return render_template('trainee_list', trainees=trainee_data)
+#         # print(service_products_data)
+#         # return jsonify(trainee_data)  
+#     except Exception as e:
+#         return jsonify({'error': f"Request error: {str(e)}"})
+
 @app.route('/trainee_list', methods=['GET', 'POST'])
-def trainee_list():
-    try:
-        with connection.cursor() as cursor:
-            # SQL query to fetch data from the users table
-            trainee_sql = "SELECT * FROM trainees"
-            cursor.execute(trainee_sql)
-            trainee_data = cursor.fetchall()
-        # print(service_products_data)
-        return jsonify(trainee_data)  
-    except Exception as e:
-        return jsonify({'error': f"Request error: {str(e)}"})
+def get_trainee_list():
+    if request.method == 'GET':
+        try:
+            with connection.cursor() as cursor:
+                trainee_sql = "SELECT * FROM trainees"
+                cursor.execute(trainee_sql)
+                trainee_data = cursor.fetchall()
+                return render_template('trainee_list.html', trainees=trainee_data)
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"})
+    elif request.method == 'POST':
+        # Handle POST request logic here
+        pass  # Placeholder for your POST request handling logic
+
 
 
 @app.route('/email_send', methods=['GET','POST'])
@@ -937,9 +954,9 @@ def logout():
 def trainee_registration():
     return render_template('trainee_registration.html')
 
-# @app.route('/trainee_list')
-# def trainee_registration():
-#     return render_template('trainee_list.html')
+@app.route('/trainee_list')
+def trainee_list():
+    return render_template('trainee_list.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

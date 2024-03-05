@@ -42,6 +42,14 @@
       <!-- Page -->
   
     </head>
+    <style>
+        .logo a:hover {
+
+    border-bottom: 1px solid #fff; /* Add underline on hover */
+    color: #000; /* Change text color on hover */
+    }
+
+    </style>
 <body>
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
@@ -52,7 +60,9 @@
                     <!-- Logo -->
                     <div class="app-brand justify-content-center" style="margin-bottom: 5px;">
                         <span class="logo">
-                            <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}"alt="Logo" style="height: 40px; width: auto;">
+                            <a href="https://freelancingpathshala.com/" title="Go back to home page">
+                                <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}" alt="Logo" style="height: 40px; width: auto;">
+                            </a>
                         </span>
                     </div>
                         <form id="registrationForm" method="POST" action="/registration">

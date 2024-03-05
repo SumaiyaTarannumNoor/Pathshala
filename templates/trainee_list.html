@@ -1,40 +1,143 @@
-{% extends 'layout.html' %}
-{% block title %}Desboard - {{ super() }}{% endblock %}
-{% block content %}
-  <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="row">
-      <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-        <div class="row">
-          <div class="col-12 mb-4">
+<!DOCTYPE html>
+    <html
+    lang="en"
+    class="light-style customizer-hide"
+    dir="ltr"
+    data-theme="theme-default"
+    data-assets-path="../assets/"
+    data-template="vertical-menu-template-free"
+  >
+    <head>
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+      />
+  
+      <title>Trainee Registration</title>
+  
+      <meta name="description" content="" />
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/img/favicon/favicon.ico')}}" />
+      <!-- Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
+  
+      <!-- Icons. Uncomment required icon fonts -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/pages/page-auth.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/fonts/boxicons.css') }}" />
+      <!-- Core CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/demo.css') }}" />
+      <!-- Vendors CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+      <!-- Page CSS -->
+      <!-- Helpers -->
+      <script src="{{ url_for('static', filename='assets/vendor/js/helpers.js') }}"></script>
+      <script src="{{ url_for('static', filename='assets/js/config.js') }}"></script>
+      <!-- Page CSS -->
+      <!-- Page -->
+  
+    </head>
+<body>
+  <!-- <div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner"> -->
+        <!-- Register -->
             <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-                  <div class="">
-                    <div class="card-title">
-                      <h5 class="text-nowrap mb-2">Pathshala Profile</h5>
-                      <span class="badge bg-label-warning rounded-pill">Year 
-                        <script>
-                          document.write(new Date().getFullYear());
-                        </script>
-                      </span>
+                <div class="card-body">
+                <!-- Logo -->
+                <div class="app-brand justify-content-center" style="margin-bottom: 5px;">
+                    <span class="logo">
+                        <a href="https://freelancingpathshala.com/" title="Go back to home page">
+                            <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}" alt="Logo" style="height: 40px; width: auto;">
+                        </a>
+                     </span>   
+                      </div>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Full Name</th>
+                              <th scope="col">Organization Name</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Phone Number</th>
+                              <th scope="col">Address</th>
+                              <th scope="col">Educational Level</th>
+                              <!-- <th scope="col">Institution</th>
+                              <th scope="col">Educational Certificates</th>
+                              <th scope="col">Availability</th>
+                              <th scope="col">Course Joining Date</th> -->
+                              <th scope="col">Skills</th>
+                              <th scope="col">Freelancing Experience</th>
+                              <th scope="col">Portfolio Link</th>
+                              <!-- <th scope="col">Preferred Work Type</th>
+                              <th scope="col">Hourly Rate</th> -->
+                              <th scope="col">Language Proficiency</th>
+                              <th scope="col">Certifications</th>
+                              <!-- <th scope="col">LinkedIn Profile</th>
+                              <th scope="col">GitHub Profile</th> -->
+                          </tr>
+                          </thead>
+                          <tbody>
+                           {% for row in trainees %}
+                                  <tr>
+                                      <td>{{row[0]}}</td>
+                                      <td>{{row[1]}}</td>
+                                      <td>{{row[2]}}</td>
+                                      <td>{{row[3]}}</td>
+                                      <td>{{row[4]}}</td>
+                                      <td>{{row[5]}}</td>
+                                      <td>{{row[6]}}</td>
+                                      <td>{{row[7]}}</td>
+                                      <td>{{row[8]}}</td>
+                                      <td>{{row[9]}}</td>
+                                      <td>{{row[10]}}</td>
+                                      <td>{{row[11]}}</td>
+                                  </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
                     </div>
-                    <div class="mt-auto">
-                      <a href="{{ url_for('ahm_profile') }}" class="mb-0 btn btn-sm btn-outline-primary">View and Update</a>
-                    </div>
-                  </div>
+                  <!-- </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
+              </div> -->
 
-<script>
-    function showEducation(){
-        var formData = new FormData();
-        fetch('/all_data', {
+  
+       
+</script>
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/registration', {
             method: 'POST',
             body: formData
         })
@@ -45,11 +148,43 @@
             throw new Error('Network response was not ok.');
         })
         .then(data => {
-            if(data.user_profile){
-                document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+            // Handle success response
+            console.log(data);
+            alert('Registration successful!');
+            // Redirect or perform other actions as needed
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error:', error);
+            alert('Registration failed! Please try again.');
+        });
+    });
+</script> -->
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        fetch('/registration', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Reload the page after a short delay (adjust the delay as needed)
+                setTimeout(() => {
+                    window.location.reload();
+                }); // Refresh after 1 seconds (adjust as needed)
             }
-          })
-        }
-        showEducation()
-  </script>
-  {% endblock %}
+            else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Registration failed! Please try again.');
+        });
+    });
+</script>
+
+</body>
+</html>
