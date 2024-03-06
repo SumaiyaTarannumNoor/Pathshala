@@ -68,30 +68,32 @@ def registration():
         if request.method == 'POST':
             full_name = request.form.get('full_name')
             email = request.form.get('email')
+            organization = request.form.get('organization')
             phone_number = request.form.get('phone_number')
             address = request.form.get('address')
             educational_level = request.form.get('educational_level')
-            institution = request.form.get('institution')
-            educational_certificates = request.form.get('educational_certificates')
+            skills = request.form.get('skills')
             freelancing_experience = request.form.get('freelancing_experience')
             portfolio_link = request.form.get('portfolio_link')
-            availability = request.form.get('availability')
-            preferred_work_type = request.form.get('preferred_work_type')
-            hourly_rate = request.form.get('hourly_rate')
             language_proficiency = request.form.get('language_proficiency')
-            certifications = request.form.get('certifications')
-            linkedIn_profile = request.form.get('linkedIn_profile')
-            github_profile = request.form.get('github_profile')
-            course_joining_date = request.form.get('course_joining_date')
+            # institution = request.form.get('institution')
+            # educational_certificates = request.form.get('educational_certificates
+            # availability = request.form.get('availability')
+            # preferred_work_type = request.form.get('preferred_work_type')
+            # hourly_rate = request.form.get('hourly_rate')
+            # certifications = request.form.get('certifications')
+            # linkedIn_profile = request.form.get('linkedIn_profile')
+            # github_profile = request.form.get('github_profile')
+            # course_joining_date = request.form.get('course_joining_date')
 
         # Check for required fields
-            if not ([full_name, email, phone_number, address, educational_level, institution, educational_certificates, availability, course_joining_date]):
+            if not ([full_name, email, phone_number, address, educational_level]):
                 return jsonify({"message": "You must fill up these required fields."}), 400
             
             # Perform database operations
             with connection.cursor() as cursor:
-                trainee_create_sql = "INSERT INTO trainees (full_name, email, phone_number, address, educational_level, institution, educational_certificates, freelancing_experience, portfolio_link, availability, preferred_work_type, hourly_rate, language_proficiency, certifications, linkedIn_profile, github_profile, course_joining_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(trainee_create_sql, (full_name, email, phone_number, address, educational_level, institution, educational_certificates, freelancing_experience, portfolio_link, availability, preferred_work_type, hourly_rate, language_proficiency, certifications, linkedIn_profile, github_profile, course_joining_date))
+                trainee_create_sql = "INSERT INTO trainees (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(trainee_create_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link,language_proficiency))
                 connection.commit()
 
             return jsonify({'success': 'Registration successful'}), 200
@@ -832,6 +834,50 @@ def get_trainee_list():
     elif request.method == 'POST':
         # Handle POST request logic here
         pass  # Placeholder for your POST request handling logic
+
+
+@app.route('/trainee_list_edit', methods=['GET','POST'])
+def gallary_edit():
+    if request.method == 'POST':
+        json_data = request.form.get('json_data')
+        json_data_dict = json.loads(json_data)
+        trainee_id = json_data_dict.get('trainee_id')
+        trainee_name = json_data_dict.get('full_name')
+        trainee_organization = json_data_dict.get('short_details')
+        
+        show_data = json_data_dict.get('show')
+        show = show_data.get('gallery')
+
+        
+        print(show_data)
+        # Get the file from the request
+        file_photo = request.files['file_photo']
+        file_name = file_photo.filename
+        original_filename = secure_filename(file_name)
+        filename_without_spaces = original_filename.replace(' ', '_')
+        new_filename = f"gallery_{filename_without_spaces}"
+        if file_photo and file_photo.filename != '':
+            try:
+                with connection.cursor() as cursor:
+                    sql = "UPDATE ahm_gallary_partners SET image_title=%s, image_short_details=%s, image_name=%s, `show`=%s WHERE g_p_id =%s"
+                    # Get user ID from session or however you manage it
+                    cursor.execute(sql, (image_name, short_details, new_filename, show, image_id))
+                    connection.commit()
+                    file_path = os.path.join('static/mainassets/images/media', new_filename)
+                    file_photo.save(file_path)
+                    return jsonify({'success': 'Image Edited Success'})
+            except Exception as e:
+                return jsonify({'error': f"Request error: {str(e)}"})
+        else:
+            try:
+                with connection.cursor() as cursor:
+                    sql = "UPDATE ahm_gallary_partners SET image_title=%s, image_short_details=%s, `show`=%s WHERE g_p_id =%s"
+                    # Get user ID from session or however you manage it
+                    cursor.execute(sql, (image_name, short_details, show, image_id))
+                    connection.commit()
+                    return jsonify({'success': 'Image Edited Success'})
+            except Exception as e:
+                return jsonify({'error': f"Request error: {str(e)}"})    
 
 
 

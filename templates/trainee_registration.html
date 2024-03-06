@@ -77,38 +77,42 @@
                                 <label for="email">Email 
                                     (The email address should be unique to the user.)
                                 </label>
-                                <label for="full_name" style="color: rebeccapurple;">*</label>
+                                <label for="email" style="color: rebeccapurple;">*</label>
                                 <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email" autofocus>
                             </div>
                             <div class="mb-3">
+                                <label for="organization">Organization</label>
+                                <input type="text" class="form-control" id="organization" name="organization" placeholder="Enter your organization name" autofocus>
+                            </div>
+                            <div class="mb-3">
                                 <label for="phone_number">Phone Number</label>
-                                <label for="full_name" style="color: rebeccapurple;">*</label>
+                                <label for="phone_number" style="color: rebeccapurple;">*</label>
                                 <input type="text" class="form-control" id="phone_number" name="phone_number" required placeholder="Enter your phone number" autofocus>
                             </div>
                             <div class="mb-3">
                                 <label for="address">Address</label>
-                                <label for="full_name" style="color: rebeccapurple;">*</label>
+                                <label for="address" style="color: rebeccapurple;">*</label>
                                 <input type="text" class="form-control" id="address" name="address" required placeholder="Enter your address" autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label for="educational_level">Educational Level</label>
+                                <label for="educational_level" style="color: rebeccapurple;">*</label>
+                                <input type="text" class="form-control" id="educational_level" name="educational_level" required placeholder="Enter your educational level: SSC, HSC, BSc, MSc etc" autofocus>
                             </div>
                             <div class="mb-3">
                                 <label for="skills">Skills</label>
                                 <input type="text" class="form-control" id="skills" name="skills" placeholder="Enter your skills" autofocus>
                             </div>
-                            <div class="mb-3">
-                                <label for="educational_level">Educational Level</label>
-                                <label for="full_name" style="color: rebeccapurple;">*</label>
-                                <input type="text" class="form-control" id="educational_level" name="educational_level" required placeholder="Enter your educational level: SSC, HSC, BSc, MSc etc" autofocus>
-                            </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="institution">Institution</label>
                                 <label for="full_name" style="color: rebeccapurple;">*</label>
                                 <input type="text" class="form-control" id="institution" name="institution" required placeholder="Enter your institution" autofocus>
-                            </div>
-                            <div class="mb-3">
+                            </div> -->
+                            <!-- <div class="mb-3">
                                 <label for="educational_certificates">Educational Certificates</label>
                                 <label for="full_name" style="color: rebeccapurple;">*</label>
                                 <input type="text" class="form-control" id="educational_certificates" name="educational_certificates" required placeholder="Enter your educational certificates" autofocus>
-                            </div> 
+                            </div>  -->
                             <div class="mb-3">
                                 <label for="freelancing_experience">Freelancing Experience</label>
                                 <input type="text" class="form-control" id="freelancing_experience" name="freelancing_experience" placeholder="Enter your freelancing experiences (if any)" autofocus>
@@ -117,28 +121,28 @@
                                 <label for="portfolio_link">Portfolio Link</label>
                                 <input type="text" class="form-control" id="portfolio_link" name="portfolio_link" placeholder="Enter your portfolio link (if any)" autofocus>
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="availability">Availability</label>
                                 <label for="full_name" style="color: rebeccapurple;">*</label>
                                 <input type="text" class="form-control" id="availability" name="availability" required placeholder="Enter your availability (When can you start to work?)" autofocus>
-                            </div>
-                            <div class="mb-3">
+                            </div> -->
+                            <!-- <div class="mb-3">
                                 <label for="preferred_work_type">Preferred Work Type</label>
                                 <input type="text" class="form-control" id="preferred_work_type" name="preferred_work_type" placeholder="Enter your preferred work type (part-time/full-time/on-contarct)" autofocus>
                             </div>
                             <div class="mb-3">
                                 <label for="hourly_rate">Hourly Rate</label>
                                 <input type="text" class="form-control" id="hourly_rate" name="hourly_rate" placeholder="Enter your hourly rate in BDT" autofocus>
-                            </div>
+                            </div> -->
                             <div class="mb-3">
                                 <label for="language_proficiency">Language Proficiency</label>
                                 <input type="text" class="form-control" id="language_proficiency" name="language_proficiency" placeholder="Enter your language proficiency (e.g: Bangla(Native), English(Intermediate))" autofocus>
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="certifications">Certifications</label>
                                 <input type="text" class="form-control" id="certifications" name="certifications" placeholder="Enter your certifications (Corsera/Udemy etc)" autofocus>
-                            </div>
-                            <div class="mb-3">
+                            </div> -->
+                            <!-- <div class="mb-3">
                                 <label for="linkedIn_profile">LinkedIn Profile</label>
                                 <input type="text" class="form-control" id="linkedIn_profile" name="linkedIn_profile" placeholder="Enter your LinkedIn Profile" autofocus>
                             </div>
@@ -150,7 +154,7 @@
                                 <label for="course_joining_date">Course Joining Date</label>
                                 <label for="full_name" style="color: rebeccapurple;">*</label>
                                 <input type="date" class="form-control" id="course_joining_date" name="course_joining_date" required placeholder="Enter your course starting date" autofocus>
-                            </div>
+                            </div> -->
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
                             </div>
@@ -222,10 +226,12 @@
         })
         .then(response => {
             if (response.ok) {
+                // Show registration successful alert
+                alert('Registration successful!');
                 // Reload the page after a short delay (adjust the delay as needed)
                 setTimeout(() => {
                     window.location.reload();
-                }); // Refresh after 1 seconds (adjust as needed)
+                }, 2000); // Refresh after 2 seconds (adjust as needed)
             }
             else {
                 throw new Error('Network response was not ok.');
