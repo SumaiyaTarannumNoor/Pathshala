@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2024 at 05:58 AM
+-- Generation Time: Mar 07, 2024 at 12:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -151,15 +151,16 @@ CREATE TABLE `ahm_profile` (
   `header_3` varchar(50) NOT NULL,
   `header_4` varchar(50) NOT NULL,
   `header_5` varchar(50) NOT NULL,
-  `create_at` datetime NOT NULL DEFAULT current_timestamp()
+  `create_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `header_6` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ahm_profile`
 --
 
-INSERT INTO `ahm_profile` (`profile_id`, `name`, `about`, `logo`, `header_1`, `header_2`, `header_3`, `header_4`, `header_5`, `create_at`) VALUES
-(1, 'Freelancing Pathshala', '\"Freelancing Pathshala” is a television training program on digital course which is going to be aired on Nexus Television from 1st January 2024 in collaboration with the Directorate of ICT to achieve the goal of Digital Bangladesh and to improve the skills of the youth society through freelancing. The program will be telecast on Nexus Television as live. The program will cover various topics which have importance to freelancing platform', 'logo_aa.jpg', 'Home', 'Education & Work', 'Services & Products', 'Partners & Gallery', 'Contact', '2024-01-09 11:10:04');
+INSERT INTO `ahm_profile` (`profile_id`, `name`, `about`, `logo`, `header_1`, `header_2`, `header_3`, `header_4`, `header_5`, `create_at`, `header_6`) VALUES
+(1, 'Freelancing Pathshala', '\"Freelancing Pathshala” is a television training program on digital course which is going to be aired on Nexus Television from 1st January 2024 in collaboration with the Directorate of ICT to achieve the goal of Digital Bangladesh and to improve the skills of the youth society through freelancing. The program will be telecast on Nexus Television as live. The program will cover various topics which have importance to freelancing platform', 'logo_aa.jpg', 'Home', 'Education & Work', 'Services & Products', 'Partners & Gallery', 'Contact', '2024-01-09 11:10:04', 'Blogs & Articles');
 
 -- --------------------------------------------------------
 
@@ -231,6 +232,21 @@ INSERT INTO `ahm_testimonial` (`testimonial_id`, `testimonial_details`, `testimo
 (3, 'TechKnowGram delivered our work quickly and provided designs that attracted both our clients and partners, while also eliminating the need for a business analyst. They offer a complete solution for all client requirements, making them a valuable asset for any customer.', 'Kenta Kato', 'testimonial_awaweqwe_Screenshot_2023-12-19_204453.png', '2024-01-13 15:25:46'),
 (4, 'TechKnowGram’s team provided fast and flexible service with considerable expertise. Their unique approach to assessing feedback helped me solve my problem. Ahmed, their leader, is highly regarded for his unwavering commitment to justice.', 'Malliga Subramanium', 'testimonial_awaweqwe_Screenshot_2023-12-19_204453.png', '2024-01-13 15:25:46'),
 (5, 'TechKnowGram and Ahmedul worked for us for quite some time. The whole team of Ahmedul became solution provider. They presented a remarkable positive attitude. All the work was done in a short span of time and the team achieved the impossible', 'Kinya Ishii', 'testimonial_awaweqwe_Screenshot_2023-12-19_204453.png', '2024-01-13 15:25:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blogs`
+--
+
+CREATE TABLE `blogs` (
+  `blog_id` int(11) NOT NULL,
+  `writer_name` varchar(50) NOT NULL,
+  `topic` varchar(255) NOT NULL,
+  `blog_headline` varchar(100) NOT NULL,
+  `blog_details` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -332,13 +348,12 @@ CREATE TABLE `trainees` (
 --
 
 INSERT INTO `trainees` (`trainee_id`, `full_name`, `email`, `phone_number`, `address`, `skills`, `educational_level`, `institution`, `educational_certificates`, `freelancing_experience`, `portfolio_link`, `availability`, `preferred_work_type`, `hourly_rate`, `language_proficiency`, `certifications`, `linkedIn_profile`, `github_profile`, `course_joining_date`, `organization`) VALUES
-(4, 'ede', 's2@gmail.com', 'wedw', 'dsd', NULL, 'dsda', 'asd', 'sdasd', NULL, NULL, 'sd', NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG'),
+(4, 'ekoli', 's2@gmail.com', 'wedw', 'dsd', '', 'dsda', 'asd', 'sdasd', '', '', 'sd', NULL, NULL, '', NULL, NULL, NULL, '2024-02-07', 'TKG'),
 (6, 'ede', 's6@gmail.com', 'wedw', 'dsd', NULL, 'dsda', 'asd', 'sdasd', NULL, NULL, 'sd', NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG'),
 (7, 'Shelly', 'shelly@gmail.com', '402834', 'ty road', '', 'HSc', 'Lalmatia mohila college', 'SSc, HSc', 'none', 'none', 'none', 'none', 0.00, 'none', 'none', 'none', 'none', '2024-02-28', 'TKG'),
 (8, 'Kashif', 'kashif@gmail.com', '9078564', 'Dhanmondi, Dhaka', NULL, 'BSc', 'South East University', 'BSc', '', '', 'Not Available', '', 0.00, '', '', '', '', '2024-03-06', 'TKG'),
 (9, 'Safa', 'safa@yahoo.com', '453459565406', 'Dhaka', '', 'BSc', NULL, NULL, '', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '0000-00-00', 'TKG'),
-(10, 'Robi', 'robi@yahoo.com', '624343489', 'Dhaka', '', 'BBA', NULL, NULL, '', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '0000-00-00', ''),
-(11, 'Sony', 'sony@gmail.com', '5345893409', 'Dhaka', '', 'BSc', NULL, NULL, '', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '0000-00-00', 'TKG');
+(10, 'Robi', 'robi@yahoo.com', '624343489', 'Dhaka', '', 'BBA', NULL, NULL, '', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '0000-00-00', '');
 
 --
 -- Indexes for dumped tables
@@ -391,6 +406,12 @@ ALTER TABLE `ahm_social`
 --
 ALTER TABLE `ahm_testimonial`
   ADD PRIMARY KEY (`testimonial_id`);
+
+--
+-- Indexes for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD PRIMARY KEY (`blog_id`);
 
 --
 -- Indexes for table `hide_show`
@@ -462,6 +483,12 @@ ALTER TABLE `ahm_social`
 --
 ALTER TABLE `ahm_testimonial`
   MODIFY `testimonial_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `blogs`
+--
+ALTER TABLE `blogs`
+  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `hide_show`

@@ -210,10 +210,11 @@ def header_data_update():
             header_3 = json_data.get('header_3')
             header_4 = json_data.get('header_4')
             header_5 = json_data.get('header_5')
+            header_6 = json_data.get('header_6')
 
             with connection.cursor() as cursor:
-                header_update_sql = "UPDATE ahm_profile SET header_1=%s, header_2=%s, header_3=%s, header_4=%s, header_5=%s WHERE profile_id = %s"
-                cursor.execute(header_update_sql, (header_1, header_2, header_3, header_4, header_5, updated_id))
+                header_update_sql = "UPDATE ahm_profile SET header_1=%s, header_2=%s, header_3=%s, header_4=%s, header_5=%s, header_6=%s WHERE profile_id = %s"
+                cursor.execute(header_update_sql, (header_1, header_2, header_3, header_4, header_5, header_6, updated_id))
                 connection.commit()
 
             return jsonify({'success': 'Header Update Success'})
@@ -817,49 +818,7 @@ def get_trainee_list():
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"})
     
-
-
-# @app.route('/trainee_list_edit', methods=['GET','POST'])
-# def trainee_list_edit():
-#     if request.method == 'POST':
-#         json_data = request.form.get('json_data')
-#         json_data_dict = json.loads(json_data)
-#         if request.method == 'POST':
-#                 full_name = request.form.get('full_name')
-#                 email = request.form.get('email')
-#                 organization = request.form.get('organization')
-#                 phone_number = request.form.get('phone_number')
-#                 address = request.form.get('address')
-#                 educational_level = request.form.get('educational_level')
-#                 skills = request.form.get('skills')
-#                 freelancing_experience = request.form.get('freelancing_experience')
-#                 portfolio_link = request.form.get('portfolio_link')
-#                 language_proficiency = request.form.get('language_proficiency')
-#                 show_data = json_data_dict.get('show')
-#                 show = show_data.get('trainee_list')
-
-        
-#         print(show_data)
-#         if full_name and address and email and educational_level and phone_number != '':
-#             try:
-#                 with connection.cursor() as cursor:
-#                     sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s `show`=%s WHERE trainee_id =%s"
-#                     # Get user ID from session or however you manage it
-#                     cursor.execute(sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, show, trainee_id))
-#                     connection.commit()
-#                     return jsonify({'success': 'Trainee Edit Successful'})
-#             except Exception as e:
-#                 return jsonify({'error': f"Request error: {str(e)}"})
-#         else:
-#             try:
-#                 with connection.cursor() as cursor:
-#                     sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s `show`=%s WHERE trainee_id =%s"
-#                     # Get user ID from session or however you manage it
-#                     cursor.execute(sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, show, trainee_id))
-#                     connection.commit()
-#                     return jsonify({'success': 'Trainee Info Successfully edited.'})
-#             except Exception as e:
-#                 return jsonify({'error': f"Request error: {str(e)}"})    
+ 
         
 @app.route('/trainee_list_edit/<int:trainee_id>', methods=['GET','POST'])
 def trainee_list_edit(trainee_id):
@@ -903,6 +862,33 @@ def trainee_delete(trainee_id):
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})
 
+@app.route('/blogs', methods=['GET', 'POST'])
+def blog():
+    try:
+        if request.method == 'POST':
+            writer_name = request.form.get('writer_name')
+            topic = request.form.get('topic')
+            blog_headline = request.form.get('blog_headline')
+            blog_details = request.form.get('blog_details')
+           
+
+        # Check for required fields
+            if not ([writer_name, topic, blog_headline, blog_details]):
+                return jsonify({"message": "You must fill up these required fields."}), 400
+            
+            # Perform database operations
+            with connection.cursor() as cursor:
+                blog_create_sql = "INSERT INTO blogs  (writer_name, topic, blog_headline, blog_details) VALUES (%s, %s, %s, %s)"
+                cursor.execute(blog_create_sql, (writer_name, topic, blog_headline, blog_details))
+                connection.commit()
+
+            return jsonify({'success': 'Blog Creation successful'}), 200
+        
+        elif request.method == 'GET':
+            return jsonify({'message': 'GET request received'}), 200
+
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"}), 500
 
 
 @app.route('/email_send', methods=['GET','POST'])
@@ -1027,6 +1013,10 @@ def trainee_registration():
 @app.route('/trainee_list')
 def trainee_list():
     return render_template('trainee_list.html')
+
+@app.route('/blogs')
+def blogs():
+    return render_template('blog.html')
 
 
 if __name__ == '__main__':

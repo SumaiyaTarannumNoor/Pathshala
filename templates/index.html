@@ -211,6 +211,11 @@
                         <span class="side-menu__label header_5"></span>
                       </a>
                     </li>
+                    <li class="slide contact_hide">
+                      <a class="side-menu__item header_6_link" data-bs-toggle="slide">
+                        <span class="side-menu__label header_6"></span>
+                      </a>
+                    </li>
                     <li>
                       <a data-bs-toggle="slide" href="{{ url_for('trainee_registration') }}" style="width:7.5rem;" class="btn btn-primary">Registration</a>  
                   </li>                  
@@ -465,6 +470,57 @@
                   </div>
                 </div>
               </div>
+
+              <div class="bg-image-landing section header_6_id">
+                <div class="container">
+                  <div class="">
+                    <div class="card card-shadow reveal">
+                      <h4 class="text-center fw-semibold mt-7 header_6_title"></h4>
+                      <span class="landing-title"></span>
+                      <h2 class="text-center fw-semibold mb-0 px-2">Get in Touch with<span
+                          class="text-primary mx-2">Me.</span></h2>
+                      <div class="card-body p-5 pb-6 text-dark">
+                        <div class="statistics-info p-4">
+                          <div class="row justify-content-center">
+                            <div class="col-xl-9">
+                              <div class="">
+                                <form class="form-horizontal reveal revealrotate m-t-20"
+                                  action="{{url_for('email_send')}}" method="POST">
+                                  <div class="form-group">
+                                    <div class="col-xs-12">
+                                      <input class="form-control" type="text" required placeholder="Username*"
+                                        name="name" id="name" />
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="col-xs-12">
+                                      <input class="form-control" type="email" required="" placeholder="Email*"
+                                        id="email" name="email" />
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="col-xs-12">
+                                      <textarea class="form-control" rows="5" name="message" style="resize:none"
+                                        placeholder="Your Comment*" required></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="">
+                                    <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
+                                      <div class="alt-send-button">
+                                        <span class="send-text">SEND</span>
+                                      </div>
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <!-- ROW-10 CLOSED -->
             </div>
           </div>
@@ -598,12 +654,15 @@
             document.querySelector(".header_3").innerHTML = data.user_profile.header_3;
             document.querySelector(".header_4").innerHTML = data.user_profile.header_4;
             document.querySelector(".header_5").innerHTML = data.user_profile.header_5;
+            document.querySelector(".header_6").innerHTML = data.user_profile.header_6;
+
 
             document.querySelector(".header_1_link").href = "#" + capitalizeFirstWord(data.user_profile.header_1);
             document.querySelector(".header_2_link").href = "#" + capitalizeFirstWord(data.user_profile.header_2);
             document.querySelector(".header_3_link").href = "#" + capitalizeFirstWord(data.user_profile.header_3);
             document.querySelector(".header_4_link").href = "#" + capitalizeFirstWord(data.user_profile.header_4);
             document.querySelector(".header_5_link").href = "#" + capitalizeFirstWord(data.user_profile.header_5);
+            document.querySelector(".header_6_link").href = "#" + capitalizeFirstWord(data.user_profile.header_6);
 
             document.querySelector(".header_1_id").id = capitalizeFirstWord(data.user_profile.header_1);
 
@@ -622,6 +681,9 @@
 
             document.querySelector(".header_5_id").id = capitalizeFirstWord(data.user_profile.header_5);
             document.querySelector(".header_5_title").textContent = capitalizeFirstWord(data.user_profile.header_5);
+
+            document.querySelector(".header_6_id").id = capitalizeFirstWord(data.user_profile.header_6);
+            document.querySelector(".header_6_title").textContent = capitalizeFirstWord(data.user_profile.header_6);
 
             document.querySelector(".desktop-logo").src = '../static/mainassets/images/logos/' + data.user_profile.logo;
             document.querySelector(".dark-logo").src = '../static/mainassets/images/logos/' + data.user_profile.logo;
@@ -1532,6 +1594,10 @@
               }
               if (showItems.identity === 'contact' && showItems.status === 0) {
                 document.querySelector('.header_5_id').style.display = "none"
+                document.querySelector('.contact_hide').style.display = "none"
+              }
+              if (showItems.identity === 'contact' && showItems.status === 0) {
+                document.querySelector('.header_6_id').style.display = "none"
                 document.querySelector('.contact_hide').style.display = "none"
               }
               if (showItems.identity === 'social' && showItems.status === 0) {

@@ -375,7 +375,7 @@ endblock %} {% block content %}
         }
 
   function openModal(traineeId) {
-   ;
+   
     console.log(traineeId);
     var trainees= {{ trainees | tojson }};
 
@@ -387,7 +387,7 @@ endblock %} {% block content %}
 
     // Call the function to fill the form with JSON data
     fillFormWithData(trainee);
-  }
+  };
 
   function deleteTrainee(traineeId) {
 

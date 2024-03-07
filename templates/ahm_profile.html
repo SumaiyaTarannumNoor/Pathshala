@@ -1,487 +1,742 @@
-{% extends 'layout.html' %}
-{% block title %}AHM Profile - {{ super() }}{% endblock %}
-{% block content %}
+{% extends 'layout.html' %} {% block title %}AHM Profile - {{ super() }}{%
+endblock %} {% block content %}
 
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row justify-content-center">
-                        <div class ="col-lg-3">
-                            <div class="logo_image"></div>
-                            <div class="d-flex justify-content-center mt-4">
-                                <a class="btn btn-sm btn-outline-success" data-bs-target="#updateLogoImage" data-bs-toggle="modal">Change Logo</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4 mb-4">
-                        <div class="col-12">
-                            <form id="header_update" method="POST" class="row">
-                                <div class="col-lg-2 mb-2">
-                                    <input type="text" class="form-control header_1" placeholder="Header" aria-describedby="defaultFormControlHelp" required />
-                                </div>
-                                <div class="col-lg-2 mb-2">
-                                    <input type="text" class="form-control header_2" placeholder="Header" aria-describedby="defaultFormControlHelp" required />
-                                </div>
-                                <div class="col-lg-2 mb-2">
-                                    <input type="text" class="form-control header_3" placeholder="Header" aria-describedby="defaultFormControlHelp" required />
-                                </div>
-                                <div class="col-lg-2 mb-2">
-                                    <input type="text" class="form-control header_4" placeholder="Header" aria-describedby="defaultFormControlHelp" required />
-                                </div>
-                                <div class="col-lg-2 mb-2">
-                                    <input type="text" class="form-control header_5" placeholder="Header " aria-describedby="defaultFormControlHelp" required />
-                                </div>
-                                <div class="col-lg-2 mb-2">
-                                    <button type="submit" class="btn btn-primary">Update Header</button>
-                                </div>
-                            </form>		
-                        </div>
-                    </div>
-                    <form id="update_ahm_profile" method="POST">
-                        <div class="form_show">
-                            <div>
-                                <label for="defaultFormControlInput" class="form-label">Name</label>
-                                <input type="text" class="form-control name_show" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                            </div>
-                            <div class="mt-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">About</label>
-                                <textarea class="form-control about_show" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">Update</button>
-                    </form>
-                    
-                    <div class="mt-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Images</label>
-                        <div class="row image_show"></div>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col-lg-6 col-sm-12 col-md-6 mb-3">
-                            <h5 class="fw-bold">Address 1</h5>
-                            <form id="update_bangladesh_address" method="POST">
-                                <div class="form_show">
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Address Title</label>
-                                        <input type="text" class="form-control address_1_title" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="exampleFormControlTextarea1" class="form-label">Address</label>
-                                        <textarea class="form-control bangladesh_address" id="exampleFormControlTextarea1" rows="4" style="resize: none;" required></textarea>
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Phone</label>
-                                        <input type="text" class="form-control bangladesh_phone" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Mobile</label>
-                                        <input type="text" class="form-control bangladesh_mobile" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Whatsapp</label>
-                                        <input type="text" class="form-control bangladesh_whatsapp" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Email</label>
-                                        <input type="email" class="form-control bangladesh_email" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary mt-3">Update</button>
-                            </form>
-                        </div>
-                        <div class="col-lg-6 col-sm-12 col-md-6 mb-3">
-                            <h5 class="fw-bold">Address 2</h5>
-                            <form id="update_japan_address" method="POST">
-                                <div class="form_show">
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Address Title</label>
-                                        <input type="text" class="form-control address_2_title" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="exampleFormControlTextarea1" class="form-label">Address</label>
-                                        <textarea class="form-control address_2" id="exampleFormControlTextarea1" rows="4" style="resize: none;" required></textarea>
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Phone</label>
-                                        <input type="text" class="form-control address_2_phone" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Mobile</label>
-                                        <input type="text" class="form-control address_2_mobile" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Whatsapp</label>
-                                        <input type="text" class="form-control address_2_whatsapp" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                    <div>
-                                        <label for="defaultFormControlInput" class="form-label">Email</label>
-                                        <input type="email" class="form-control address_2_email" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary mt-3">Update</button>
-                            </form>
-                        </div>
-                    </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row justify-content-center">
+            <div class="col-lg-3">
+              <div class="logo_image"></div>
+              <div class="d-flex justify-content-center mt-4">
+                <a
+                  class="btn btn-sm btn-outline-success"
+                  data-bs-target="#updateLogoImage"
+                  data-bs-toggle="modal"
+                  >Change Logo</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4 mb-4">
+            <div class="col-12">
+              <form id="header_update" method="POST" class="row">
+                <div class="col-lg-2 mb-2">
+                  <input
+                    type="text"
+                    class="form-control header_1"
+                    placeholder="Header"
+                    aria-describedby="defaultFormControlHelp"
+                    required
+                  />
                 </div>
+                <div class="col-lg-2 mb-2">
+                  <input
+                    type="text"
+                    class="form-control header_2"
+                    placeholder="Header"
+                    aria-describedby="defaultFormControlHelp"
+                    required
+                  />
+                </div>
+                <div class="col-lg-2 mb-2">
+                  <input
+                    type="text"
+                    class="form-control header_3"
+                    placeholder="Header"
+                    aria-describedby="defaultFormControlHelp"
+                    required
+                  />
+                </div>
+                <div class="col-lg-2 mb-2">
+                  <input
+                    type="text"
+                    class="form-control header_4"
+                    placeholder="Header"
+                    aria-describedby="defaultFormControlHelp"
+                    required
+                  />
+                </div>
+                <div class="col-lg-2 mb-2">
+                  <input
+                    type="text"
+                    class="form-control header_5"
+                    placeholder="Header "
+                    aria-describedby="defaultFormControlHelp"
+                    required
+                  />
+                </div>
+                <div class="col-lg-2 mb-2">
+                  <input
+                    type="text"
+                    class="form-control header_6"
+                    placeholder="Header "
+                    aria-describedby="defaultFormControlHelp"
+                    required
+                  />
+                </div>
+                <div class="col-lg-2 mb-2">
+                  <button type="submit" class="btn btn-primary">
+                    Update Header
+                  </button>
+                </div>
+              </form>
             </div>
-        </div>
+          </div>
+          <form id="update_ahm_profile" method="POST">
+            <div class="form_show">
+              <div>
+                <label for="defaultFormControlInput" class="form-label"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control name_show"
+                  id="defaultFormControlInput"
+                  placeholder="John Doe"
+                  aria-describedby="defaultFormControlHelp"
+                />
+              </div>
+              <div class="mt-3">
+                <label for="exampleFormControlTextarea1" class="form-label"
+                  >About</label
+                >
+                <textarea
+                  class="form-control about_show"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Update</button>
+          </form>
 
-</div>
-<div class="modal fade" id="updateLogoImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content show_modal_content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalToggleLabel">Update Logo Form</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="mt-3">
+            <label for="exampleFormControlTextarea1" class="form-label"
+              >Images</label
+            >
+            <div class="row image_show"></div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-lg-6 col-sm-12 col-md-6 mb-3">
+              <h5 class="fw-bold">Address 1</h5>
+              <form id="update_bangladesh_address" method="POST">
+                <div class="form_show">
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Address Title</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control address_1_title"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="exampleFormControlTextarea1" class="form-label"
+                      >Address</label
+                    >
+                    <textarea
+                      class="form-control bangladesh_address"
+                      id="exampleFormControlTextarea1"
+                      rows="4"
+                      style="resize: none"
+                      required
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Phone</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control bangladesh_phone"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Mobile</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control bangladesh_mobile"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Whatsapp</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control bangladesh_whatsapp"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Email</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control bangladesh_email"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">
+                  Update
+                </button>
+              </form>
             </div>
-            <div class="modal-body">
-                <form id="update_logo" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="formFile" class="service-logo">Images</label>
-                        <input class="form-control update_logo_input" name="file_photo" type="file" id="formFileLogo" required />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </form>
+            <div class="col-lg-6 col-sm-12 col-md-6 mb-3">
+              <h5 class="fw-bold">Address 2</h5>
+              <form id="update_japan_address" method="POST">
+                <div class="form_show">
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Address Title</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control address_2_title"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="exampleFormControlTextarea1" class="form-label"
+                      >Address</label
+                    >
+                    <textarea
+                      class="form-control address_2"
+                      id="exampleFormControlTextarea1"
+                      rows="4"
+                      style="resize: none"
+                      required
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Phone</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control address_2_phone"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Mobile</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control address_2_mobile"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Whatsapp</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control address_2_whatsapp"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                  <div>
+                    <label for="defaultFormControlInput" class="form-label"
+                      >Email</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control address_2_email"
+                      id="defaultFormControlInput"
+                      placeholder="John Doe"
+                      aria-describedby="defaultFormControlHelp"
+                    />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">
+                  Update
+                </button>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<div class="modal fade" id="updateImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+  </div>
+  <div
+    class="modal fade"
+    id="updateLogoImage"
+    aria-labelledby="modalToggleLabel"
+    tabindex="-1"
+    style="display: none"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content show_modal_content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="upload_profile_image" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="formFile" class="service-logo">Images</label>
-                        <input class="form-control service_file_input" name="file_photo" type="file" id="formFile" required />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </form>
-            </div>
+      <div class="modal-content show_modal_content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalToggleLabel">Update Logo Form</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
+        <div class="modal-body">
+          <form id="update_logo" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="formFile" class="service-logo">Images</label>
+              <input
+                class="form-control update_logo_input"
+                name="file_photo"
+                type="file"
+                id="formFileLogo"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
-<script>
-    function showEducation(){
-
-        var formData = new FormData();
-        fetch('/all_data', {
-            method: 'POST',
-            body: formData
+  </div>
+  <div
+    class="modal fade"
+    id="updateImage"
+    aria-labelledby="modalToggleLabel"
+    tabindex="-1"
+    style="display: none"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content show_modal_content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            id="upload_profile_image"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="mb-3">
+              <label for="formFile" class="service-logo">Images</label>
+              <input
+                class="form-control service_file_input"
+                name="file_photo"
+                type="file"
+                id="formFile"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function showEducation() {
+      var formData = new FormData();
+      fetch("/all_data", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            console.log(data)
-            // Create a div element
-            if(data.user_profile) {
-                document.querySelector('.name_show').value = data.user_profile.name || '';
-                document.querySelector('.about_show').value = data.user_profile.about || '';
-                document.querySelector('.header_1').value = data.user_profile.header_1 || '';
-                document.querySelector('.header_2').value = data.user_profile.header_2 || '';
-                document.querySelector('.header_3').value = data.user_profile.header_3 || '';
-                document.querySelector('.header_4').value = data.user_profile.header_4 || '';
-                document.querySelector('.header_5').value = data.user_profile.header_5 || '';
+        .then((data) => {
+          console.log(data);
+          // Create a div element
+          if (data.user_profile) {
+            document.querySelector(".name_show").value =
+              data.user_profile.name || "";
+            document.querySelector(".about_show").value =
+              data.user_profile.about || "";
+            document.querySelector(".header_1").value =
+              data.user_profile.header_1 || "";
+            document.querySelector(".header_2").value =
+              data.user_profile.header_2 || "";
+            document.querySelector(".header_3").value =
+              data.user_profile.header_3 || "";
+            document.querySelector(".header_4").value =
+              data.user_profile.header_4 || "";
+            document.querySelector(".header_5").value =
+              data.user_profile.header_5 || "";
+            document.querySelector(".header_6").value =
+              data.user_profile.header_6 || "";
 
-                const logo_image = document.createElement('img');
-                logo_image.src = '../static/mainassets/images/logos/'+data.user_profile.logo;
-                logo_image.style.width = '100%';
+            const logo_image = document.createElement("img");
+            logo_image.src =
+              "../static/mainassets/images/logos/" + data.user_profile.logo;
+            logo_image.style.width = "100%";
 
-                document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+            document.querySelector(".header_image").src =
+              "../static/mainassets/images/logos/" + data.user_profile.logo;
 
-                document.querySelector('.logo_image').appendChild(logo_image)
-            };
+            document.querySelector(".logo_image").appendChild(logo_image);
+          }
 
-            if(data.users_address_data && data.users_address_data.length > 0){
-                data.users_address_data.forEach(addressData =>{
-                    if(addressData.address_id == 1){
-                        document.querySelector('.address_1_title').value = addressData.address_title;
-                        document.querySelector('.bangladesh_address').value = addressData.address;
-                        document.querySelector('.bangladesh_phone').value = addressData.phone;
-                        document.querySelector('.bangladesh_mobile').value = addressData.mobile;
-                        document.querySelector('.bangladesh_whatsapp').value = addressData.whatsapp;
-                        document.querySelector('.bangladesh_email').value = addressData.mail;
+          if (data.users_address_data && data.users_address_data.length > 0) {
+            data.users_address_data.forEach((addressData) => {
+              if (addressData.address_id == 1) {
+                document.querySelector(".address_1_title").value =
+                  addressData.address_title;
+                document.querySelector(".bangladesh_address").value =
+                  addressData.address;
+                document.querySelector(".bangladesh_phone").value =
+                  addressData.phone;
+                document.querySelector(".bangladesh_mobile").value =
+                  addressData.mobile;
+                document.querySelector(".bangladesh_whatsapp").value =
+                  addressData.whatsapp;
+                document.querySelector(".bangladesh_email").value =
+                  addressData.mail;
 
-                        const update_adress_1_form = document.getElementById('update_bangladesh_address');
-                        update_adress_1_form.addEventListener('submit', function(event) {
-                            event.preventDefault();
-                            const updateAddressOneFormData = new FormData(update_adress_1_form);
-                            const jsonData = {
-                                address_id: addressData.address_id,
-                                title: document.querySelector('.address_1_title').value,
-                                adress: document.querySelector('.bangladesh_address').value,
-                                phone: document.querySelector('.bangladesh_phone').value,
-                                mobile: document.querySelector('.bangladesh_mobile').value,
-                                whatsapp: document.querySelector('.bangladesh_whatsapp').value,
-                                email: document.querySelector('.bangladesh_email').value,
-                            };
-                            updateAddressOneFormData.append('address_json_data', JSON.stringify(jsonData));
+                const update_adress_1_form = document.getElementById(
+                  "update_bangladesh_address"
+                );
+                update_adress_1_form.addEventListener(
+                  "submit",
+                  function (event) {
+                    event.preventDefault();
+                    const updateAddressOneFormData = new FormData(
+                      update_adress_1_form
+                    );
+                    const jsonData = {
+                      address_id: addressData.address_id,
+                      title: document.querySelector(".address_1_title").value,
+                      adress: document.querySelector(".bangladesh_address")
+                        .value,
+                      phone: document.querySelector(".bangladesh_phone").value,
+                      mobile:
+                        document.querySelector(".bangladesh_mobile").value,
+                      whatsapp: document.querySelector(".bangladesh_whatsapp")
+                        .value,
+                      email: document.querySelector(".bangladesh_email").value,
+                    };
+                    updateAddressOneFormData.append(
+                      "address_json_data",
+                      JSON.stringify(jsonData)
+                    );
 
-                            fetch('/adress_update', {
-                                method: 'POST',
-                                body: updateAddressOneFormData
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    return response.json();
-                                }
-                                throw new Error('Network response was not ok.');
-                            })
-                            .then(data => {
-                                if(data.success){
-                                    location.reload();
-                                }
-                            })
-                        })
-                    }
-                    if(addressData.address_id == 2){
-                        document.querySelector('.address_2_title').value = addressData.address_title;
-                        document.querySelector('.address_2').value = addressData.address;
-                        document.querySelector('.address_2_phone').value = addressData.phone;
-                        document.querySelector('.address_2_mobile').value = addressData.mobile;
-                        document.querySelector('.address_2_whatsapp').value = addressData.whatsapp;
-                        document.querySelector('.address_2_email').value = addressData.mail;
-
-                        const update_adress_2_form = document.getElementById('update_japan_address');
-                        update_adress_2_form.addEventListener('submit', function(event) {
-                            event.preventDefault();
-                            const updateAddressTwoFormData = new FormData(update_adress_2_form);
-                            const jsonData = {
-                                address_id: addressData.address_id,
-                                title: document.querySelector('.address_2_title').value,
-                                adress: document.querySelector('.address_2').value,
-                                phone: document.querySelector('.address_2_phone').value,
-                                mobile: document.querySelector('.address_2_mobile').value,
-                                whatsapp: document.querySelector('.address_2_whatsapp').value,
-                                email: document.querySelector('.address_2_email').value,
-                            };
-                            updateAddressTwoFormData.append('address_json_data', JSON.stringify(jsonData));
-
-                            fetch('/adress_update', {
-                                method: 'POST',
-                                body: updateAddressTwoFormData
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    return response.json();
-                                }
-                                throw new Error('Network response was not ok.');
-                            })
-                            .then(data => {
-                                if(data.success){
-                                    location.reload();
-                                }
-                            })
-                        })
-                    }
-                })
-            }
-
-            if(data.profile_photos && data.profile_photos.length > 0){
-                data.profile_photos.forEach(photos =>{
-                    const col = document.createElement('div');
-                    col.className = 'col-lg-3 col-md-4 col-sm-6 mb-2 image_1'
-                    const divElement_image_1 = document.createElement("div");
-                    divElement_image_1.classList.add("position-relative");
-
-                    // Create an img element
-                    const imgElement_image_1 = document.createElement("img");
-                    imgElement_image_1.src = `../static/mainassets/images/users/${photos.photos_name}`;
-                    imgElement_image_1.alt = "";
-                    imgElement_image_1.style.width = "100%";
-                    divElement_image_1.appendChild(imgElement_image_1);
-
-                    // Create an anchor element
-                    const anchorElement_image_1 = document.createElement("a");
-                    anchorElement_image_1.href = "javascript:void(0)";
-                    anchorElement_image_1.classList.add("btn", "btn-sm", "btn-primary", "position-absolute");
-                    anchorElement_image_1.style.left = "0";
-                    anchorElement_image_1.setAttribute('data-bs-toggle','modal');
-                    anchorElement_image_1.setAttribute('data-bs-target','#updateImage');
-                    anchorElement_image_1.addEventListener('click', function(){
-                        uploadData(photos)
+                    fetch("/adress_update", {
+                      method: "POST",
+                      body: updateAddressOneFormData,
                     })
+                      .then((response) => {
+                        if (response.ok) {
+                          return response.json();
+                        }
+                        throw new Error("Network response was not ok.");
+                      })
+                      .then((data) => {
+                        if (data.success) {
+                          location.reload();
+                        }
+                      });
+                  }
+                );
+              }
+              if (addressData.address_id == 2) {
+                document.querySelector(".address_2_title").value =
+                  addressData.address_title;
+                document.querySelector(".address_2").value =
+                  addressData.address;
+                document.querySelector(".address_2_phone").value =
+                  addressData.phone;
+                document.querySelector(".address_2_mobile").value =
+                  addressData.mobile;
+                document.querySelector(".address_2_whatsapp").value =
+                  addressData.whatsapp;
+                document.querySelector(".address_2_email").value =
+                  addressData.mail;
 
-                    // Create an icon element
-                    const iconElement_image_1 = document.createElement("i");
-                    iconElement_image_1.classList.add("bx", "bx-edit-alt");
-                    anchorElement_image_1.appendChild(iconElement_image_1);
+                const update_adress_2_form = document.getElementById(
+                  "update_japan_address"
+                );
+                update_adress_2_form.addEventListener(
+                  "submit",
+                  function (event) {
+                    event.preventDefault();
+                    const updateAddressTwoFormData = new FormData(
+                      update_adress_2_form
+                    );
+                    const jsonData = {
+                      address_id: addressData.address_id,
+                      title: document.querySelector(".address_2_title").value,
+                      adress: document.querySelector(".address_2").value,
+                      phone: document.querySelector(".address_2_phone").value,
+                      mobile: document.querySelector(".address_2_mobile").value,
+                      whatsapp: document.querySelector(".address_2_whatsapp")
+                        .value,
+                      email: document.querySelector(".address_2_email").value,
+                    };
+                    updateAddressTwoFormData.append(
+                      "address_json_data",
+                      JSON.stringify(jsonData)
+                    );
 
-                    // Append the anchor element to the div
-                    divElement_image_1.appendChild(anchorElement_image_1);
+                    fetch("/adress_update", {
+                      method: "POST",
+                      body: updateAddressTwoFormData,
+                    })
+                      .then((response) => {
+                        if (response.ok) {
+                          return response.json();
+                        }
+                        throw new Error("Network response was not ok.");
+                      })
+                      .then((data) => {
+                        if (data.success) {
+                          location.reload();
+                        }
+                      });
+                  }
+                );
+              }
+            });
+          }
 
-                    // Append the div to the body or any other container element
-                    col.appendChild(divElement_image_1);
-                    document.querySelector('.image_show').appendChild(col)
-                })
-                
-            }
-        })
+          if (data.profile_photos && data.profile_photos.length > 0) {
+            data.profile_photos.forEach((photos) => {
+              const col = document.createElement("div");
+              col.className = "col-lg-3 col-md-4 col-sm-6 mb-2 image_1";
+              const divElement_image_1 = document.createElement("div");
+              divElement_image_1.classList.add("position-relative");
+
+              // Create an img element
+              const imgElement_image_1 = document.createElement("img");
+              imgElement_image_1.src = `../static/mainassets/images/users/${photos.photos_name}`;
+              imgElement_image_1.alt = "";
+              imgElement_image_1.style.width = "100%";
+              divElement_image_1.appendChild(imgElement_image_1);
+
+              // Create an anchor element
+              const anchorElement_image_1 = document.createElement("a");
+              anchorElement_image_1.href = "javascript:void(0)";
+              anchorElement_image_1.classList.add(
+                "btn",
+                "btn-sm",
+                "btn-primary",
+                "position-absolute"
+              );
+              anchorElement_image_1.style.left = "0";
+              anchorElement_image_1.setAttribute("data-bs-toggle", "modal");
+              anchorElement_image_1.setAttribute(
+                "data-bs-target",
+                "#updateImage"
+              );
+              anchorElement_image_1.addEventListener("click", function () {
+                uploadData(photos);
+              });
+
+              // Create an icon element
+              const iconElement_image_1 = document.createElement("i");
+              iconElement_image_1.classList.add("bx", "bx-edit-alt");
+              anchorElement_image_1.appendChild(iconElement_image_1);
+
+              // Append the anchor element to the div
+              divElement_image_1.appendChild(anchorElement_image_1);
+
+              // Append the div to the body or any other container element
+              col.appendChild(divElement_image_1);
+              document.querySelector(".image_show").appendChild(col);
+            });
+          }
+        });
     }
     showEducation();
 
-    const form = document.getElementById('update_ahm_profile');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+    const form = document.getElementById("update_ahm_profile");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-        // Create FormData object to handle file and additional form data
-        const formData = new FormData(form);
+      // Create FormData object to handle file and additional form data
+      const formData = new FormData(form);
 
-        // Add JSON data to the FormData object
-        const jsonData = {
-            name: document.querySelector('.name_show').value,
-            about: document.querySelector('.about_show').value,
-        };
-        formData.append('json_data', JSON.stringify(jsonData));
+      // Add JSON data to the FormData object
+      const jsonData = {
+        name: document.querySelector(".name_show").value,
+        about: document.querySelector(".about_show").value,
+      };
+      formData.append("json_data", JSON.stringify(jsonData));
 
-        fetch('/profile_data_update', {
-            method: 'POST',
-            body: formData
+      fetch("/profile_data_update", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            if(data.success){
-                location.reload();
-            }
-            console.log('Received data from server:', data);
-            // Handle the response data from the server
-        })
-    })
-
-    const headerUpdateForm = document.getElementById('header_update');
-    headerUpdateForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        // Create FormData object to handle file and additional form data
-        const headerUpdateFormData = new FormData(headerUpdateForm);
-
-        // Add JSON data to the FormData object
-        const jsonData = {
-            header_1: document.querySelector('.header_1').value,
-            header_2: document.querySelector('.header_2').value,
-            header_3: document.querySelector('.header_3').value,
-            header_4: document.querySelector('.header_4').value,
-            header_5: document.querySelector('.header_5').value,
-        };
-        headerUpdateFormData.append('header_json_data', JSON.stringify(jsonData));
-
-        fetch('/header_data_update', {
-            method: 'POST',
-            body: headerUpdateFormData
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            if(data.success){
-                location.reload();
-            }
-            console.log('Received data from server:', data);
-            // Handle the response data from the server
-        })
-    })
-
-    function uploadData(image_num){
-        console.log(image_num);
-        const editform = document.getElementById('upload_profile_image');
-        editform.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const profileFormData = new FormData(editform);
-            const fileInput = document.getElementById('formFile');
-
-            // Add the file to the FormData object if a file is selected
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                profileFormData.append('file_photo', file);
-            }
-
-            // Add other form data or JSON data here (if needed)
-            const jsonData = {
-                image_num: image_num.photos_id,
-            };
-            profileFormData.append('json_data', JSON.stringify(jsonData));
-
-            // Send data to the backend using Fetch API
-            fetch('/profile_image_update', {
-                method: 'POST',
-                body: profileFormData
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Network response was not ok.');
-            })
-            .then(data => {
-                if (data && data.success) {
-                    location.reload();
-                } else {
-                    console.error('Edit operation failed:', data);
-                    // Handle error or display a message to the user
-                }
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-        });
-
-    }
-    const udateLogoEditform = document.getElementById('update_logo');
-    udateLogoEditform.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const profileogoFormData = new FormData(udateLogoEditform);
-        const logoFileInput = document.getElementById('formFileLogo');
-
-        // Add the file to the FormData object if a file is selected
-        if (logoFileInput.files.length > 0) {
-            const file = logoFileInput.files[0];
-            profileogoFormData.append('file_photo', file);
-        }
-
-        // Send data to the backend using Fetch API
-        fetch('/profile_logo_update', {
-            method: 'POST',
-            body: profileogoFormData
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            if (data && data.success) {
-                location.reload();
-            } else {
-                console.error('Edit operation failed:', data);
-                // Handle error or display a message to the user
-            }
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
+        .then((data) => {
+          if (data.success) {
+            location.reload();
+          }
+          console.log("Received data from server:", data);
+          // Handle the response data from the server
         });
     });
 
-</script>
+    const headerUpdateForm = document.getElementById("header_update");
+    headerUpdateForm.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-{% endblock %}
-{% set active_page = 'ahm_profile' %}
+      // Create FormData object to handle file and additional form data
+      const headerUpdateFormData = new FormData(headerUpdateForm);
+
+      // Add JSON data to the FormData object
+      const jsonData = {
+        header_1: document.querySelector(".header_1").value,
+        header_2: document.querySelector(".header_2").value,
+        header_3: document.querySelector(".header_3").value,
+        header_4: document.querySelector(".header_4").value,
+        header_5: document.querySelector(".header_5").value,
+        header_6: document.querySelector(".header_6").value,
+      };
+      headerUpdateFormData.append("header_json_data", JSON.stringify(jsonData));
+
+      fetch("/header_data_update", {
+        method: "POST",
+        body: headerUpdateFormData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
+        })
+        .then((data) => {
+          if (data.success) {
+            location.reload();
+          }
+          console.log("Received data from server:", data);
+          // Handle the response data from the server
+        });
+    });
+
+    function uploadData(image_num) {
+      console.log(image_num);
+      const editform = document.getElementById("upload_profile_image");
+      editform.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const profileFormData = new FormData(editform);
+        const fileInput = document.getElementById("formFile");
+
+        // Add the file to the FormData object if a file is selected
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          profileFormData.append("file_photo", file);
+        }
+
+        // Add other form data or JSON data here (if needed)
+        const jsonData = {
+          image_num: image_num.photos_id,
+        };
+        profileFormData.append("json_data", JSON.stringify(jsonData));
+
+        // Send data to the backend using Fetch API
+        fetch("/profile_image_update", {
+          method: "POST",
+          body: profileFormData,
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Network response was not ok.");
+          })
+          .then((data) => {
+            if (data && data.success) {
+              location.reload();
+            } else {
+              console.error("Edit operation failed:", data);
+              // Handle error or display a message to the user
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          });
+      });
+    }
+    const udateLogoEditform = document.getElementById("update_logo");
+    udateLogoEditform.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const profileogoFormData = new FormData(udateLogoEditform);
+      const logoFileInput = document.getElementById("formFileLogo");
+
+      // Add the file to the FormData object if a file is selected
+      if (logoFileInput.files.length > 0) {
+        const file = logoFileInput.files[0];
+        profileogoFormData.append("file_photo", file);
+      }
+
+      // Send data to the backend using Fetch API
+      fetch("/profile_logo_update", {
+        method: "POST",
+        body: profileogoFormData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
+        })
+        .then((data) => {
+          if (data && data.success) {
+            location.reload();
+          } else {
+            console.error("Edit operation failed:", data);
+            // Handle error or display a message to the user
+          }
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+        });
+    });
+  </script>
+
+  {% endblock %} {% set active_page = 'ahm_profile' %}
+</div>
