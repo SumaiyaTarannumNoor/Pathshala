@@ -806,23 +806,8 @@ def gallary_delete():
         return jsonify({'error': f"Request error: {str(e)}"})
     
 
-# @app.route('/trainee_list', methods=['GET', 'POST'])
-# def trainee_list():
-#     try:
-#         with connection.cursor() as cursor:
-#             # SQL query to fetch data from the users table
-#             trainee_sql = "SELECT * FROM trainees"
-#             cursor.execute(trainee_sql)
-#             trainee_data = cursor.fetchall()
-#             return render_template('trainee_list', trainees=trainee_data)
-#         # print(service_products_data)
-#         # return jsonify(trainee_data)  
-#     except Exception as e:
-#         return jsonify({'error': f"Request error: {str(e)}"})
-
 @app.route('/trainee_list', methods=['GET', 'POST'])
 def get_trainee_list():
-    if request.method == 'GET':
         try:
             with connection.cursor() as cursor:
                 trainee_sql = "SELECT * FROM trainees"
@@ -831,53 +816,92 @@ def get_trainee_list():
                 return render_template('trainee_list.html', trainees=trainee_data)
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"})
-    elif request.method == 'POST':
-        # Handle POST request logic here
-        pass  # Placeholder for your POST request handling logic
+    
 
 
-@app.route('/trainee_list_edit', methods=['GET','POST'])
-def gallary_edit():
+# @app.route('/trainee_list_edit', methods=['GET','POST'])
+# def trainee_list_edit():
+#     if request.method == 'POST':
+#         json_data = request.form.get('json_data')
+#         json_data_dict = json.loads(json_data)
+#         if request.method == 'POST':
+#                 full_name = request.form.get('full_name')
+#                 email = request.form.get('email')
+#                 organization = request.form.get('organization')
+#                 phone_number = request.form.get('phone_number')
+#                 address = request.form.get('address')
+#                 educational_level = request.form.get('educational_level')
+#                 skills = request.form.get('skills')
+#                 freelancing_experience = request.form.get('freelancing_experience')
+#                 portfolio_link = request.form.get('portfolio_link')
+#                 language_proficiency = request.form.get('language_proficiency')
+#                 show_data = json_data_dict.get('show')
+#                 show = show_data.get('trainee_list')
+
+        
+#         print(show_data)
+#         if full_name and address and email and educational_level and phone_number != '':
+#             try:
+#                 with connection.cursor() as cursor:
+#                     sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s `show`=%s WHERE trainee_id =%s"
+#                     # Get user ID from session or however you manage it
+#                     cursor.execute(sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, show, trainee_id))
+#                     connection.commit()
+#                     return jsonify({'success': 'Trainee Edit Successful'})
+#             except Exception as e:
+#                 return jsonify({'error': f"Request error: {str(e)}"})
+#         else:
+#             try:
+#                 with connection.cursor() as cursor:
+#                     sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s `show`=%s WHERE trainee_id =%s"
+#                     # Get user ID from session or however you manage it
+#                     cursor.execute(sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, show, trainee_id))
+#                     connection.commit()
+#                     return jsonify({'success': 'Trainee Info Successfully edited.'})
+#             except Exception as e:
+#                 return jsonify({'error': f"Request error: {str(e)}"})    
+        
+@app.route('/trainee_list_edit/<int:trainee_id>', methods=['GET','POST'])
+def trainee_list_edit(trainee_id):
     if request.method == 'POST':
-        json_data = request.form.get('json_data')
-        json_data_dict = json.loads(json_data)
-        trainee_id = json_data_dict.get('trainee_id')
-        trainee_name = json_data_dict.get('full_name')
-        trainee_organization = json_data_dict.get('short_details')
-        
-        show_data = json_data_dict.get('show')
-        show = show_data.get('gallery')
+        trainee_id = request.form.get('trainee_id')
+        full_name = request.form.get('full_name')
+        email = request.form.get('email')
+        organization = request.form.get('organization')
+        phone_number = request.form.get('phone_number')
+        address = request.form.get('address')
+        educational_level = request.form.get('educational_level')
+        skills = request.form.get('skills')
+        freelancing_experience = request.form.get('freelancing_experience')
+        portfolio_link = request.form.get('portfolio_link')
+        language_proficiency = request.form.get('language_proficiency')
 
-        
-        print(show_data)
-        # Get the file from the request
-        file_photo = request.files['file_photo']
-        file_name = file_photo.filename
-        original_filename = secure_filename(file_name)
-        filename_without_spaces = original_filename.replace(' ', '_')
-        new_filename = f"gallery_{filename_without_spaces}"
-        if file_photo and file_photo.filename != '':
-            try:
-                with connection.cursor() as cursor:
-                    sql = "UPDATE ahm_gallary_partners SET image_title=%s, image_short_details=%s, image_name=%s, `show`=%s WHERE g_p_id =%s"
-                    # Get user ID from session or however you manage it
-                    cursor.execute(sql, (image_name, short_details, new_filename, show, image_id))
-                    connection.commit()
-                    file_path = os.path.join('static/mainassets/images/media', new_filename)
-                    file_photo.save(file_path)
-                    return jsonify({'success': 'Image Edited Success'})
-            except Exception as e:
-                return jsonify({'error': f"Request error: {str(e)}"})
-        else:
-            try:
-                with connection.cursor() as cursor:
-                    sql = "UPDATE ahm_gallary_partners SET image_title=%s, image_short_details=%s, `show`=%s WHERE g_p_id =%s"
-                    # Get user ID from session or however you manage it
-                    cursor.execute(sql, (image_name, short_details, show, image_id))
-                    connection.commit()
-                    return jsonify({'success': 'Image Edited Success'})
-            except Exception as e:
-                return jsonify({'error': f"Request error: {str(e)}"})    
+        # Perform database operations
+        try:
+            with connection.cursor() as cursor:
+                trainee_update_sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s WHERE trainee_id = %s"
+                cursor.execute(trainee_update_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, trainee_id))
+                connection.commit()
+
+            return jsonify({'success': 'Trainee info updated successfully'}), 200
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"}), 500
+
+
+@app.route('/trainee_delete/<int:trainee_id>', methods=['GET','POST'])
+def trainee_delete(trainee_id):
+    try:
+        if request.method == 'POST':
+            # trainee_id = request.form.get('trainee_id ')
+            # print(trainee_id )
+            cursor = connection.cursor()
+            event_delete_query = "DELETE FROM trainees  WHERE trainee_id  = %s"
+            cursor.execute(event_delete_query, (trainee_id,))
+            connection.commit()
+            return jsonify({'success': 'Delete Success'})
+        return jsonify({'error': 'Invalid request'})
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})
 
 
 
@@ -1003,6 +1027,7 @@ def trainee_registration():
 @app.route('/trainee_list')
 def trainee_list():
     return render_template('trainee_list.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
