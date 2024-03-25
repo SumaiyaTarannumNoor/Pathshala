@@ -116,6 +116,12 @@
               <div data-i18n="Analytics">Trainee List</div>
             </a>
           </li>
+          <li class="menu-item {% if active_page == 'blogs_admin_panel' %}active{% endif %}">
+            <a href="{{ url_for('blogs_admin_panel') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-group"></i>
+              <div data-i18n="Analytics">Pathshala Users Blogs</div>
+            </a>
+          </li>
 
         </ul>
       </aside>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2024 at 12:03 PM
+-- Generation Time: Mar 25, 2024 at 05:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -63,7 +63,7 @@ CREATE TABLE `ahm_address` (
 --
 
 INSERT INTO `ahm_address` (`address_id`, `address_title`, `address`, `phone`, `mobile`, `whatsapp`, `mail`, `created_at`) VALUES
-(1, 'Bangladesh', '5/9 Block B, Lalmatia, Mohammadpur Dhaka-1207, BANGLADESH', '+880 1713-453337', '', '+880 1713-453337', 'ahmedulbabu@gmail.com', '2024-01-17 11:51:15'),
+(1, 'Bangladesh', '5/9 Block B, Lalmatia, Mohammadpur Dhaka-1207, BANGLADESH', '+880 1713-453337', '+880 1713-453337', '+880 1713-453337', 'ahmedulbabu@gmail.com', '2024-01-17 11:51:15'),
 (2, 'Japan', '東京都世田谷区尾山台 1丁目10番4号, 日本', '+880 1713-453337', '', '+880 1713-453337', 'ahmedulbabu@gmail.com', '2024-01-17 11:51:15');
 
 -- --------------------------------------------------------
@@ -116,24 +116,33 @@ CREATE TABLE `ahm_gallary_partners` (
   `image_name` varchar(100) NOT NULL,
   `show` tinyint(1) NOT NULL,
   `category` varchar(25) NOT NULL,
-  `create_at` datetime NOT NULL
+  `create_at` datetime NOT NULL,
+  `year` int(11) DEFAULT NULL,
+  `event` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ahm_gallary_partners`
 --
 
-INSERT INTO `ahm_gallary_partners` (`g_p_id`, `image_title`, `image_short_details`, `image_name`, `show`, `category`, `create_at`) VALUES
-(2, 'Ict Division', 'Ict Division', 'hi_tech.png', 1, 'partners', '2024-01-09 12:27:24'),
-(4, '', '', 'microsense.png', 1, 'partners', '2024-01-09 12:26:20'),
-(5, '', '', 'nanma.png', 1, 'partners', '2024-01-09 12:27:24'),
-(6, '', '', 'ict_devision.png', 1, 'partners', '2024-01-09 12:27:24'),
-(13, 'Nothing', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করসি\n ', 'gallery_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00'),
-(21, 'TechKnowGram', 'TechKnowGram', 'techknowgram.png', 1, 'partners', '2024-01-28 07:16:19'),
-(22, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করসি\n ', 'gallary_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00'),
-(24, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\r\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\r\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\r\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করস', 'gallary_Amy_Toensing-300x300.jpg', 0, 'gallary', '0000-00-00 00:00:00'),
-(25, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করস', 'gallary_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00'),
-(26, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করস', 'gallary_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00');
+INSERT INTO `ahm_gallary_partners` (`g_p_id`, `image_title`, `image_short_details`, `image_name`, `show`, `category`, `create_at`, `year`, `event`) VALUES
+(2, 'Ict Division', 'Ict Division', 'hi_tech.png', 1, 'partners', '2024-01-09 12:27:24', NULL, NULL),
+(4, '', '', 'microsense.png', 1, 'partners', '2024-01-09 12:26:20', NULL, NULL),
+(5, '', '', 'nanma.png', 1, 'partners', '2024-01-09 12:27:24', NULL, NULL),
+(6, '', '', 'ict_devision.png', 1, 'partners', '2024-01-09 12:27:24', NULL, NULL),
+(13, 'Nothing', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করসি\n ', 'gallery_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00', NULL, NULL),
+(21, 'TechKnowGram', 'TechKnowGram', 'techknowgram.png', 1, 'partners', '2024-01-28 07:16:19', NULL, NULL),
+(22, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করসি\n ', 'gallary_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00', NULL, NULL),
+(24, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\r\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\r\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\r\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করস', 'gallary_Amy_Toensing-300x300.jpg', 0, 'gallary', '0000-00-00 00:00:00', NULL, NULL),
+(25, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করস', 'gallary_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00', NULL, NULL),
+(26, 'Blanket Distribution', '‘শুরুসি ককাসনা ডকছু বুঝিাম না। গুগল ও ইউটউব কেসট ডিখসি লাগলাম।\nে্লিার কেসয় ব্যথিে াই কবডি হসি লাগল। এখনকার মসিা িখন এি ককাসেরে\nব্যবস্থাও ডছল না। অসনক ইসে ডছল ওসয়ব-কিসভলপসমসন্টর ওপর কাি করব।\nকেটাসি খুব কবডি ে্লিা না আোয় ডিডিটাল মাসকটে িংসয়র ওপর কাি করস', 'gallary_Amy_Toensing-300x300.jpg', 1, 'gallary', '0000-00-00 00:00:00', NULL, NULL),
+(27, 'Test', 'frgfaergg', 'gallary_6201-SeriesHeaders_NARSHP_2000x800.jpg', 0, 'gallary', '0000-00-00 00:00:00', 2019, '{\"year\": null}'),
+(28, 'rgtr', 'brghrhb', 'gallary_6201-SeriesHeaders_NARSHP_2000x800.jpg', 0, 'gallary', '0000-00-00 00:00:00', 2019, '{\"year\": null}'),
+(29, 'dfbg', 'fvdfv', 'gallary_6201-SeriesHeaders_NARSHP_2000x800.jpg', 0, 'gallary', '0000-00-00 00:00:00', 2019, 'wfrefger'),
+(30, 'rf', 'refhjrebgf', 'gallary_custom-3d-wallpaper-naruto-photo-wallpaper.jpg', 0, 'gallary', '0000-00-00 00:00:00', 0, 'ferfgtghrt'),
+(31, '2test', 'dfberfjhedljfefej\'pk', 'gallary_custom-3d-wallpaper-naruto-photo-wallpaper.jpg', 0, 'gallary', '0000-00-00 00:00:00', 0, 'nwfwkfjnreof'),
+(32, 'rfgreg', 'gqegeg', 'gallary_custom-3d-wallpaper-naruto-photo-wallpaper.jpg', 0, 'gallary', '0000-00-00 00:00:00', 2020, 'fjefrefk'),
+(33, 'gretg', 'frgfreg', 'gallary_custom-3d-wallpaper-naruto-photo-wallpaper.jpg', 0, 'gallary', '0000-00-00 00:00:00', 2021, 'Basis Program');
 
 -- --------------------------------------------------------
 
@@ -241,12 +250,20 @@ INSERT INTO `ahm_testimonial` (`testimonial_id`, `testimonial_details`, `testimo
 
 CREATE TABLE `blogs` (
   `blog_id` int(11) NOT NULL,
-  `writer_name` varchar(50) NOT NULL,
+  `writers_name` varchar(50) NOT NULL,
   `topic` varchar(255) NOT NULL,
   `blog_headline` varchar(100) NOT NULL,
   `blog_details` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `blogs`
+--
+
+INSERT INTO `blogs` (`blog_id`, `writers_name`, `topic`, `blog_headline`, `blog_details`, `created_at`) VALUES
+(3, 'Sumaiya', 'AI', 'Random AI is GAINING Popularity', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at leo eros. Nulla sagittis orci nec pulvinar commodo. Fusce eget accumsan justo. In id sodales arcu. Cras faucibus elementum lacus, a cursus nulla pharetra id. Ut varius tellus bibendum vehicula vehicula. Nullam nec orci vitae lacus lobortis porttitor. In hac habitasse platea dictumst. Fusce blandit, massa auctor rutrum efficitur, erat turpis mollis urna, a tincidunt felis mi id eros. Pellentesque suscipit nisi ut varius iaculis. Morbi quis malesuada felis. Integer malesuada nibh vitae libero luctus, ut porttitor dui aliquet.\r\n\r\nPellentesque in ornare ante. Sed eu ante ac arcu elementum tristique et id nunc. Cras gravida vehicula diam, non efficitur ligula efficitur vel. Aliquam vitae aliquet erat. Quisque id ipsum turpis. Duis at purus erat. Sed venenatis purus vitae nunc ornare, vitae fringilla purus lobortis. Nunc pellentesque eu ligula a pellentesque. Curabitur urna magna, tempor sed posuere aliquet, pretium eget nisi. Pellentesque sit amet metus justo. Mauris facilisis eros eu luctus pulvinar.\r\n\r\nSed eu velit turpis. Sed tincidunt tellus ut neque efficitur pulvinar. Ut semper urna vitae lacinia blandit. Nam eget gravida lacus. Ut orci ante, mattis eget tempus at, gravida ut nisi. Proin nec auctor ligula. Maecenas at dictum lectus, eget aliquet lectus. Vivamus a placerat lorem, et rhoncus mauris. Nam sollicitudin quam eget erat tristique efficitur. Mauris laoreet, risus id rhoncus volutpat, diam sem scelerisque nibh, ac eleifend sem nisi non turpis. Nam scelerisque ipsum pulvinar sagittis blandit. Aliquam erat volutpat. Nullam bibendum neque id ante aliquam blandit. Proin lacinia congue mauris eget porta. Nam scelerisque molestie sodales. Donec non nisl quis dolor vehicula ornare.\r\n\r\nPraesent in porta lacus, quis ultricies urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur maximus luctus felis ac congue. In aliquam fringilla eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer vitae consectetur purus. Nulla justo nunc, porttitor sed volutpat faucibus, euismod vitae leo. Mauris eget leo et nunc egestas elementum at in sem. Suspendisse eleifend felis eget tellus vestibulum ultricies. Aliquam mattis felis quis cursus tincidunt. Nullam at faucibus elit. Fusce eleifend tincidunt condimentum.\r\n\r\nPraesent vehicula scelerisque lobortis. Suspendisse elit massa, faucibus quis dignissim efficitur, molestie gravida nibh. Donec venenatis metus eget risus faucibus, posuere varius ex interdum. Mauris bibendum, ex in mollis posuere, lorem justo rutrum nibh, nec pulvinar metus magna finibus velit. Phasellus fermentum augue vel enim aliquet, sed finibus nisi eleifend. Morbi semper, quam at semper dictum, felis enim posuere nunc, sit amet congue justo massa in leo. Proin id est in diam venenatis cursus. Cras a luctus turpis. Proin commodo, erat sed gravida semper, purus tortor ullamcorper velit, fermentum consectetur nulla ante at felis.', '2024-03-13 07:44:21'),
+(4, 'Sumaiya', 'Development', 'How to Change the World', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at leo eros. Nulla sagittis orci nec pulvinar commodo. Fusce eget accumsan justo. In id sodales arcu. Cras faucibus elementum lacus, a cursus nulla pharetra id. Ut varius tellus bibendum vehicula vehicula. Nullam nec orci vitae lacus lobortis porttitor. In hac habitasse platea dictumst. Fusce blandit, massa auctor rutrum efficitur, erat turpis mollis urna, a tincidunt felis mi id eros. Pellentesque suscipit nisi ut varius iaculis. Morbi quis malesuada felis. Integer malesuada nibh vitae libero luctus, ut porttitor dui aliquet.\r\n\r\nPellentesque in ornare ante. Sed eu ante ac arcu elementum tristique et id nunc. Cras gravida vehicula diam, non efficitur ligula efficitur vel. Aliquam vitae aliquet erat. Quisque id ipsum turpis. Duis at purus erat. Sed venenatis purus vitae nunc ornare, vitae fringilla purus lobortis. Nunc pellentesque eu ligula a pellentesque. Curabitur urna magna, tempor sed posuere aliquet, pretium eget nisi. Pellentesque sit amet metus justo. Mauris facilisis eros eu luctus pulvinar.\r\n\r\nSed eu velit turpis. Sed tincidunt tellus ut neque efficitur pulvinar. Ut semper urna vitae lacinia blandit. Nam eget gravida lacus. Ut orci ante, mattis eget tempus at, gravida ut nisi. Proin nec auctor ligula. Maecenas at dictum lectus, eget aliquet lectus. Vivamus a placerat lorem, et rhoncus mauris. Nam sollicitudin quam eget erat tristique efficitur. Mauris laoreet, risus id rhoncus volutpat, diam sem scelerisque nibh, ac eleifend sem nisi non turpis. Nam scelerisque ipsum pulvinar sagittis blandit. Aliquam erat volutpat. Nullam bibendum neque id ante aliquam blandit. Proin lacinia congue mauris eget porta. Nam scelerisque molestie sodales. Donec non nisl quis dolor vehicula ornare.\r\n\r\nPraesent in porta lacus, quis ultricies urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur maximus luctus felis ac congue. In aliquam fringilla eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer vitae consectetur purus. Nulla justo nunc, porttitor sed volutpat faucibus, euismod vitae leo. Mauris eget leo et nunc egestas elementum at in sem. Suspendisse eleifend felis eget tellus vestibulum ultricies. Aliquam mattis felis quis cursus tincidunt. Nullam at faucibus elit. Fusce eleifend tincidunt condimentum.\r\n\r\nPraesent vehicula scelerisque lobortis. Suspendisse elit massa, faucibus quis dignissim efficitur, molestie gravida nibh. Donec venenatis metus eget risus faucibus, posuere varius ex interdum. Mauris bibendum, ex in mollis posuere, lorem justo rutrum nibh, nec pulvinar metus magna finibus velit. Phasellus fermentum augue vel enim aliquet, sed finibus nisi eleifend. Morbi semper, quam at semper dictum, felis enim posuere nunc, sit amet congue justo massa in leo. Proin id est in diam venenatis cursus. Cras a luctus turpis. Proin commodo, erat sed gravida semper, purus tortor ullamcorper velit, fermentum consectetur nulla ante at felis.', '2024-03-13 07:44:36');
 
 -- --------------------------------------------------------
 
@@ -330,30 +347,47 @@ CREATE TABLE `trainees` (
   `educational_level` varchar(50) DEFAULT NULL,
   `institution` varchar(255) DEFAULT NULL,
   `educational_certificates` varchar(255) DEFAULT NULL,
-  `freelancing_experience` varchar(255) DEFAULT NULL,
+  `freelancing_experience` enum('0-1 year','1-3 years','3-5 years','more than 5 years') DEFAULT NULL,
   `portfolio_link` varchar(255) DEFAULT NULL,
   `availability` varchar(50) DEFAULT NULL,
   `preferred_work_type` varchar(100) DEFAULT NULL,
   `hourly_rate` decimal(10,2) DEFAULT NULL,
-  `language_proficiency` varchar(100) DEFAULT NULL,
   `certifications` text DEFAULT NULL,
   `linkedIn_profile` varchar(255) DEFAULT NULL,
   `github_profile` varchar(255) DEFAULT NULL,
   `course_joining_date` date NOT NULL,
-  `organization` varchar(255) DEFAULT NULL
+  `organization` varchar(255) DEFAULT NULL,
+  `language_proficiency` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `done_trainings` text DEFAULT NULL,
+  `wantTo_trainings` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `trainees`
 --
 
-INSERT INTO `trainees` (`trainee_id`, `full_name`, `email`, `phone_number`, `address`, `skills`, `educational_level`, `institution`, `educational_certificates`, `freelancing_experience`, `portfolio_link`, `availability`, `preferred_work_type`, `hourly_rate`, `language_proficiency`, `certifications`, `linkedIn_profile`, `github_profile`, `course_joining_date`, `organization`) VALUES
-(4, 'ekoli', 's2@gmail.com', 'wedw', 'dsd', '', 'dsda', 'asd', 'sdasd', '', '', 'sd', NULL, NULL, '', NULL, NULL, NULL, '2024-02-07', 'TKG'),
-(6, 'ede', 's6@gmail.com', 'wedw', 'dsd', NULL, 'dsda', 'asd', 'sdasd', NULL, NULL, 'sd', NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG'),
-(7, 'Shelly', 'shelly@gmail.com', '402834', 'ty road', '', 'HSc', 'Lalmatia mohila college', 'SSc, HSc', 'none', 'none', 'none', 'none', 0.00, 'none', 'none', 'none', 'none', '2024-02-28', 'TKG'),
-(8, 'Kashif', 'kashif@gmail.com', '9078564', 'Dhanmondi, Dhaka', NULL, 'BSc', 'South East University', 'BSc', '', '', 'Not Available', '', 0.00, '', '', '', '', '2024-03-06', 'TKG'),
-(9, 'Safa', 'safa@yahoo.com', '453459565406', 'Dhaka', '', 'BSc', NULL, NULL, '', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '0000-00-00', 'TKG'),
-(10, 'Robi', 'robi@yahoo.com', '624343489', 'Dhaka', '', 'BBA', NULL, NULL, '', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '0000-00-00', '');
+INSERT INTO `trainees` (`trainee_id`, `full_name`, `email`, `phone_number`, `address`, `skills`, `educational_level`, `institution`, `educational_certificates`, `freelancing_experience`, `portfolio_link`, `availability`, `preferred_work_type`, `hourly_rate`, `certifications`, `linkedIn_profile`, `github_profile`, `course_joining_date`, `organization`, `language_proficiency`, `done_trainings`, `wantTo_trainings`) VALUES
+(4, 'ekoli', 's2@gmail.com', 'wedw', 'dsd', '', 'dsda', 'asd', 'sdasd', '', '', 'sd', NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG', '', NULL, NULL),
+(6, 'ede', 's6@gmail.com', 'wedw', 'dsd', NULL, 'dsda', 'asd', 'sdasd', NULL, NULL, 'sd', NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG', '', NULL, NULL),
+(7, 'Shelly', 'shelly@gmail.com', '402834', 'ty road', '', 'HSc', 'Lalmatia mohila college', 'SSc, HSc', '', 'none', 'none', 'none', 0.00, 'none', 'none', 'none', '2024-02-28', 'TKG', '', NULL, NULL),
+(8, 'Kashif', 'kashif@gmail.com', '9078564', 'Dhanmondi, Dhaka', NULL, 'BSc', 'South East University', 'BSc', '', '', 'Not Available', '', 0.00, '', '', '', '2024-03-06', 'TKG', '', NULL, NULL),
+(9, 'Safa', 'safa@yahoo.com', '453459565406', 'Dhaka', '', 'BSc', NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
+(10, 'Robi', 'robi@yahoo.com', '624343489', 'Dhaka', '', 'BBA', NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', '', '', NULL, NULL),
+(13, 'koli', 'koli@gmail.com', '402834', 'Dhaka', 'designing', 'BSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
+(14, 'Belly', 'belly@gmail.com', '234345546', 'Dhaka', 'Graphic Design', 'BSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
+(15, 'Kash', 'k@yahoo.com', '546576775', 'Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
+(16, 'deww', 'gg@gmail.com', '42345345', 'ty road', 'ASDASD', 'HSC', NULL, NULL, '', 'hrhh', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'fdsf', '', NULL, NULL),
+(19, 'fdrfraef', 'g3g@gmail.com', '3534534', 'Dhaka', 'deigning', 'HSC', NULL, NULL, '', 'twt', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', NULL, NULL),
+(20, 'r34err', 'egfrqeg@yahoo.com', 'ff', 'rff', 'freref', 'HSC', NULL, NULL, '', 'ef', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'rewr', 'Arabic', NULL, NULL),
+(21, 'dd', 'fff@gmail.com', '43535', '554654', '', 'HSC', NULL, NULL, '', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"upwork\": \"\", \"freelancer\": \"\", \"toptal\": \"\", \"guru\": \"\", \"other\": \"\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'asddd', '', NULL, NULL),
+(22, 'Sony', 'sony.croft@gmail.com', '232343546', 'Dhanmondi, Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '3-5 years', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"upwork\": \"\", \"freelancer\": \"\", \"toptal\": \"\", \"guru\": \"\", \"other\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', NULL, NULL),
+(23, 'ewrfewrf', 'rfrefg@gmail.com', 'ggg', 'regeg', 'gfg', 'HSC', NULL, NULL, '0-1 year', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"guru\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'regg', 'Bangla', NULL, NULL),
+(24, 'Sakib', 'sakib@gmail.com', '345354654', 'Dhanmondi, Dhaka', 'deigning', 'BSc', NULL, NULL, '1-3 years', '{\"other\": \"https://app.prntscr.com/en/download.html\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'English, Other', NULL, NULL),
+(25, 'tret', 'tger@gmail.com', '567y56756', 'dasdcd', 'yy', 'SSC', NULL, NULL, '3-5 years', '{\"other\": \"https://app.prntscr.com/en/download.html\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'tgre', 'Other', NULL, NULL),
+(26, 'tt', 's56756@gmail.com', 'yhehe', 'tywr', 'asdA', 'HSC', NULL, NULL, '0-1 year', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Hindi', NULL, NULL),
+(27, 'fdfe', 's254@gmail.com', 'ghnhn', 'nghnn', 'mnhn', 'HSC', NULL, NULL, '3-5 years', '{\"guru\": \"nghnthn\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'thnh', 'Bangla', 'Data Entry, hnh', NULL),
+(28, 'yytyrty', 's6546546@gmail.com', 'tj', 'jyj', '', 'HSC', NULL, NULL, '1-3 years', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'yy', '', 'Copywriting, kjjkmj', NULL),
+(29, 'gdfb', 'frewrfe@email.com', 'dvfv', 'fvdfav', 'svav', 'HSC', NULL, NULL, '1-3 years', '{\"upwork\": \"dfvdfv\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'dscsd', 'English', 'vdfv', 'avdvdv');
 
 --
 -- Indexes for dumped tables
@@ -458,7 +492,7 @@ ALTER TABLE `ahm_edu_work`
 -- AUTO_INCREMENT for table `ahm_gallary_partners`
 --
 ALTER TABLE `ahm_gallary_partners`
-  MODIFY `g_p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `g_p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `ahm_profile`
@@ -488,7 +522,7 @@ ALTER TABLE `ahm_testimonial`
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hide_show`
@@ -506,7 +540,7 @@ ALTER TABLE `service_products`
 -- AUTO_INCREMENT for table `trainees`
 --
 ALTER TABLE `trainees`
-  MODIFY `trainee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `trainee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

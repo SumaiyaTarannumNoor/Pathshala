@@ -1,0 +1,424 @@
+{% extends 'layout.html' %} {% block title %}Blog Admin Panel - {{ super() }}{%
+    endblock %} {% block content %}
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-header d-flex justify-content-between">
+                      <h5 class="m-0">TRAINEE LIST</h5>
+                     
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                
+                                <th style="color:#000; font-family: sans-serif">Blog HeadLine</th>
+                                <th style="color:#000; font-family: sans-serif">Topic</th>
+                                <th style="color:#000; font-family: sans-serif">Writer's Name</th>
+                                <th style="color:#000; font-family: sans-serif">Blog Details</th>
+                                <th style="color:#000; font-family: sans-serif">Created At</th>
+                                <th style="color:#000; font-family:sans-serif">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for blog in blogs %}
+                              <tr>
+                                
+                                <td>{{ blog.blog_headline }}</td>
+                                <td>{{ blog.topic}}</td>
+                                <td>{{ blog.writers_name }}</td>
+                                <td>{{ blog.blog_details[:50] }}{{ '...' if blog.blog_details|length > 50 else '' }}</td>
+                                <td>{{ blog.created_at }}</td>
+                                <td> 
+                                  <button class="btn btn-sm btn-outline-info" onclick="openModal({{ blog.blog_id }})" data-bs-toggle="modal" data-bs-target="#readBlog">Read The Blog</button>
+                                  
+                                  <button href="javascript:void(0)" onclick="deleteBlog({{ blog.blog_id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button></td>
+                                  
+                              </tbody>
+                              </tr>
+                              {% endfor %}
+                              
+                              <tbody class="education_table">
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+    
+          <div class="modal fade" id="readBlog" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content show_modal_content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalToggleLabel">Blog</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="" method="POST" action="/blogs">
+                        <div class="mb-3">
+                          <label class="form-label" for="blog_id_input_update">Blog No.</label>
+                          <!-- <input type="text" name="blog_id" id="blog_id_input_update" value="YOUR_BLOG_ID_HERE"> -->
+                          <p id="blog_id_input_update">
+
+                          </p>
+                      </div>
+                       
+                            <div class="mb-3">
+                                <label class="form-label" for="writers_name_input_update">Writer</label>
+                                <!-- <input type="text" class="form-control writers_name_input_update" name="writers_name" id="writers_name_modal"> -->
+                                <p id="writers_name_modal">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="topic_input_update">Topic</label>
+                                <!-- <input type="text" class="form-control topic_input_update" name="topic" id="topic_modal"> -->
+                                <p id="topic_modal">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="blog_headline_input_update">Blog Headline</label>
+                                <!-- <input type="email" class="form-control blog_headline_input_update" name="blog_headline" id="blog_headline_modal"> -->
+                                <p id="blog_headline_modal">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="created_at_input_update">Created At</label>
+                                <!-- <input type="text" class="form-control created_at_input_update" name="created_at" id="created_at"> -->
+                                <p id="created_at">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="blog_details_input_update">Blog Details</label>
+                                <!-- <input type="text" class="form-control blog_details_input_update" name="blog_details" id="blog_details_modal"> -->
+                                <p id="blog_details_modal">
+
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <script>    
+    
+        function showTrainee(){
+          var formData = new FormData();
+          fetch('/all_data', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => {
+              if (response.ok) {
+                  return response.json();
+              }
+              throw new Error('Network response was not ok.');
+          })
+          .then(data => {
+              if(data.user_profile){
+                  document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+              }
+              console.log(data)
+              if(data.trainees && data.trainees.length > 0){
+                  let trainee_count = 0;
+                  data.trainees.forEach(trainee => {
+                      if(trainee.category == 'trainee'){
+    
+                          const tr = document.createElement('tr');
+    
+                          const tdshow = document.createElement('td');
+                          tdshow.className = 'text-center'
+    
+                          if(trainee.show === 1){
+                              const showicon = document.createElement('i');
+                              showicon.style.fontSize = "12px";
+                              showicon.className = "bx bxs-circle text-success me-2";
+                              tdshow.appendChild(showicon);
+                          }
+                          else{
+                              const showicon = document.createElement('i');
+                              showicon.style.fontSize = "12px";
+                              showicon.className = "bx bxs-circle text-danger me-2";
+                              tdshow.appendChild(showicon);
+                          }
+    
+                          const td = document.createElement("td");
+                          const trainee_name = document.createElement("strong");
+                          trainee_name.textContent = trainee.full_name;
+                          td.appendChild(trainee_name);
+    
+                          const position2 = document.createElement('td');
+                          position2.textContent = trainee.organization;
+    
+                          const position3 = document.createElement('td');
+                          position3.textContent = trainee.email;
+    
+                          const position4 = document.createElement('td');
+                          position4.textContent = trainee.phone_number;
+    
+                          const position5 = document.createElement('td');
+                          position5.textContent = trainee.address;
+    
+                          const position6 = document.createElement('td');
+                          position6.textContent = trainee.skills;
+    
+                          const position7 = document.createElement('td');
+                          position7.textContent = trainee.educational_level;
+    
+                          const position8 = document.createElement('td');
+                          position8.textContent = trainee.freelancing_experience;
+    
+                          const position9 = document.createElement('td');
+                          position9.textContent = trainee.portfolio_link;
+    
+                          const position10 = document.createElement('td')
+                          position10.textContent = trainee.language_proficiency;
+    
+    
+    
+                          const trainee_td = document.createElement("td");
+    
+    
+    
+    
+                          const action_td = document.createElement("td");
+    
+                          const action_div = document.createElement('div');
+                          action_div.className = 'd-flex justify-content-center w-100';
+    
+                          const edit_action_button = document.createElement('a');
+                          edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                          edit_action_button.href = 'javascript:void(0);';
+                          edit_action_button.setAttribute('data-bs-toggle','modal');
+                          edit_action_button.setAttribute('data-bs-target','#editTrainree');
+                          edit_action_button.addEventListener('click', function(){
+                              editTraineeData(trainee);
+                          })
+                          
+                          const edit_action_button_icon = document.createElement('i');
+                          edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+    
+                          edit_action_button.appendChild(edit_action_button_icon);
+    
+                          const delete_action_button = document.createElement('a');
+                          delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
+                          delete_action_button.href = 'javascript:void(0);';
+                          delete_action_button.addEventListener('click', function(){
+                              deleteTraineeData(trainee);
+                          })
+    
+                          const delete_action_button_icon = document.createElement('i');
+                          delete_action_button_icon.className = 'bx bx-trash me-1';
+    
+                          delete_action_button.appendChild(delete_action_button_icon);
+                          action_div.appendChild(edit_action_button);
+                          action_div.appendChild(delete_action_button);
+                          action_td.appendChild(action_div);
+                          tr.appendChild(tdshow)
+                          tr.appendChild(td)
+                          tr.appendChild(position2)
+                          tr.appendChild(position3)
+                          tr.appendChild(position4)
+                          tr.appendChild(position5)
+                          tr.appendChild(position6)
+                          tr.appendChild(position7)
+                          tr.appendChild(position8)
+                          tr.appendChild(position9)
+                          tr.appendChild(position10)
+                          tr.appendChild(trainee_td)
+                          tr.appendChild(action_td);
+                          document.querySelector('.education_table').appendChild(tr)
+                          trainee_count++;
+                      }
+                      // if(gallary.category == 'partners'){
+                          
+                      //     const tr = document.createElement('tr');
+    
+                      //     const tdshow = document.createElement('td');
+                      //     tdshow.className = 'text-center'
+    
+                      //     if(gallary.show === 1){
+                      //         const showicon = document.createElement('i');
+                      //         showicon.style.fontSize = "12px";
+                      //         showicon.className = "bx bxs-circle text-success me-2";
+                      //         tdshow.appendChild(showicon);
+                      //     }
+                      //     else{
+                      //         const showicon = document.createElement('i');
+                      //         showicon.style.fontSize = "12px";
+                      //         showicon.className = "bx bxs-circle text-danger me-2";
+                      //         tdshow.appendChild(showicon);
+                      //     }
+    
+                      //     const td = document.createElement("td");
+    
+                      //     const gallary_image_title = document.createElement("strong");
+                      //     gallary_image_title.textContent = gallary.image_title;
+    
+                      //     td.appendChild(gallary_image_title);
+    
+                      //     const position = document.createElement('td');
+                      //     position.textContent = gallary.image_short_details;
+    
+                      //     const image_td = document.createElement("td");
+    
+                      //     const avatar_image_div = document.createElement("div");
+                      //     avatar_image_div.className = "d-flex justify-content-center align-items-center";
+    
+                      //     const avatar_div = document.createElement('div');
+                      //     avatar_div.className = '';
+                          
+                      //     const avatar_image = document.createElement('img');
+                      //     avatar_image.className = '';
+                      //     avatar_image.style.maxWidth = '150px';
+                      //     const baseUrl = '../static/mainassets/images/media/'; // Replace with your base URL
+                      //     avatar_image.src = baseUrl + gallary.image_name;
+    
+                      //     avatar_div.appendChild(avatar_image);
+                      //     avatar_image_div.appendChild(avatar_div);
+                      //     image_td.appendChild(avatar_image_div);
+    
+                      //     const action_td = document.createElement("td");
+    
+                      //     const action_div = document.createElement('div');
+                      //     action_div.className = 'd-flex justify-content-center w-100';
+    
+                      //     const edit_action_button = document.createElement('a');
+                      //     edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                      //     edit_action_button.href = 'javascript:void(0);';
+                      //     edit_action_button.setAttribute('data-bs-toggle','modal');
+                      //     edit_action_button.setAttribute('data-bs-target','#editTrainree');
+                      //     edit_action_button.addEventListener('click', function(){
+                      //       editTrainreeData(trainee);
+                      //     })
+                          
+                      //     const edit_action_button_icon = document.createElement('i');
+                      //     edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+    
+                      //     edit_action_button.appendChild(edit_action_button_icon);
+    
+                      //     const delete_action_button = document.createElement('a');
+                      //     delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
+                      //     delete_action_button.href = 'javascript:void(0);';
+                      //     delete_action_button.addEventListener('click', function(){
+                      //         deleteTraineeData(trainee);
+                      //     })
+    
+                      //     const delete_action_button_icon = document.createElement('i');
+                      //     delete_action_button_icon.className = 'bx bx-trash me-1';
+    
+                      //     delete_action_button.appendChild(delete_action_button_icon);
+                      //     action_div.appendChild(edit_action_button);
+                      //     action_div.appendChild(delete_action_button);
+                      //     action_td.appendChild(action_div);
+                      //     tr.appendChild(tdshow)
+                      //     tr.appendChild(td)
+                      //     tr.appendChild(position)
+                      //     tr.appendChild(image_td)
+                      //     tr.appendChild(action_td);
+                      //     document.querySelector('.work_table').appendChild(tr)
+                      //     trainee_count++
+                      // }
+                  });
+              }
+          })
+          .catch(error => {
+              // Handle any errors that occurred during the fetch or processing
+              console.error('Error:', error);
+          });
+      }
+      showTrainee();
+    
+      // Function to fill the form with JSON data
+      function fillFormWithData(data) {
+            debugger;
+        
+            document.getElementById("blog_id_input_update").innerText = data.blog_id;
+            document.getElementById("writers_name_modal").innerText = data.writers_name;
+            document.getElementById("blog_headline_modal").innerText = data.blog_headline;
+            document.getElementById("topic_modal").innerText = data.topic;
+            document.getElementById("blog_details_modal").innerText = data.blog_details;
+        }
+
+
+    function openModal(blogID) {
+   
+    console.log(blogID);
+    var blogs= {{ blogs | tojson }};
+
+    var blog= blogs.find(function (item) {
+        return item.blog_id== blogID;
+    });
+
+    console.log(blog);
+
+    // Call the function to fill the form with JSON data
+    fillFormWithData(blog);
+  }
+    
+      function deleteBlog(blogId) {
+    
+        fetch('/blog_delete/'+ blogId, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse the JSON response
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                // Check if the response contains 'success' key
+                if (data && data.success) {
+                    // Show registration successful alert
+                    alert(data.success);
+                    // Reload the page after a short delay (adjust the delay as needed)
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000); // Refresh after 2 seconds (adjust as needed)
+                } else {
+                    throw new Error('Invalid response from the server.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Updating failed! Please try again.');
+            });
+      }
+    
+
+    
+    
+    </script>
+    <script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+    <!-- endbuild -->
+    
+    <!-- Vendors JS -->
+    <script src="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    
+    <!-- Main JS -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    
+    
+    <!-- Page JS -->
+    
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+     
+      {% endblock %} {% set active_page = 'blogs_admin_panel' %}
+    </div>
+    

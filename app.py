@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
 from urllib.parse import urlparse
 from tld import get_tld
+import math
 
 app = Flask(__name__)
 app.secret_key = 'eer'
@@ -74,8 +75,8 @@ def registration():
             educational_level = request.form.get('educational_level')
             skills = request.form.get('skills')
             freelancing_experience = request.form.get('freelancing_experience')
-            portfolio_link = request.form.get('portfolio_link')
-            language_proficiency = request.form.get('language_proficiency')
+            # portfolio_link = request.form.get('portfolio_link')
+            # language_proficiency = request.form.get('language_proficiency')
             # institution = request.form.get('institution')
             # educational_certificates = request.form.get('educational_certificates
             # availability = request.form.get('availability')
@@ -85,6 +86,79 @@ def registration():
             # linkedIn_profile = request.form.get('linkedIn_profile')
             # github_profile = request.form.get('github_profile')
             # course_joining_date = request.form.get('course_joining_date')
+            # Handling language proficiency
+            portfolio_links = {}
+
+            # Extract portfolio links for selected platforms
+            if 'fiverr' in request.form:
+                portfolio_links['fiverr'] = request.form.get('fiverr_link')
+            if 'upwork' in request.form:
+                portfolio_links['upwork'] = request.form.get('upwork_link')
+            if 'freelancer' in request.form:
+                portfolio_links['freelancer'] = request.form.get('freelancer_link')
+            if 'toptal' in request.form:
+                portfolio_links['toptal'] = request.form.get('toptal_link')
+            if 'guru' in request.form:
+                portfolio_links['guru'] = request.form.get('guru_link')
+            if 'other' in request.form:
+                portfolio_links['other'] = request.form.get('other_link')
+
+            # Convert the dictionary to a JSON string
+            json_data = json.dumps(portfolio_links)
+        
+
+            languages = []
+            if 'bangla' in request.form:
+                languages.append('Bangla')
+            if 'english' in request.form:
+                languages.append('English')
+            if 'other_language' in request.form:
+                other_language = request.form.get('other_language')
+                if other_language:
+                    languages.append(other_language)
+            # print(languages)
+            # exit()
+            language_proficiency = ', '.join(languages)
+            
+            done_trainings = []
+            if 'copywriting' in request.form:
+                done_trainings.append('Copywriting')
+            if 'digital_marketing' in request.form:
+                done_trainings.append('Digital Marketing')
+            if 'graphic_design' in request.form:
+                done_trainings.append('Graphic Design')  
+            if 'data_entry' in request.form:
+                done_trainings.append('Data Entry')    
+            if 'seo' in request.form:
+                done_trainings.append('SEO')    
+            if 'uxui' in request.form:
+                done_trainings.append('UX/UI Design') 
+            if 'other_done_training' in request.form:
+                other_done_training = request.form.get('other_done_training')
+                if other_done_training:
+                    done_trainings.append(other_done_training)        
+                       
+            done_trainings = ', '.join(done_trainings)
+            
+            wantTo_trainings = []
+            if 'copywriting' in request.form:
+                wantTo_trainings.append('Copywriting')
+            if 'digital_marketing' in request.form:
+                wantTo_trainings.append('Digital Marketing')
+            if 'graphic_design' in request.form:
+                wantTo_trainings.append('Graphic Design')  
+            if 'data_entry' in request.form:
+                wantTo_trainings.append('Data Entry')    
+            if 'seo' in request.form:
+                wantTo_trainings.append('SEO')    
+            if 'uxui' in request.form:
+                wantTo_trainings.append('UX/UI Design') 
+            if 'other_wantTo_training' in request.form:
+                other_wantTo_training = request.form.get('other_wantTo_training')
+                if other_wantTo_training:
+                    wantTo_trainings.append(other_wantTo_training)        
+                       
+            wantTo_trainings = ', '.join(wantTo_trainings) 
 
         # Check for required fields
             if not ([full_name, email, phone_number, address, educational_level]):
@@ -92,8 +166,8 @@ def registration():
             
             # Perform database operations
             with connection.cursor() as cursor:
-                trainee_create_sql = "INSERT INTO trainees (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(trainee_create_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link,language_proficiency))
+                trainee_create_sql = "INSERT INTO trainees (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(trainee_create_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings))
                 connection.commit()
 
             return jsonify({'success': 'Registration successful'}), 200
@@ -210,11 +284,10 @@ def header_data_update():
             header_3 = json_data.get('header_3')
             header_4 = json_data.get('header_4')
             header_5 = json_data.get('header_5')
-            header_6 = json_data.get('header_6')
 
             with connection.cursor() as cursor:
-                header_update_sql = "UPDATE ahm_profile SET header_1=%s, header_2=%s, header_3=%s, header_4=%s, header_5=%s, header_6=%s WHERE profile_id = %s"
-                cursor.execute(header_update_sql, (header_1, header_2, header_3, header_4, header_5, header_6, updated_id))
+                header_update_sql = "UPDATE ahm_profile SET header_1=%s, header_2=%s, header_3=%s, header_4=%s, header_5=%s WHERE profile_id = %s"
+                cursor.execute(header_update_sql, (header_1, header_2, header_3, header_4, header_5, updated_id))
                 connection.commit()
 
             return jsonify({'success': 'Header Update Success'})
@@ -687,6 +760,148 @@ def gallary():
         return jsonify(gallary_data)  
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})
+    
+@app.route('/user_gallery', methods=['GET','POST'])
+def get_user_gallary():
+    try:
+        with connection.cursor() as cursor:
+            # SQL query to fetch data from the users table
+            # users_gallary_sql = "SELECT * FROM ahm_gallary_partners LIMIT 6"
+            users_gallary_sql = "SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' LIMIT 6"
+            cursor.execute(users_gallary_sql)
+            gallary_data = cursor.fetchall()
+            
+           
+            count_query = "SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary'"
+            cursor.execute(count_query)
+            total_records = cursor.fetchone()
+            count_value = total_records['COUNT(g_p_id)']
+            
+        
+        limit_per_page = 6
+        total_pages = (count_value + limit_per_page)
+        
+        # print(gallary_data)
+        # sys.exit(1)
+        
+        total_pages = math.ceil(total_pages / limit_per_page)-1
+
+        return render_template('user_gallary.html', gallaries=gallary_data, current_page=1, total_pages=total_pages)
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})
+    
+
+# @app.route('/user_gallery', methods=['GET','POST'])
+# def get_user_gallery():
+#     try:
+#         with connection.cursor() as cursor:
+#             # Construct SQL query to fetch data from the gallery table with category 'gallary'
+#             gallery_sql = """
+#                 SELECT * 
+#                 FROM ahm_gallary_partners 
+#                 WHERE category = %s 
+#                 LIMIT 6
+#             """
+#             cursor.execute(gallery_sql, ('gallary',))
+#             gallery_data = cursor.fetchall()
+            
+#             # Construct SQL query to count total records in the gallery table with category 'gallary'
+#             count_query = """
+#                 SELECT COUNT(g_p_id) AS total 
+#                 FROM ahm_gallary_partners 
+#                 WHERE category = %s
+#             """
+#             cursor.execute(count_query, ('gallary',))
+#             total_records = cursor.fetchone()
+#             count_value = total_records['total']
+            
+#         limit_per_page = 6
+#         total_pages = math.ceil(count_value / limit_per_page)
+
+#         return render_template('user_gallary.html', galleries=gallery_data, current_page=1, total_pages=total_pages)
+#     except Exception as e:
+#         return jsonify({'error': f"Request error: {str(e)}"})
+    
+
+# GET NEXT 10 IMAGES
+PER_PAGE = 6  # Number of items per page
+START_PAGE = 2  # Starting page number
+
+@app.route('/user_gallary_pagination', methods=['GET'])
+def user_gallary_pagination():
+    try:
+        # Get the page number from the request arguments, default to START_PAGE if not provided
+        page = request.args.get('page', START_PAGE, type=int)
+
+        # Calculate the OFFSET based on the page number and number of items per page
+        offset = (page - 1) * PER_PAGE
+
+        with connection.cursor() as cursor:
+            # SQL query to fetch paginated data from the users table
+            users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' LIMIT %s OFFSET %s"
+            cursor.execute(users_gallary_sql, (PER_PAGE, offset))
+            gallary_data = cursor.fetchall()
+            
+            count_query = "SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary'"
+            cursor.execute(count_query)
+            total_records = cursor.fetchone()
+            count_value = total_records['COUNT(g_p_id)']
+            
+        limit_per_page = 6
+        total_pages = (count_value + limit_per_page)
+        
+        # print(gallary_data)
+        # sys.exit(1)
+        
+        total_pages = math.ceil(total_pages / limit_per_page)-1
+
+        return jsonify({'galleries': gallary_data, 'page': page, 'total_pages': total_pages})
+
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})
+
+
+# PER_PAGE = 6  # Number of items per page
+# START_PAGE = 2  # Starting page number
+
+# @app.route('/user_gallery_pagination', methods=['GET'])
+# def user_gallery_pagination():
+#     try:
+#         # Get the page number from the request arguments, default to START_PAGE if not provided
+#         page = request.args.get('page', START_PAGE, type=int)
+
+#         # Calculate the OFFSET based on the page number and number of items per page
+#         offset = (page - 1) * PER_PAGE
+
+#         with connection.cursor() as cursor:
+#             # SQL query to fetch paginated data from the gallery table
+#             gallery_pagination_sql = """
+#                 SELECT * 
+#                 FROM ahm_gallary_partners 
+#                 LIMIT %s OFFSET %s
+#             """
+#             cursor.execute(gallery_pagination_sql, (PER_PAGE, offset))
+#             gallery_data = cursor.fetchall()
+
+#             # Query to count total records in the gallery table
+#             count_query = "SELECT COUNT(g_p_id) AS total FROM ahm_gallary_partners WHERE category = %s"
+#             cursor.execute(count_query, ('gallary',))
+#             total_records = cursor.fetchone()
+#             count_value = total_records['total']
+
+            
+#         limit_per_page = 6
+#         total_pages = (count_value + limit_per_page)
+        
+#         # print(gallery_data)
+#         # sys.exit(1)
+        
+#         total_pages = math.ceil(total_pages / limit_per_page) - 1
+
+#         return jsonify({'galleries': gallery_data, 'page': page, 'total_pages': total_pages})
+
+#     except Exception as e:
+#         return jsonify({'error': f"Request error: {str(e)}"})
 
 # @app.route('/upload_gellary', methods=['POST'])
 # def upload():
@@ -725,6 +940,8 @@ def upload():
         short_details = request.form['short_details']
         category = request.form['category']
         file_photo = request.files['file_photo']
+        year = request.form['year']
+        event = request.form['event']
 
         # print(radio)
         photo_name = file_photo.filename
@@ -735,8 +952,8 @@ def upload():
         if file_photo and file_photo.filename != '':
             try:
                 with connection.cursor() as cursor:
-                    cursor.execute('INSERT INTO ahm_gallary_partners (image_title, image_short_details, image_name, category) VALUES (%s, %s,%s, %s)',
-                        (image_name, short_details, new_filename, category))
+                    cursor.execute('INSERT INTO ahm_gallary_partners (image_title, image_short_details, image_name, category, year, event) VALUES (%s, %s,%s, %s, %s, %s)',
+                        (image_name, short_details, new_filename, category, year, event))
                     connection.commit()
                     file_path = os.path.join('static/mainassets/images/media', new_filename)
                     file_photo.save(file_path)
@@ -755,6 +972,8 @@ def gallary_edit():
         image_id = json_data_dict.get('gallary_id')
         image_name = json_data_dict.get('image_name')
         short_details = json_data_dict.get('short_details')
+        year = json_data_dict.get('year')
+        event = json_data_dict.get('event')
         show_data = json_data_dict.get('show')
         show = show_data.get('gallery')
 
@@ -769,9 +988,9 @@ def gallary_edit():
         if file_photo and file_photo.filename != '':
             try:
                 with connection.cursor() as cursor:
-                    sql = "UPDATE ahm_gallary_partners SET image_title=%s, image_short_details=%s, image_name=%s, `show`=%s WHERE g_p_id =%s"
+                    sql = "UPDATE ahm_gallary_partners SET image_title=%s, image_short_details=%s, image_name=%s, `show`=%s, `year`=%s, `event`=%s WHERE g_p_id =%s"
                     # Get user ID from session or however you manage it
-                    cursor.execute(sql, (image_name, short_details, new_filename, show, image_id))
+                    cursor.execute(sql, (image_name, short_details, year, event, new_filename, show, image_id))
                     connection.commit()
                     file_path = os.path.join('static/mainassets/images/media', new_filename)
                     file_photo.save(file_path)
@@ -818,7 +1037,49 @@ def get_trainee_list():
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"})
     
- 
+
+
+# @app.route('/trainee_list_edit', methods=['GET','POST'])
+# def trainee_list_edit():
+#     if request.method == 'POST':
+#         json_data = request.form.get('json_data')
+#         json_data_dict = json.loads(json_data)
+#         if request.method == 'POST':
+#                 full_name = request.form.get('full_name')
+#                 email = request.form.get('email')
+#                 organization = request.form.get('organization')
+#                 phone_number = request.form.get('phone_number')
+#                 address = request.form.get('address')
+#                 educational_level = request.form.get('educational_level')
+#                 skills = request.form.get('skills')
+#                 freelancing_experience = request.form.get('freelancing_experience')
+#                 portfolio_link = request.form.get('portfolio_link')
+#                 language_proficiency = request.form.get('language_proficiency')
+#                 show_data = json_data_dict.get('show')
+#                 show = show_data.get('trainee_list')
+
+        
+#         print(show_data)
+#         if full_name and address and email and educational_level and phone_number != '':
+#             try:
+#                 with connection.cursor() as cursor:
+#                     sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s `show`=%s WHERE trainee_id =%s"
+#                     # Get user ID from session or however you manage it
+#                     cursor.execute(sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, show, trainee_id))
+#                     connection.commit()
+#                     return jsonify({'success': 'Trainee Edit Successful'})
+#             except Exception as e:
+#                 return jsonify({'error': f"Request error: {str(e)}"})
+#         else:
+#             try:
+#                 with connection.cursor() as cursor:
+#                     sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s `show`=%s WHERE trainee_id =%s"
+#                     # Get user ID from session or however you manage it
+#                     cursor.execute(sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, show, trainee_id))
+#                     connection.commit()
+#                     return jsonify({'success': 'Trainee Info Successfully edited.'})
+#             except Exception as e:
+#                 return jsonify({'error': f"Request error: {str(e)}"})    
         
 @app.route('/trainee_list_edit/<int:trainee_id>', methods=['GET','POST'])
 def trainee_list_edit(trainee_id):
@@ -861,35 +1122,104 @@ def trainee_delete(trainee_id):
         return jsonify({'error': 'Invalid request'})
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})
-
+    
 @app.route('/blogs', methods=['GET', 'POST'])
-def blog():
+def get_blogs():
+        try:
+            with connection.cursor() as cursor:
+                blog_sql = "SELECT * FROM blogs ORDER BY created_at DESC LIMIT 6" 
+                cursor.execute(blog_sql)
+                blog_data = cursor.fetchall()
+                return render_template('blogs.html', blogs=blog_data)
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"})    
+        
+@app.route('/blogs_admin_panel', methods=['GET', 'POST'])
+def get_blogs_admin_panel():
+        try:
+            with connection.cursor() as cursor:
+                blog_sql = "SELECT * FROM blogs"
+                cursor.execute(blog_sql)
+                blog_data = cursor.fetchall()
+                return render_template('blogs_admin_panel.html', blogs=blog_data)
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"})            
+
+
+# @app.route('/blog_creation', methods=['GET', 'POST'])
+# def create_blogs():
+#     try:
+#         if request.method == 'POST':
+#             writers_name = request.form.get('writers_name')
+#             topic = request.form.get('topic')
+#             blog_headline = request.form.get('blog_headline')
+#             blog_details = request.form.get('blog_details')
+           
+
+#         # Check for required fields
+#             if not ([writers_name, topic, blog_headline, blog_details]):
+#                 return jsonify({"message": "You must fill up these required fields."}), 400
+            
+#             # Perform database operations
+#             with connection.cursor() as cursor:
+#                 blog_create_sql = "INSERT INTO blogs  (writers_name, topic, blog_headline, blog_details) VALUES (%s, %s, %s, %s)"
+#                 cursor.execute(blog_create_sql, (writers_name, topic, blog_headline, blog_details))
+#                 connection.commit()
+
+#             return jsonify({'success': 'Blog Creation successful'}), 200
+        
+#         elif request.method == 'GET':
+#             return jsonify({'message': 'GET request received'}), 200
+
+#     except Exception as e:
+#         return jsonify({'error': f"Request error: {str(e)}"}), 500
+
+@app.route('/blog_creation', methods=['POST'])
+def create_blogs():
     try:
         if request.method == 'POST':
-            writer_name = request.form.get('writer_name')
+            # image = request.form['image']
+            writers_name = request.form.get('writers_name')
             topic = request.form.get('topic')
             blog_headline = request.form.get('blog_headline')
             blog_details = request.form.get('blog_details')
-           
 
-        # Check for required fields
-            if not ([writer_name, topic, blog_headline, blog_details]):
-                return jsonify({"message": "You must fill up these required fields."}), 400
+            # Check for required fields
+            if not all([writers_name, topic, blog_headline, blog_details]):
+                return jsonify({"message": "You must fill up all required fields."}), 400
             
+            # Save the image file
+            file_photo = request.files['file_photo']
+            if file_photo.filename != '':
+                image = secure_filename(file_photo.filename)
+                file_path = os.path.join('static/mainassets/images/blog_images', image)
+                file_photo.save(file_path)
+                
             # Perform database operations
             with connection.cursor() as cursor:
-                blog_create_sql = "INSERT INTO blogs  (writer_name, topic, blog_headline, blog_details) VALUES (%s, %s, %s, %s)"
-                cursor.execute(blog_create_sql, (writer_name, topic, blog_headline, blog_details))
+                blog_create_sql = "INSERT INTO blogs  (image, writers_name, topic, blog_headline, blog_details) VALUES (%s, %s, %s, %s, %s)"
+                cursor.execute(blog_create_sql, (image, writers_name, topic, blog_headline, blog_details))
                 connection.commit()
 
             return jsonify({'success': 'Blog Creation successful'}), 200
-        
-        elif request.method == 'GET':
-            return jsonify({'message': 'GET request received'}), 200
 
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"}), 500
 
+
+
+@app.route('/blog_delete/<int:blog_id>', methods=['GET','POST'])
+def blog_delete(blog_id):
+    try:
+        if request.method == 'POST':
+            cursor = connection.cursor()
+            event_delete_query = "DELETE FROM blogs  WHERE blog_id  = %s"
+            cursor.execute(event_delete_query, (blog_id))
+            connection.commit()
+            return jsonify({'success': 'Delete Success'})
+        return jsonify({'error': 'Invalid request'})
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})
 
 @app.route('/email_send', methods=['GET','POST'])
 def email_send():
@@ -998,25 +1328,39 @@ def ahm_show_hide():
         return render_template('ahm_show_hide.html')
     else:
         return redirect(url_for('admin'))
-    
+
+
+
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('admin')) 
 
+@app.route('/trainee_list')
+def trainee_list():
+    if 'loggedin' in session and session['loggedin']:
+        return render_template('trainee_list.html')
+    else:
+        return redirect(url_for('admin'))
+
 
 @app.route('/trainee_registration')
 def trainee_registration():
     return render_template('trainee_registration.html')
 
-@app.route('/trainee_list')
-def trainee_list():
-    return render_template('trainee_list.html')
 
 @app.route('/blogs')
 def blogs():
-    return render_template('blog.html')
+    return render_template('blogs.html')
+
+@app.route('/blogs_admin_panel')
+def blogs_admin_panel():
+    return render_template('blogs_admin_panel.html')
+
+@app.route('/user_gallery')
+def user_gallary():
+    return render_template('user_gallary.html')    
 
 
 if __name__ == '__main__':

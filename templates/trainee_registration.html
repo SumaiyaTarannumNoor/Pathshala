@@ -51,7 +51,7 @@
 
     </style>
 <body>
-    <div class="container-xxl">
+    <div class="container-xxl" >
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
             <!-- Register -->
@@ -61,44 +61,72 @@
                     <div class="app-brand justify-content-center" style="margin-bottom: 5px;">
                         <span class="logo">
                             <a href="https://freelancingpathshala.com/" title="Go back to home page">
-                                <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}" alt="Logo" style="height: 40px; width: auto;">
+                                <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}" alt="Logo" style="height: 100px; width: auto;">
                             </a>
                         </span>
                     </div>
                         <form id="registrationForm" method="POST" action="/registration">
                             <h6 style="color: rebeccapurple; margin-top: 1rem;">The fields containing (*) are required.</h6>
-                            <div class="mb-3">
-                                <label for="full_name">Full Name </label>
-                                <label for="full_name" style="color: rebeccapurple;">*</label>
-                                <input type="text" class="form-control" id="full_name" name="full_name" required placeholder="Enter your Full Name" autofocus>
+                           <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="full_name">Full Name </label>
+                                    <label for="full_name" style="color: rebeccapurple;">*</label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name" required placeholder="Enter your Full Name" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="email">Email 
+                                        (The email address should be unique to the user.)
+                                    </label>
+                                    <label for="email" style="color: rebeccapurple;">*</label>
+                                    <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="organization">Organization</label>
+                                    <input type="text" class="form-control" id="organization" name="organization" placeholder="Enter your organization name" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="phone_number">Phone Number</label>
+                                    <label for="phone_number" style="color: rebeccapurple;">*</label>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" required placeholder="Enter your phone number" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                
+                                <div class="mb-3">
+                                    <label for="address">Address</label>
+                                    <label for="address" style="color: rebeccapurple;">*</label>
+                                    <input type="text" class="form-control" id="address" name="address" required placeholder="Enter your address" autofocus>
+                                </div>
                             </div>
                             
-                            <div class="mb-3">
-                                <label for="email">Email 
-                                    (The email address should be unique to the user.)
-                                </label>
-                                <label for="email" style="color: rebeccapurple;">*</label>
-                                <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email" autofocus>
-                            </div>
-                            <div class="mb-3">
-                                <label for="organization">Organization</label>
-                                <input type="text" class="form-control" id="organization" name="organization" placeholder="Enter your organization name" autofocus>
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone_number">Phone Number</label>
-                                <label for="phone_number" style="color: rebeccapurple;">*</label>
-                                <input type="text" class="form-control" id="phone_number" name="phone_number" required placeholder="Enter your phone number" autofocus>
-                            </div>
-                            <div class="mb-3">
-                                <label for="address">Address</label>
-                                <label for="address" style="color: rebeccapurple;">*</label>
-                                <input type="text" class="form-control" id="address" name="address" required placeholder="Enter your address" autofocus>
-                            </div>
-                            <div class="mb-3">
+                           </div>
+                            
+                           <div class="mb-3">
+                            <label for="educational_level">Educational Level</label>
+                            <label for="educational_level" style="color: rebeccapurple;">*</label>
+                            <select class="form-control" id="educational_level" name="educational_level" required autofocus>
+                                <option value="SSC">SSC</option>
+                                <option value="HSC">HSC</option>
+                                <option value="BSc">BSc</option>
+                                <option value="MSc">MSc</option>
+                                <!-- You can add more options here if needed -->
+                            </select>
+                        </div>
+                        
+                            
+                            
+                            <!-- <div class="mb-3">
                                 <label for="educational_level">Educational Level</label>
                                 <label for="educational_level" style="color: rebeccapurple;">*</label>
                                 <input type="text" class="form-control" id="educational_level" name="educational_level" required placeholder="Enter your educational level: SSC, HSC, BSc, MSc etc" autofocus>
-                            </div>
+                            </div> -->
                             <div class="mb-3">
                                 <label for="skills">Skills</label>
                                 <input type="text" class="form-control" id="skills" name="skills" placeholder="Enter your skills" autofocus>
@@ -113,14 +141,74 @@
                                 <label for="full_name" style="color: rebeccapurple;">*</label>
                                 <input type="text" class="form-control" id="educational_certificates" name="educational_certificates" required placeholder="Enter your educational certificates" autofocus>
                             </div>  -->
+
                             <div class="mb-3">
                                 <label for="freelancing_experience">Freelancing Experience</label>
-                                <input type="text" class="form-control" id="freelancing_experience" name="freelancing_experience" placeholder="Enter your freelancing experiences (if any)" autofocus>
+                                <label for="freelancing_experience" style="color: rebeccapurple;">*</label>
+                                <select class="form-control" id="freelancing_experience" name="freelancing_experience" required autofocus>
+                                    <option value="0-1 year">0-1 Year</option>
+                                    <option value="1-3 years">1-3 Years</option>
+                                    <option value="3-5 years">3-5 Years</option>
+                                    <option value="more than 5 years">More Than Five Years</option>
+                                    <!-- You can add more options here if needed -->
+                                </select>
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="portfolio_link">Portfolio Link</label>
                                 <input type="text" class="form-control" id="portfolio_link" name="portfolio_link" placeholder="Enter your portfolio link (if any)" autofocus>
+                            </div> -->
+                            <div class="mb-3">
+                                <label>Portfolio Links</label><br>
+                                <input type="checkbox" id="fiverr" name="fiverr" value="Fiverr">
+                                <label for="fiverr"> Fiverr</label><br>
+                                <input type="text" id="fiverr_link" name="fiverr_link" placeholder="Enter Fiverr Link" style="display: none; width: 600px; height: 40px;">
+                            
+                                <input type="checkbox" id="upwork" name="upwork" value="Upwork">
+                                <label for="upwork"> Upwork</label><br>
+                                <input type="text" id="upwork_link" name="upwork_link" placeholder="Enter Upwork Link" style="display: none; width: 600px; height: 40px;">
+
+                                <input type="checkbox" id="freelancer" name="freelancer" value="Freelancer">
+                                <label for="freelancer"> Freelancer</label><br>
+                                <input type="text" id="freelancer_link" name="freelancer_link" placeholder="Enter Freelancer Link" style="display: none; width: 600px; height: 40px;">
+
+                                <input type="checkbox" id="toptal" name="toptal" value="Toptal">
+                                <label for="toptal"> Toptal</label><br>
+                                <input type="text" id="toptal_link" name="toptal_link" placeholder="Enter Toptal Link" style="display: none; width: 600px; height: 40px;">
+
+                                <input type="checkbox" id="guru" name="guru" value="Guru">
+                                <label for="guru"> Guru</label><br>
+                                <input type="text" id="guru_link" name="guru_link" placeholder="Enter Guru Link" style="display: none; width: 600px; height: 40px;">
+                            
+                                <input type="checkbox" id="other" name="other" value="Other">
+                                <label for="other"> Other</label><br>
+                                <input type="text" id="other_link" name="other_link" placeholder="Enter Other link" style="display: none;width: 600px; height: 40px;">
                             </div>
+                            
+                            <script>
+                                // Function to toggle the visibility of the input field based on checkbox state
+                                function toggleInput(checkboxId, inputId) {
+                                    var checkbox = document.getElementById(checkboxId);
+                                    var input = document.getElementById(inputId);
+                                    
+                                    checkbox.addEventListener("change", function() {
+                                        if (this.checked) {
+                                            input.style.display = "block";
+                                            input.focus();
+                                        } else {
+                                            input.style.display = "none";
+                                        }
+                                    });
+                                }
+                            
+                                // Call the toggleInput function for each checkbox and its corresponding input
+                                toggleInput("fiverr", "fiverr_link");
+                                toggleInput("upwork", "upwork_link");
+                                toggleInput("freelancer", "freelancer_link");
+                                toggleInput("toptal", "toptal_link");
+                                toggleInput("guru", "guru_link");
+                                toggleInput("other", "other_link");
+                            </script>
+                            
                             <!-- <div class="mb-3">
                                 <label for="availability">Availability</label>
                                 <label for="full_name" style="color: rebeccapurple;">*</label>
@@ -134,10 +222,97 @@
                                 <label for="hourly_rate">Hourly Rate</label>
                                 <input type="text" class="form-control" id="hourly_rate" name="hourly_rate" placeholder="Enter your hourly rate in BDT" autofocus>
                             </div> -->
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="language_proficiency">Language Proficiency</label>
                                 <input type="text" class="form-control" id="language_proficiency" name="language_proficiency" placeholder="Enter your language proficiency (e.g: Bangla(Native), English(Intermediate))" autofocus>
+                            </div> -->
+
+                            <div class="mb-3">
+                                <label for="language_proficiency">Language Proficiency</label><br>
+                                <input type="checkbox" id="bangla" name="bangla" value="Bangla">
+                                <label for="bangla"> Bangla</label><br>
+                                <input type="checkbox" id="english" name="english" value="English">
+                                <label for="english"> English</label><br>
+                                <input type="checkbox" id="other_language_checkbox" name="other_language_checkbox" value="Other">
+                                <label for="other_language_checkbox"> Other</label><br>
+                                <input type="text" id="other_language_input" name="other_language" placeholder="Enter other language" style="display: none; width: 600px; height: 40px;">
+                                
+                                <script>
+                                    document.getElementById("other_language_checkbox").addEventListener("change", function() {
+                                        var otherLanguageInput = document.getElementById("other_language_input");
+                                        if (this.checked) {
+                                            otherLanguageInput.style.display = "block";
+                                            otherLanguageInput.focus();
+                                        } else {
+                                            otherLanguageInput.style.display = "none";
+                                        }
+                                    });
+                                </script>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="done_trainings">Is there any training that you have done</label><br>
+                                <input type="checkbox" id="copywriting" name="copywriting" value="Copywriting">
+                                <label for="copywriting"> Copywriting</label><br>
+                                <input type="checkbox" id="digital_marketing" name="digital_marketing" value="Digital Marketing">
+                                <label for="digital_marketing"> Digital Marketing</label><br>
+                                <input type="checkbox" id="graphic_design" name="graphic_design" value="Graphic Design">
+                                <label for="graphic_design"> Graphic Design</label><br>
+                                <input type="checkbox" id="data_entry" name="data_entry" value="Data Entry">
+                                <label for="data_entry"> Data Entry</label><br>
+                                <input type="checkbox" id="seo" name="seo" value="SEO">
+                                <label for="seo"> SEO</label><br>
+                                <input type="checkbox" id="uxui" name="uxui" value="UX/UI Design">
+                                <label for="uxui"> UX/UI Design</label><br>
+                                <input type="checkbox" id="other_done_training_checkbox" name="other_done_training_checkbox" value="Other_Done_Training">
+                                <label for="other_done_training_checkbox"> Other</label><br>
+                                <input type="text" id="other_done_training_input" name="other_done_training" placeholder="Enter here if you have done any other trainings" style="display: none; width: 600px; height: 40px;">
+                                
+                                <script>
+                                    document.getElementById("other_done_training_checkbox").addEventListener("change", function() {
+                                        var otherDoneTrainingInput = document.getElementById("other_done_training_input");
+                                        if (this.checked) {
+                                            otherDoneTrainingInput.style.display = "block";
+                                            otherDoneTrainingInput.focus();
+                                        } else {
+                                            otherDoneTrainingInput.style.display = "none";
+                                        }
+                                    });
+                                </script>
+                            </div>    
+                            
+                            <div class="mb-3">
+                                <label for="wantTo_trainings">Is there any training you are interested to do</label><br>
+                                <input type="checkbox" id="copywriting" name="copywriting" value="Copywriting">
+                                <label for="copywriting"> Copywriting</label><br>
+                                <input type="checkbox" id="digital_marketing" name="digital_marketing" value="Digital Marketing">
+                                <label for="digital_marketing"> Digital Marketing</label><br>
+                                <input type="checkbox" id="graphic_design" name="graphic_design" value="Graphic Design">
+                                <label for="graphic_design"> Graphic Design</label><br>
+                                <input type="checkbox" id="data_entry" name="data_entry" value="Data Entry">
+                                <label for="data_entry"> Data Entry</label><br>
+                                <input type="checkbox" id="seo" name="seo" value="SEO">
+                                <label for="seo"> SEO</label><br>
+                                <input type="checkbox" id="uxui" name="uxui" value="UX/UI Design">
+                                <label for="uxui"> UX/UI Design</label><br>
+                                <input type="checkbox" id="other_wantTo_training_checkbox" name="other_wantTo_training_checkbox" value="Other_Want_To_Training">
+                                <label for="other_wantTo_training_checkbox"> Other</label><br>
+                                <input type="text" id="other_wantTo_training_input" name="other_wantTo_training" placeholder="Enter here if you want to do any other trainings" style="display: none; width: 600px; height: 40px;">
+                                
+                                <script>
+                                    document.getElementById("other_wantTo_training_checkbox").addEventListener("change", function() {
+                                        var otherWantToTrainingInput = document.getElementById("other_wantTo_training_input");
+                                        if (this.checked) {
+                                            otherWantToTrainingInput.style.display = "block";
+                                            otherWantToTrainingInput.focus();
+                                        } else {
+                                            otherWantToTrainingInput.style.display = "none";
+                                        }
+                                    });
+                                </script>
+                            </div>    
+                            
+
                             <!-- <div class="mb-3">
                                 <label for="certifications">Certifications</label>
                                 <input type="text" class="form-control" id="certifications" name="certifications" placeholder="Enter your certifications (Corsera/Udemy etc)" autofocus>
@@ -162,8 +337,7 @@
                     </div>
             <!-- <form id="registrationForm" method="POST" action="/registration"> -->
             
-        </form>
-    </div>
+        <!-- </form> -->
        
 </script>
 <!-- Core JS -->
