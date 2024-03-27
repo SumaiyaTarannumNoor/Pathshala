@@ -105,6 +105,19 @@
   background-color: #5c51da;
 }
 
+.navbar-scrolled{
+      background-image: linear-gradient(90deg, #6c5ffc, #ffffff);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-scrolled{
+      background-color: #ffffff;
+      color: #6c5ffc;
+    }
+
+    .heading-scrolled{
+      color: #ffffff;
+    }
 
     </style>
 
@@ -121,7 +134,7 @@
   }
 </style>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="https://freelancingpathshala.com/" title="Go back to home page"> <span class="logo">
        
@@ -135,7 +148,7 @@
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           
           <li class="nav-item">
-            <p style="display: flex; align-self: center;"><h1>Gallery</h1></p>
+            <p style="display: flex; align-self: center; "><h1 style="color: #0c0c1a; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 2.5px 1px #292e4a">Gallery!</h1></p>
           </li>
          
         </ul>
@@ -150,19 +163,20 @@
   
 
 
-    <div class="card">
+    <div class="card" style="background-image: linear-gradient(90deg, #ffffff, #d2eaf5)">
     <div class="card-body">
     <div class="bg-image-landing section header_5_id" >
     <div class="container" style="padding-bottom: 40px; padding-top: 20px;">
-    <div class="table">
-        <h1 style="color:#6c5ffc;margin-bottom: 30px;">Enjoy the sneak picks to celebrate our memories!</h1>
+    <!-- <div class="table"> -->
+      <div class="container" style="padding-bottom: 40px; padding-top: 20px; margin-top: 100px;"></div>
+      <h2 style="color:#6c5ffc; font-style: bold; font-weight: 700; font-size: 40px; margin-left: 200px; margin-bottom: 40px;">Enjoy the sneak picks to celebrate our memories!</h2>
         <div class="container">
           
           <div class="row" id="image-gallery">
 
             {% for gallery in gallaries %}
               <div class="col-md-4">
-                  <div class="thumbnail" data-gallery-id="{{ gallery.g_p_id }}" data-bs-toggle="modal" data-image_title="{{ gallery.image_title }}" data-image_short_details="{{ gallery.image_short_details }}" data-year="{{ gallery.year }}" data-event="{{ gallery.event }}" data-image_name="{{ gallery.image_name }}" data-bs-toggle="modal" data-bs-target="#seeThisImage">
+                  <div class="thumbnail" style="width: 18rem; margin: 16px;" data-gallery-id="{{ gallery.g_p_id }}" data-bs-toggle="modal" data-image_title="{{ gallery.image_title }}" data-image_short_details="{{ gallery.image_short_details }}" data-year="{{ gallery.year }}" data-event="{{ gallery.event }}" data-image_name="{{ gallery.image_name }}" data-bs-toggle="modal" data-bs-target="#seeThisImage">
                       <div>
                           <img src="{{ url_for('static', filename='mainassets/images/media/' + gallery.image_name) }}" alt="Image" style="width:100%">
                       </div>
@@ -175,7 +189,7 @@
           </div>
           
 
-          <div class="row" id="pagination-container">
+          <div class="row" id="pagination-container" style="margin-top: 40px;">
             <nav aria-label="Page navigation">
               <ul class="pagination justify-content-center">
                   <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
@@ -199,13 +213,13 @@
           </div>
         
         </div>
-          </div>
+    </div>
         </div>
     </div>
    
-    <div class="modal fade" id="seeThisImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none; margin: 20px 0;" aria-hidden="true">
+    <div class="modal fade" id="seeThisImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none; margin: 20px 0" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" style="width: 600px;">
-          <div class="modal-content show_modal_content">
+          <div class="modal-content show_modal_content" style="background-image: linear-gradient(90deg, #ffffff, #99d5f1)">
               <div class="modal-header">
                   <!-- <h5 class="modal-title" id="modalToggleLabel">Image</h5> -->
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -219,7 +233,7 @@
 
                     </p>
                 </div> -->
-                 
+                      <img src="" style="height:auto; width:90%; padding-left: 100px ;" id="image_modal" />
                       <div class="mb-3">
                           <label class="form-label" for="image_title_input_update">Image Title</label>
                           <!-- <input type="text" class="form-control writers_name_input_update" name="writers_name" id="writers_name_modal"> -->
@@ -250,7 +264,7 @@
                       </div>
 
                       <!-- <img src="" style="height: auto; width: 100%" id="image_modal" /> -->
-                      <img src="" style="height:auto; width:80%; padding-left: 100px ;" id="image_modal" />
+                      
                                             
                   </form>
               </div>
@@ -320,7 +334,7 @@
                   $('#image-gallery').empty();
                   $.each(response.galleries, function(index, gallery) {
                       var imageSrc = '{{ url_for("static", filename="mainassets/images/media/") }}' + gallery.image_name;
-                      $('#image-gallery').append('<div class="col-md-4"><div class="thumbnail" data-gallery-id="' + gallery.g_p_id + '" data-bs-toggle="modal" data-image_title="' + gallery.image_title + '" data-image_short_details="' + gallery.image_short_details + '" data-year="' + gallery.year + '" data-event="' + gallery.event + '" data-image_name="' + gallery.image_name + '" data-bs-target="#seeThisImage"><div><img src="' + imageSrc + '" alt="Image" style="width:100%"></div></div></div>');
+                      $('#image-gallery').append('<div class="col-md-4"><div class="thumbnail" style="width: 18rem; margin: 16px;" data-gallery-id="' + gallery.g_p_id + '" data-bs-toggle="modal" data-image_title="' + gallery.image_title + '" data-image_short_details="' + gallery.image_short_details + '" data-year="' + gallery.year + '" data-event="' + gallery.event + '" data-image_name="' + gallery.image_name + '" data-bs-target="#seeThisImage"><div><img src="' + imageSrc + '" alt="Image" style="width:100%"></div></div></div>');
                   });
                   // Update pagination links
                   updatePagination(response.page, response.total_pages);
@@ -418,7 +432,41 @@ fillFormWithData(image);
 
 </script>
 
+<script>
+  const navEl = document.querySelector('.navbar');
 
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      navEl.classList.add('navbar-scrolled');
+    } else {
+      navEl.classList.remove('navbar-scrolled');
+    }
+  });
+
+
+  const btnEl = document.querySelector('.btn.btn-primary');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      btnEl.classList.add('btn-scrolled');
+    } else {
+      btnEl.classList.remove('btn-scrolled');
+    }
+  });
+
+ 
+  const headingEl = document.querySelector('.nav-item p h1');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      headingEl.classList.add('heading-scrolled');
+    } else {
+      headingEl.classList.remove('heading-scrolled');
+    }
+  });
+
+
+</script>
 
 
 
