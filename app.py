@@ -790,37 +790,6 @@ def get_user_gallary():
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})
     
-
-# @app.route('/user_gallery', methods=['GET','POST'])
-# def get_user_gallery():
-#     try:
-#         with connection.cursor() as cursor:
-#             # Construct SQL query to fetch data from the gallery table with category 'gallary'
-#             gallery_sql = """
-#                 SELECT * 
-#                 FROM ahm_gallary_partners 
-#                 WHERE category = %s 
-#                 LIMIT 6
-#             """
-#             cursor.execute(gallery_sql, ('gallary',))
-#             gallery_data = cursor.fetchall()
-            
-#             # Construct SQL query to count total records in the gallery table with category 'gallary'
-#             count_query = """
-#                 SELECT COUNT(g_p_id) AS total 
-#                 FROM ahm_gallary_partners 
-#                 WHERE category = %s
-#             """
-#             cursor.execute(count_query, ('gallary',))
-#             total_records = cursor.fetchone()
-#             count_value = total_records['total']
-            
-#         limit_per_page = 6
-#         total_pages = math.ceil(count_value / limit_per_page)
-
-#         return render_template('user_gallary.html', galleries=gallery_data, current_page=1, total_pages=total_pages)
-#     except Exception as e:
-#         return jsonify({'error': f"Request error: {str(e)}"})
     
 
 # GET NEXT 10 IMAGES
@@ -832,20 +801,37 @@ def user_gallary_pagination():
     try:
         # Get the page number from the request arguments, default to START_PAGE if not provided
         page = request.args.get('page', START_PAGE, type=int)
+        
+        selected_year = request.args.get('selected_year')
 
         # Calculate the OFFSET based on the page number and number of items per page
         offset = (page - 1) * PER_PAGE
 
         with connection.cursor() as cursor:
-            # SQL query to fetch paginated data from the users table
-            users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' LIMIT %s OFFSET %s"
-            cursor.execute(users_gallary_sql, (PER_PAGE, offset))
-            gallary_data = cursor.fetchall()
             
-            count_query = "SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary'"
-            cursor.execute(count_query)
-            total_records = cursor.fetchone()
-            count_value = total_records['COUNT(g_p_id)']
+            if selected_year:
+                # SQL query to fetch paginated data from the users table
+                users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s LIMIT %s OFFSET %s"
+                cursor.execute(users_gallary_sql, (selected_year, PER_PAGE, offset))
+                gallary_data = cursor.fetchall()
+                
+                count_query = f"SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s"
+                cursor.execute(count_query, (selected_year))
+                total_records = cursor.fetchone()
+                count_value = total_records['COUNT(g_p_id)']
+            else:
+                 # SQL query to fetch paginated data from the users table
+                users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' LIMIT %s OFFSET %s"
+                cursor.execute(users_gallary_sql, (PER_PAGE, offset))
+                gallary_data = cursor.fetchall()
+                
+                count_query = "SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary'"
+                cursor.execute(count_query)
+                total_records = cursor.fetchone()
+                count_value = total_records['COUNT(g_p_id)']
+            
+            
+           
             
         limit_per_page = 6
         total_pages = (count_value + limit_per_page)
@@ -859,49 +845,39 @@ def user_gallary_pagination():
 
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})
+    
 
-
-# PER_PAGE = 6  # Number of items per page
-# START_PAGE = 2  # Starting page number
-
-# @app.route('/user_gallery_pagination', methods=['GET'])
-# def user_gallery_pagination():
-#     try:
-#         # Get the page number from the request arguments, default to START_PAGE if not provided
-#         page = request.args.get('page', START_PAGE, type=int)
-
-#         # Calculate the OFFSET based on the page number and number of items per page
-#         offset = (page - 1) * PER_PAGE
-
-#         with connection.cursor() as cursor:
-#             # SQL query to fetch paginated data from the gallery table
-#             gallery_pagination_sql = """
-#                 SELECT * 
-#                 FROM ahm_gallary_partners 
-#                 LIMIT %s OFFSET %s
-#             """
-#             cursor.execute(gallery_pagination_sql, (PER_PAGE, offset))
-#             gallery_data = cursor.fetchall()
-
-#             # Query to count total records in the gallery table
-#             count_query = "SELECT COUNT(g_p_id) AS total FROM ahm_gallary_partners WHERE category = %s"
-#             cursor.execute(count_query, ('gallary',))
-#             total_records = cursor.fetchone()
-#             count_value = total_records['total']
-
+@app.route('/user_gallery_by_year', methods=['GET', 'POST'])
+def get_user_gallery_by_year():
+    
+    if request.method == 'POST':
+    
+        try:
+            data = request.json
+            selected_year = data['year']
             
-#         limit_per_page = 6
-#         total_pages = (count_value + limit_per_page)
-        
-#         # print(gallery_data)
-#         # sys.exit(1)
-        
-#         total_pages = math.ceil(total_pages / limit_per_page) - 1
+            
+            with connection.cursor() as cursor:
+                # SQL query to fetch data from the ahm_gallary_partners table based on selected year
+                users_gallary_sql = "SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' AND year = %s"
+                cursor.execute(users_gallary_sql, (selected_year,))
+                gallary_data = cursor.fetchall()
+                
+                count_query = "SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary' AND year = %s"
+                cursor.execute(count_query, (selected_year,))
+                total_records = cursor.fetchone()
+                count_value = total_records['COUNT(g_p_id)']
+                
+            limit_per_page = 6
+            total_pages = math.ceil(count_value / limit_per_page)
+            
+            # return render_template('user_gallary.html', gallaries=gallary_data, current_page=1, total_pages=total_pages)
+            return jsonify({'galleries': gallary_data, 'current_page': 1, 'total_pages': total_pages})
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"})
 
-#         return jsonify({'galleries': gallery_data, 'page': page, 'total_pages': total_pages})
 
-#     except Exception as e:
-#         return jsonify({'error': f"Request error: {str(e)}"})
+
 
 # @app.route('/upload_gellary', methods=['POST'])
 # def upload():

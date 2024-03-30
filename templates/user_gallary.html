@@ -132,6 +132,14 @@
   .thumbnail:hover img {
     transform: scale(1.1); /* Zoom effect */
   }
+
+  @media(min-width: 1200px) {
+        {
+          .container{
+            margin-top: 10px;
+          }
+        }
+      };
 </style>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -148,20 +156,73 @@
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           
           <li class="nav-item">
-            <p style="display: flex; align-self: center; "><h1 style="color: #0c0c1a; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 2.5px 1px #292e4a">Gallery!</h1></p>
+            <p style="display: flex;align-self: center;"><h1 style="color: #0c0c1a; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 2.5px 1px #292e4a;">Gallery!</h1></p>
           </li>
          
         </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
-        <a data-bs-toggle="slide" href="#SeeImage" style="width:9rem;" class="btn btn-primary">Write a Blog</a>  
       </div>
+    <div class="dropdown" style="width: 300px">
+      <button class="btn btn-primary dropdown-toggle" type="submit" id="yearDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        See Image Based on Year
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="yearDropdown">
+        <li><a class="dropdown-item" href="#" data-year="2019">2019</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2020">2020</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2021">2021</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2022">2022</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2023">2023</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2024">2024</a></li>
+      </ul>
+      <button class="btn btn-primary dropdown-toggle" type="submit" id="eventDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        See Image Based on Event
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="eventDropdown">
+        <li><a class="dropdown-item" href="#">Basis</a></li>
+        <li><a class="dropdown-item" href="#">Techknowgram</a></li>
+        <li><a class="dropdown-item" href="#">Bacco</a></li>
+      </ul>
+    </div>
+    <div class="dropdown" style="margin: 10px;">
+      
     </div>
   </nav>
-  
+   <!-- <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Add click event listener to dropdown items
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedYear = this.dataset.year;
+            fetch('/user_gallery_by_year', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({year: selectedYear})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                // Handle the response, e.g., update the gallery with new data
+                console.log(data);
+                updatePagination(data.current_page, response.total_pages);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    });
+});
 
+
+   </script> -->
+    
 
     <div class="card" style="background-image: linear-gradient(90deg, #ffffff, #d2eaf5)">
     <div class="card-body">
@@ -170,7 +231,8 @@
     <!-- <div class="table"> -->
       <div class="container" style="padding-bottom: 40px; padding-top: 20px; margin-top: 100px;"></div>
       <h2 style="color:#6c5ffc; font-style: bold; font-weight: 700; font-size: 40px; margin-left: 200px; margin-bottom: 40px;">Enjoy the sneak picks to celebrate our memories!</h2>
-        <div class="container">
+        
+      <div class="container">
           
           <div class="row" id="image-gallery">
 
@@ -325,10 +387,21 @@
 });
       // Function to load data for a specific page via AJAX
       function loadData(page) {
+          var yearValue= "";
+         
+          selectedYear= $("#yearDropdown").text();
+          debugger;
+
+          if (selectedYear.trim()=="See Image Based on Year") {
+            yearValue= "";
+          } else {
+            yearValue= selectedYear;
+          }
+
           $.ajax({
               url: '/user_gallary_pagination',
               type: 'GET',
-              data: { page: page },
+              data: { page: page, selected_year: yearValue },
               success: function(response) {
                   // Update the gallery content with the loaded data
                   $('#image-gallery').empty();
@@ -379,6 +452,48 @@
 
       // Initially load data for the first page
       // loadData(1);
+
+      //for filtering event handler
+      const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedYear = this.dataset.year;
+            $("#yearDropdown").text(selectedYear);
+            fetch('/user_gallery_by_year', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({year: selectedYear})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle the response, e.g., update the gallery with new data
+                // console.log(data);
+                debugger;
+                console.log("gelleries data", data);
+                // Update the gallery content with the loaded data
+                // Update the gallery content with the loaded data
+                $('#image-gallery').empty();
+                  $.each(data.galleries, function(index, gallery) {
+                      var imageSrc = '{{ url_for("static", filename="mainassets/images/media/") }}' + gallery.image_name;
+                      $('#image-gallery').append('<div class="col-md-4"><div class="thumbnail" style="width: 18rem; margin: 16px;" data-gallery-id="' + gallery.g_p_id + '" data-bs-toggle="modal" data-image_title="' + gallery.image_title + '" data-image_short_details="' + gallery.image_short_details + '" data-year="' + gallery.year + '" data-event="' + gallery.event + '" data-image_name="' + gallery.image_name + '" data-bs-target="#seeThisImage"><div><img src="' + imageSrc + '" alt="Image" style="width:100%"></div></div></div>');
+                  });
+                debugger;
+                updatePagination(data.current_page, data.total_pages);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    });
   });
 
 
@@ -453,6 +568,17 @@ fillFormWithData(image);
       btnEl.classList.remove('btn-scrolled');
     }
   });
+
+  const btn2El = document.querySelector('#eventDropdown');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      btn2El.classList.add('btn-scrolled');
+    } else {
+      btn2El.classList.remove('btn-scrolled');
+    }
+  });
+
 
  
   const headingEl = document.querySelector('.nav-item p h1');
