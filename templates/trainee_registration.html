@@ -331,6 +331,13 @@
                                 <input type="date" class="form-control" id="course_joining_date" name="course_joining_date" required placeholder="Enter your course starting date" autofocus>
                             </div> -->
                             <div class="mb-3">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                            <label for="confirm_password">Confirm Password:</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                            </div>    
+
+                            <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
                             </div>
                         </form>
@@ -338,8 +345,34 @@
             <!-- <form id="registrationForm" method="POST" action="/registration"> -->
             
         <!-- </form> -->
-       
-</script>
+
+               
+        <!-- <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Get the form element
+                var form = document.querySelector("form");
+        
+                // Add submit event listener to the form
+                form.addEventListener("submit", function(event) {
+                    // Prevent the default form submission
+                    event.preventDefault();
+        
+                    // Get the values of password and confirm password fields
+                    var password = document.getElementById("password").value;
+                    var confirm_password = document.getElementById("confirm_password").value;
+        
+                    // Check if passwords match
+                    if (password !== confirm_password) {
+                        alert("Passwords do not match");
+                        return false; // Prevent form submission
+                    }
+        
+                    // If passwords match, submit the form
+                    this.submit();
+                });
+            });
+        </script> -->
+        
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
@@ -390,7 +423,7 @@
         });
     });
 </script> -->
-<script>
+<!-- <script>
     document.getElementById('registrationForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(this);
@@ -416,7 +449,51 @@
             alert('Registration failed! Please try again.');
         });
     });
+</script> -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get the values of password and confirm password fields
+            var password = document.getElementById("password").value;
+            var confirm_password = document.getElementById("confirm_password").value;
+
+            // Check if passwords match
+            if (password !== confirm_password) {
+                alert("Passwords do not match");
+                return false; // Prevent form submission
+            }
+            else{
+                const formData = new FormData(this);
+                fetch('/registration', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Show registration successful alert
+                        alert('Registration successful!');
+                        // Reload the page after a short delay (adjust the delay as needed)
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000); // Refresh after 2 seconds (adjust as needed)
+                    }
+                    else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Registration failed! Please try again.');
+                });
+            }
+            
+        });
+    });
 </script>
+
 
 </body>
 </html>

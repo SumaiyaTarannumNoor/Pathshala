@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
 from urllib.parse import urlparse
 from tld import get_tld
+from flask import request, jsonify
+
 import math
 
 app = Flask(__name__)
@@ -57,11 +59,56 @@ def login_user():
                 return jsonify({'error': error})
     else:
         return jsonify({'error': 'Method not allowed'})
+    
+    
+@app.route('/login_trainee', methods=['POST'])
+def login_trainee():
+    if request.method == 'POST':
+        usermail = request.form.get('usermail')
+        password = request.form.get('pass')  # Encode password to bytes
+
+        with connection.cursor() as cursor:
+            # Retrieve user based on usermail
+            sql = "SELECT * FROM trainees WHERE email = %s"
+            cursor.execute(sql, (usermail,))
+            user = cursor.fetchone()
+
+            if user and password == user['password']:
+                session['loggedin'] = True
+                session['id'] = user['trainee_id']
+                session['email'] = user['email']
+                session['name'] = user['full_name']
+                # Redirect to profile_dashboard route
+                # return redirect(url_for('profile_dashboard'))
+                return jsonify({'redirect': url_for('profile_dashboard')})
+            else:
+                error = "Invalid credentials. Please try again."
+                return jsonify({'error': error})
+    else:
+        return jsonify({'error': 'Method not allowed'})
+
+@app.route('/profile', methods=['GET', 'POST'])
+def get_trainee():
+    if 'loggedin' in session and session['loggedin']:
+        try:
+            with connection.cursor() as cursor:
+                # Retrieve trainee data based on trainee_id
+                trainee_id= session['id']
+                trainee_sql = "SELECT * FROM trainees WHERE trainee_id = %s"
+                cursor.execute(trainee_sql, (trainee_id,))
+                trainee_data = cursor.fetchone()
+                if trainee_data:
+                    # return render_template('profile_dashboard.html', trainee=trainee_data)
+                    return jsonify(trainee_data)
+                else:
+                    return "Trainee not found"
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"})
+    else:
+        return redirect(url_for('index'))
 
 
-from flask import request, jsonify
 
-from flask import request, jsonify
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -159,15 +206,17 @@ def registration():
                     wantTo_trainings.append(other_wantTo_training)        
                        
             wantTo_trainings = ', '.join(wantTo_trainings) 
+            
+            password = request.form.get('password')
 
         # Check for required fields
-            if not ([full_name, email, phone_number, address, educational_level]):
+            if not ([full_name, email, phone_number, address, educational_level, password]):
                 return jsonify({"message": "You must fill up these required fields."}), 400
             
             # Perform database operations
             with connection.cursor() as cursor:
-                trainee_create_sql = "INSERT INTO trainees (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(trainee_create_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings))
+                trainee_create_sql = "INSERT INTO trainees (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(trainee_create_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings, password))
                 connection.commit()
 
             return jsonify({'success': 'Registration successful'}), 200
@@ -1004,6 +1053,7 @@ def gallary_delete():
 
 @app.route('/trainee_list', methods=['GET', 'POST'])
 def get_trainee_list():
+    if 'loggedin' in session and session['loggedin']:
         try:
             with connection.cursor() as cursor:
                 trainee_sql = "SELECT * FROM trainees"
@@ -1012,6 +1062,8 @@ def get_trainee_list():
                 return render_template('trainee_list.html', trainees=trainee_data)
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"})
+    else:
+        return redirect(url_for('admin'))
     
 
 
@@ -1112,6 +1164,7 @@ def get_blogs():
         
 @app.route('/blogs_admin_panel', methods=['GET', 'POST'])
 def get_blogs_admin_panel():
+    if 'loggedin' in session and session['loggedin']:
         try:
             with connection.cursor() as cursor:
                 blog_sql = "SELECT * FROM blogs"
@@ -1119,7 +1172,9 @@ def get_blogs_admin_panel():
                 blog_data = cursor.fetchall()
                 return render_template('blogs_admin_panel.html', blogs=blog_data)
         except Exception as e:
-            return jsonify({'error': f"Request error: {str(e)}"})            
+            return jsonify({'error': f"Request error: {str(e)}"})   
+    else:
+        return redirect(url_for('admin'))             
 
 
 # @app.route('/blog_creation', methods=['GET', 'POST'])
@@ -1267,6 +1322,14 @@ def ahm_profile():
         return redirect(url_for('admin'))
     
 
+@app.route('/profile_dashboard')
+def profile_dashboard():
+    if 'loggedin' in session and session['loggedin']:
+        return render_template('profile_dashboard.html')
+    else:
+        return redirect(url_for('trainee_login'))
+    
+
 @app.route('/ahm_edu_work')
 def ahm_edu_work():
     if 'loggedin' in session and session['loggedin']:
@@ -1311,19 +1374,28 @@ def ahm_show_hide():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('admin')) 
+    return redirect(url_for(' ')) 
 
-@app.route('/trainee_list')
-def trainee_list():
-    if 'loggedin' in session and session['loggedin']:
-        return render_template('trainee_list.html')
-    else:
-        return redirect(url_for('admin'))
+@app.route('/trainee_logout')
+def trainee_logout():
+    session.clear()
+    return redirect(url_for('trainee_login')) 
+
+# @app.route('/trainee_list')
+# def trainee_list():
+#     if 'loggedin' in session and session['loggedin']:
+#         return render_template('trainee_list.html')
+#     else:
+#         return redirect(url_for('admin'))
 
 
 @app.route('/trainee_registration')
 def trainee_registration():
     return render_template('trainee_registration.html')
+
+@app.route('/trainee_login')
+def trainee_login():
+    return render_template('login_trainee.html')
 
 
 @app.route('/blogs')

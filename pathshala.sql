@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2024 at 07:29 AM
+-- Generation Time: Mar 31, 2024 at 10:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -367,35 +367,43 @@ CREATE TABLE `trainees` (
   `organization` varchar(255) DEFAULT NULL,
   `language_proficiency` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `done_trainings` text DEFAULT NULL,
-  `wantTo_trainings` text DEFAULT NULL
+  `wantTo_trainings` text DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `joined_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `trainees`
 --
 
-INSERT INTO `trainees` (`trainee_id`, `full_name`, `email`, `phone_number`, `address`, `skills`, `educational_level`, `institution`, `educational_certificates`, `freelancing_experience`, `portfolio_link`, `availability`, `preferred_work_type`, `hourly_rate`, `certifications`, `linkedIn_profile`, `github_profile`, `course_joining_date`, `organization`, `language_proficiency`, `done_trainings`, `wantTo_trainings`) VALUES
-(4, 'ekoli', 's2@gmail.com', 'wedw', 'dsd', '', 'dsda', 'asd', 'sdasd', '', '', 'sd', NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG', '', NULL, NULL),
-(6, 'ede', 's6@gmail.com', 'wedw', 'dsd', NULL, 'dsda', 'asd', 'sdasd', NULL, NULL, 'sd', NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG', '', NULL, NULL),
-(7, 'Shelly', 'shelly@gmail.com', '402834', 'ty road', '', 'HSc', 'Lalmatia mohila college', 'SSc, HSc', '', 'none', 'none', 'none', 0.00, 'none', 'none', 'none', '2024-02-28', 'TKG', '', NULL, NULL),
-(8, 'Kashif', 'kashif@gmail.com', '9078564', 'Dhanmondi, Dhaka', NULL, 'BSc', 'South East University', 'BSc', '', '', 'Not Available', '', 0.00, '', '', '', '2024-03-06', 'TKG', '', NULL, NULL),
-(9, 'Safa', 'safa@yahoo.com', '453459565406', 'Dhaka', '', 'BSc', NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
-(10, 'Robi', 'robi@yahoo.com', '624343489', 'Dhaka', '', 'BBA', NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', '', '', NULL, NULL),
-(13, 'koli', 'koli@gmail.com', '402834', 'Dhaka', 'designing', 'BSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
-(14, 'Belly', 'belly@gmail.com', '234345546', 'Dhaka', 'Graphic Design', 'BSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
-(15, 'Kash', 'k@yahoo.com', '546576775', 'Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL),
-(16, 'deww', 'gg@gmail.com', '42345345', 'ty road', 'ASDASD', 'HSC', NULL, NULL, '', 'hrhh', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'fdsf', '', NULL, NULL),
-(19, 'fdrfraef', 'g3g@gmail.com', '3534534', 'Dhaka', 'deigning', 'HSC', NULL, NULL, '', 'twt', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', NULL, NULL),
-(20, 'r34err', 'egfrqeg@yahoo.com', 'ff', 'rff', 'freref', 'HSC', NULL, NULL, '', 'ef', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'rewr', 'Arabic', NULL, NULL),
-(21, 'dd', 'fff@gmail.com', '43535', '554654', '', 'HSC', NULL, NULL, '', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"upwork\": \"\", \"freelancer\": \"\", \"toptal\": \"\", \"guru\": \"\", \"other\": \"\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'asddd', '', NULL, NULL),
-(22, 'Sony', 'sony.croft@gmail.com', '232343546', 'Dhanmondi, Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '3-5 years', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"upwork\": \"\", \"freelancer\": \"\", \"toptal\": \"\", \"guru\": \"\", \"other\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', NULL, NULL),
-(23, 'ewrfewrf', 'rfrefg@gmail.com', 'ggg', 'regeg', 'gfg', 'HSC', NULL, NULL, '0-1 year', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"guru\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'regg', 'Bangla', NULL, NULL),
-(24, 'Sakib', 'sakib@gmail.com', '345354654', 'Dhanmondi, Dhaka', 'deigning', 'BSc', NULL, NULL, '1-3 years', '{\"other\": \"https://app.prntscr.com/en/download.html\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'English, Other', NULL, NULL),
-(25, 'tret', 'tger@gmail.com', '567y56756', 'dasdcd', 'yy', 'SSC', NULL, NULL, '3-5 years', '{\"other\": \"https://app.prntscr.com/en/download.html\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'tgre', 'Other', NULL, NULL),
-(26, 'tt', 's56756@gmail.com', 'yhehe', 'tywr', 'asdA', 'HSC', NULL, NULL, '0-1 year', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Hindi', NULL, NULL),
-(27, 'fdfe', 's254@gmail.com', 'ghnhn', 'nghnn', 'mnhn', 'HSC', NULL, NULL, '3-5 years', '{\"guru\": \"nghnthn\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'thnh', 'Bangla', 'Data Entry, hnh', NULL),
-(28, 'yytyrty', 's6546546@gmail.com', 'tj', 'jyj', '', 'HSC', NULL, NULL, '1-3 years', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'yy', '', 'Copywriting, kjjkmj', NULL),
-(29, 'gdfb', 'frewrfe@email.com', 'dvfv', 'fvdfav', 'svav', 'HSC', NULL, NULL, '1-3 years', '{\"upwork\": \"dfvdfv\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'dscsd', 'English', 'vdfv', 'avdvdv');
+INSERT INTO `trainees` (`trainee_id`, `full_name`, `email`, `phone_number`, `address`, `skills`, `educational_level`, `institution`, `educational_certificates`, `freelancing_experience`, `portfolio_link`, `availability`, `preferred_work_type`, `hourly_rate`, `certifications`, `linkedIn_profile`, `github_profile`, `course_joining_date`, `organization`, `language_proficiency`, `done_trainings`, `wantTo_trainings`, `password`, `joined_on`) VALUES
+(4, 'ekoli', 's2@gmail.com', 'wedw', 'dsd', '', 'dsda', 'asd', 'sdasd', '', '', 'sd', NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(6, 'ede', 's6@gmail.com', 'wedw', 'dsd', NULL, 'dsda', 'asd', 'sdasd', NULL, NULL, 'sd', NULL, NULL, NULL, NULL, NULL, '2024-02-07', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(7, 'Shelly', 'shelly@gmail.com', '402834', 'ty road', '', 'HSc', 'Lalmatia mohila college', 'SSc, HSc', '', 'none', 'none', 'none', 0.00, 'none', 'none', 'none', '2024-02-28', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(8, 'Kashif', 'kashif@gmail.com', '9078564', 'Dhanmondi, Dhaka', NULL, 'BSc', 'South East University', 'BSc', '', '', 'Not Available', '', 0.00, '', '', '', '2024-03-06', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(9, 'Safa', 'safa@yahoo.com', '453459565406', 'Dhaka', '', 'BSc', NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(10, 'Robi', 'robi@yahoo.com', '624343489', 'Dhaka', '', 'BBA', NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', '', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(13, 'koli', 'koli@gmail.com', '402834', 'Dhaka', 'designing', 'BSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(14, 'Belly', 'belly@gmail.com', '234345546', 'Dhaka', 'Graphic Design', 'BSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(15, 'Kash', 'k@yahoo.com', '546576775', 'Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '', 'none', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(16, 'deww', 'gg@gmail.com', '42345345', 'ty road', 'ASDASD', 'HSC', NULL, NULL, '', 'hrhh', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'fdsf', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(19, 'fdrfraef', 'g3g@gmail.com', '3534534', 'Dhaka', 'deigning', 'HSC', NULL, NULL, '', 'twt', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', NULL, NULL, '', '2024-03-31 06:06:03'),
+(20, 'r34err', 'egfrqeg@yahoo.com', 'ff', 'rff', 'freref', 'HSC', NULL, NULL, '', 'ef', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'rewr', 'Arabic', NULL, NULL, '', '2024-03-31 06:06:03'),
+(21, 'dd', 'fff@gmail.com', '43535', '554654', '', 'HSC', NULL, NULL, '', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"upwork\": \"\", \"freelancer\": \"\", \"toptal\": \"\", \"guru\": \"\", \"other\": \"\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'asddd', '', NULL, NULL, '', '2024-03-31 06:06:03'),
+(22, 'Sony', 'sony.croft@gmail.com', '232343546', 'Dhanmondi, Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '3-5 years', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"upwork\": \"\", \"freelancer\": \"\", \"toptal\": \"\", \"guru\": \"\", \"other\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', NULL, NULL, '', '2024-03-31 06:06:03'),
+(23, 'ewrfewrf', 'rfrefg@gmail.com', 'ggg', 'regeg', 'gfg', 'HSC', NULL, NULL, '0-1 year', '{\"fiverr\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\", \"guru\": \"https://getbootstrap.com/docs/4.0/utilities/spacing/\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'regg', 'Bangla', NULL, NULL, '', '2024-03-31 06:06:03'),
+(24, 'Sakib', 'sakib@gmail.com', '345354654', 'Dhanmondi, Dhaka', 'deigning', 'BSc', NULL, NULL, '1-3 years', '{\"other\": \"https://app.prntscr.com/en/download.html\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'English, Other', NULL, NULL, '', '2024-03-31 06:06:03'),
+(25, 'tret', 'tger@gmail.com', '567y56756', 'dasdcd', 'yy', 'SSC', NULL, NULL, '3-5 years', '{\"other\": \"https://app.prntscr.com/en/download.html\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'tgre', 'Other', NULL, NULL, '', '2024-03-31 06:06:03'),
+(26, 'tt', 's56756@gmail.com', 'yhehe', 'tywr', 'asdA', 'HSC', NULL, NULL, '0-1 year', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Hindi', NULL, NULL, '', '2024-03-31 06:06:03'),
+(27, 'fdfe', 's254@gmail.com', 'ghnhn', 'nghnn', 'mnhn', 'HSC', NULL, NULL, '3-5 years', '{\"guru\": \"nghnthn\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'thnh', 'Bangla', 'Data Entry, hnh', NULL, '', '2024-03-31 06:06:03'),
+(28, 'yytyrty', 's6546546@gmail.com', 'tj', 'jyj', '', 'HSC', NULL, NULL, '1-3 years', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'yy', '', 'Copywriting, kjjkmj', NULL, '', '2024-03-31 06:06:03'),
+(29, 'gdfb', 'frewrfe@email.com', 'dvfv', 'fvdfav', 'svav', 'HSC', NULL, NULL, '1-3 years', '{\"upwork\": \"dfvdfv\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'dscsd', 'English', 'vdfv', 'avdvdv', '', '2024-03-31 06:06:03'),
+(30, 'koli', 'koli.koli@email.com', '402834', 'Dhanmondi, Dhaka', 'Graphic Design', 'HSC', NULL, NULL, '1-3 years', '{\"upwork\": \"dfqeferf\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, fvfv', 'Copywriting, Data Entry, SEO', 'Copywriting, Data Entry, SEO', '', '2024-03-31 06:06:03'),
+(31, 'wefrf', 'ffefewf@gmail.com', '4', 'dfv', 'ASDASD', 'SSC', NULL, NULL, '0-1 year', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'fdsfdfvd', 'Bangla', '', '', '12345', '2024-03-31 06:06:03'),
+(32, 'fregfe', 'srewrf@gmail.com', '645676', 'Dhaka', 'deigning', 'HSC', NULL, NULL, '0-1 year', '{\"fiverr\": \"v nvbn vbn\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla', '', '', 'weer', '2024-03-31 06:06:03'),
+(33, 'Fluffy', 'fluffy@email.com', '3424355', 'Dhanmondi, Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '1-3 years', '{\"fiverr\": \"ddjsdkc\", \"other\": \"cdscvjhasbdncvlk\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, Japanese', 'Copywriting', 'Copywriting, dwfawdfae', '12345', '2024-03-31 06:06:03'),
+(34, 'Fluffy', 'fluffy1@email.com', '334244534', 'Dhanmondi, Dhaka', '', 'BSc', NULL, NULL, '3-5 years', '{\"fiverr\": \"wfgrwbrgb\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', 'UX/UI Design, gdfgfb', 'UX/UI Design', '12345', '2024-03-31 06:06:03'),
+(35, 'Nihar', 'nihar@gmail.com', '354646', 'Dhanmondi, Dhaka', 'Graphic Design', 'BSc', NULL, NULL, '1-3 years', '{\"fiverr\": \"Fiverr\", \"other\": \"Nothing\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', 'Copywriting, Graphic Design, UX/UI Design', 'Copywriting, Graphic Design, UX/UI Design', 'nihar', '2024-03-31 08:03:05');
 
 --
 -- Indexes for dumped tables
@@ -548,7 +556,7 @@ ALTER TABLE `service_products`
 -- AUTO_INCREMENT for table `trainees`
 --
 ALTER TABLE `trainees`
-  MODIFY `trainee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `trainee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
