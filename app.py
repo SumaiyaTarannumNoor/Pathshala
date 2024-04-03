@@ -1052,7 +1052,7 @@ def gallary_delete():
     
 
 @app.route('/trainee_list', methods=['GET', 'POST'])
-def get_trainee_list():
+def trainee_list():
     if 'loggedin' in session and session['loggedin']:
         try:
             with connection.cursor() as cursor:
@@ -1374,7 +1374,7 @@ def ahm_show_hide():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for(' ')) 
+    return redirect(url_for('admin')) 
 
 @app.route('/trainee_logout')
 def trainee_logout():

@@ -15,7 +15,7 @@
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
       />
   
-      <title>Blogs</title>
+      <title>Profile</title>
   
       <meta name="description" content="" />
       <!-- Favicon -->
@@ -182,18 +182,19 @@
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4>John Doe</h4>
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                      <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <h4 id="user_name_modal"></h4>
+                      <!-- <p class="text-secondary mb-1">Full Stack Developer</p> -->
+                      <p>Lives In  <p class="text-muted font-size-sm" id="address_modal" ></p></p>
+                     
+                      <!-- <button class="btn btn-primary">Follow</button>
+                      <button class="btn btn-outline-primary">Message</button> -->
                     </div>
                   </div>
                 </div>
               </div>
               <div class="card mt-3">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
                     <span class="text-secondary">https://bootdey.com</span>
                   </li>
@@ -212,21 +213,72 @@
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
                     <span class="text-secondary">bootdey</span>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
+              <div class="card mt-3" id="portfolio-links">
+                <ul class="list-group list-group-flush">
+                    <!-- Portfolio links will be dynamically added here -->
+                </ul>
+            </div>
+            <div class="card mt-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h4 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">I would like to</i></h4>
+                  <h4 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"></i>Learn:</h4>
+                  <h6 id="wantTo_trainings_modal"></h6>
+                </div>
+              </div>
+            </div>
+            
+            <script>
+                // Extracted and converted JSON data
+                // var json_data = '{"fiverr":"https://fiverr.com/username","upwork":"https://upwork.com/username","freelancer":"https://freelancer.com/username","toptal":"https://toptal.com/username","guru":"https://guru.com/username","other":"https://example.com"}';
+            
+                function populatePortfolios(json_data) {
+                 
+                // Parse JSON data
+                var portfolio_links = JSON.parse(json_data);
+            
+                // Get the container where portfolio links will be added
+                var portfolioContainer = document.getElementById('portfolio-links');
+            
+                // Loop through the portfolio_links object and create list items
+                for (var platform in portfolio_links) {
+                    if (portfolio_links.hasOwnProperty(platform)) {
+                        var listItem = document.createElement('li');
+                        listItem.className = 'list-group-item d-flex justify-content-between align-items-center flex-wrap';
+            
+                        var platformIcon = document.createElement('h6');
+                        platformIcon.className = 'mb-0';
+                        platformIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' + platform.charAt(0).toUpperCase() + platform.slice(1);
+            
+                        var linkText = document.createElement('span');
+                        linkText.className = 'text-secondary';
+                        linkText.textContent = portfolio_links[platform];
+            
+                        listItem.appendChild(platformIcon);
+                        listItem.appendChild(linkText);
+            
+                        portfolioContainer.querySelector('ul').appendChild(listItem);
+                    }
+                }
+
+              }
+            </script>
+            
             </div>
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Full Name</h6>
+                      <h6 class="mb-0" >Full Name</h6>
                     </div>
                     <div id="user_name_modal" class="col-sm-9 text-secondary">
                       
                     </div>
-                  </div>
+                  </div> -->
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
@@ -255,14 +307,22 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Address</h6>
                     </div>
                     <div id="address_modal" class="col-sm-9 text-secondary">
                      
+                    </div> -->
+                    
+
+                     <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Joined On:</h6>
                     </div>
-                    <p id="joined_on">Joined On: {{ joined_on }}</p>
+                    <div id="joined_on" class="col-sm-9 text-secondary">
+                      
+                    </div>
 
                   </div>
                   <hr>
@@ -278,16 +338,18 @@
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                      <small>Web Design</small>
+                      <h3 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Ski</i>lls</h3>
+                      <h6>Freelancing Skills</h6>
+                      <medium id="skills_modal"></medium>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
-                      <small>Website Markup</small>
+                      <h6>Trainings</h6>
+                      <medium id="done_training_modal"></medium>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
-                      <small>One Page</small>
+                      <!--<small>One Page</small>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
@@ -298,19 +360,25 @@
                       <small>Backend API</small>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                      <small>Web Design</small>
+                      <h3 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Hard</i>Skills</h4>
+                      <h6>Language Proficiency</h6>
+                      <medium id="languages_modal"></medium>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
-                      <small>Website Markup</small>
+                      <h6>Freelancing Experience</h6>
+                      <medium id="experience_modal"></medium>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <!-- <small>Website Markup</small>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
@@ -325,7 +393,7 @@
                       <small>Backend API</small>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -381,7 +449,10 @@
             },
             success: function(data) {
                 // Render the trainee data on the webpage
+                populatePortfolios(data.portfolio_link);
                 fillFormWithData(data);
+
+                
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Error:', errorThrown);
@@ -400,20 +471,54 @@ function fillFormWithData(data) {
         document.getElementById("email_modal").innerText = data.email;
         document.getElementById("phone_number_modal").innerText = data.phone_number;
         document.getElementById("address_modal").innerText = data.address;
-        // document.getElementById("created_at").innerText = data.created_at;
-        // var dateString = document.getElementById("joined_on").innerText;
-        // var created_at_date = new Date(dateString);
-        // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        // var formatted_date = created_at_date.toLocaleDateString('en-UK', options);
-        // document.getElementById("joined_on").innerText = formatted_date;
+        document.getElementById("skills_modal").innerText = data.skills;
+        document.getElementById("languages_modal").innerText = data.language_proficiency;
+        document.getElementById("experience_modal").innerText = data.freelancing_experience;
+        document.getElementById("done_training_modal").innerText = data.done_trainings;
+        document.getElementById("wantTo_trainings_modal").innerText = data.wantTo_trainings;
+        // document.getElementById("joined_modal").innerText = data.joined_on;
+        // var forDate= formatDate(data.joined_on);
 
+        //  document.getElementById("joined_on").innerText=forDate;
+
+        var created_at_date = new Date(data.joined_on);
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var formatted_date = created_at_date.toLocaleDateString('en-UK', options);
+        document.getElementById("joined_on").innerText = formatted_date;
+          
 
         // var image = document.getElementById('image_modal');
         // image.src = '{{ url_for("static", filename="mainassets/images/blog_images/") }}' +data.image;
 
+        
+
     }
 
+    // // Function to format the date
+    // function formatDate(dateString) {
+    //     // Create a Date object from the date string
+    //     let date = new Date(dateString);
+
+    //     // Extract day, month, and year
+    //     let day = date.getDate();
+    //     let month = date.getMonth() + 1; // January is 0, so we add 1
+    //     let year = date.getFullYear();
+
+    //     // Add leading zeros if necessary
+    //     if (day < 10) {
+    //         day = '0' + day;
+    //     }
+    //     if (month < 10) {
+    //         month = '0' + month;
+    //     }
+
+    //     // Format the date as dd-mm-yyyy
+    //     return `${day}-${month}-${year}`;
+    // }
+
     </script>
+
+    
 
     <script>
         const navEl = document.querySelector('.navbar');
@@ -470,29 +575,5 @@ window.addEventListener('scroll', () => {
       });
   });
   </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-            // Get the timestamp data from the HTML
-    var timestampData = document.getElementById("joined_on").innerText;
-
-    // Convert the timestamp string to a JavaScript Date object
-    var joinedDate = new Date(timestampData.replace('', ','));
-
-    // Define options for formatting the date
-    var options = { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-    };
-
-    // Format the date in the desired format
-    var formattedDate = joinedDate.toLocaleDateString('en-US', options);
-
-    // Update the content of the HTML element with the formatted date
-    document.getElementById("joined_on").innerText = "Joined On: " + formattedDate;
-});
-
-  </script>
-
 </body>
 </html>
