@@ -1112,7 +1112,7 @@ def trainee_list():
 @app.route('/trainee_list_edit/<int:trainee_id>', methods=['GET','POST'])
 def trainee_list_edit(trainee_id):
     if request.method == 'POST':
-        trainee_id = request.form.get('trainee_id')
+       
         full_name = request.form.get('full_name')
         email = request.form.get('email')
         organization = request.form.get('organization')
@@ -1121,14 +1121,86 @@ def trainee_list_edit(trainee_id):
         educational_level = request.form.get('educational_level')
         skills = request.form.get('skills')
         freelancing_experience = request.form.get('freelancing_experience')
-        portfolio_link = request.form.get('portfolio_link')
-        language_proficiency = request.form.get('language_proficiency')
+        portfolio_links = {}
+
+        # Extract portfolio links for selected platforms
+        if 'fiverr' in request.form:
+            portfolio_links['fiverr'] = request.form.get('fiverr_link')
+        if 'upwork' in request.form:
+            portfolio_links['upwork'] = request.form.get('upwork_link')
+        if 'freelancer' in request.form:
+            portfolio_links['freelancer'] = request.form.get('freelancer_link')
+        if 'toptal' in request.form:
+            portfolio_links['toptal'] = request.form.get('toptal_link')
+        if 'guru' in request.form:
+            portfolio_links['guru'] = request.form.get('guru_link')
+        if 'other' in request.form:
+            portfolio_links['other'] = request.form.get('other_link')
+
+        # Convert the dictionary to a JSON string
+        json_data = json.dumps(portfolio_links)
+    
+
+        languages = []
+        if 'bangla' in request.form:
+            languages.append('Bangla')
+        if 'english' in request.form:
+            languages.append('English')
+        if 'other_language' in request.form:
+            other_language = request.form.get('other_language')
+            if other_language:
+                languages.append(other_language)
+        # print(languages)
+        # exit()
+        language_proficiency = ', '.join(languages)
+        
+        done_trainings = []
+        if 'copywriting' in request.form:
+            done_trainings.append('Copywriting')
+        if 'digital_marketing' in request.form:
+            done_trainings.append('Digital Marketing')
+        if 'graphic_design' in request.form:
+            done_trainings.append('Graphic Design')  
+        if 'data_entry' in request.form:
+            done_trainings.append('Data Entry')    
+        if 'seo' in request.form:
+            done_trainings.append('SEO')    
+        if 'uxui' in request.form:
+            done_trainings.append('UX/UI Design') 
+        if 'other_done_training' in request.form:
+            other_done_training = request.form.get('other_done_training')
+            if other_done_training:
+                done_trainings.append(other_done_training)        
+                    
+        done_trainings = ', '.join(done_trainings)
+        
+        wantTo_trainings = []
+        if 'copywriting' in request.form:
+            wantTo_trainings.append('Copywriting')
+        if 'digital_marketing' in request.form:
+            wantTo_trainings.append('Digital Marketing')
+        if 'graphic_design' in request.form:
+            wantTo_trainings.append('Graphic Design')  
+        if 'data_entry' in request.form:
+            wantTo_trainings.append('Data Entry')    
+        if 'seo' in request.form:
+            wantTo_trainings.append('SEO')    
+        if 'uxui' in request.form:
+            wantTo_trainings.append('UX/UI Design') 
+        if 'other_wantTo_training' in request.form:
+            other_wantTo_training = request.form.get('other_wantTo_training')
+            if other_wantTo_training:
+                wantTo_trainings.append(other_wantTo_training)        
+                    
+        wantTo_trainings = ', '.join(wantTo_trainings) 
+        
+        password = request.form.get('password')
 
         # Perform database operations
         try:
             with connection.cursor() as cursor:
-                trainee_update_sql = "UPDATE trainees SET full_name=%s, organization=%s, email=%s, phone_number=%s, address=%s, educational_level=%s, skills=%s, freelancing_experience=%s, portfolio_link=%s, language_proficiency=%s WHERE trainee_id = %s"
-                cursor.execute(trainee_update_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, trainee_id))
+                trainee_update_sql = "UPDATE trainees SET full_name = %s, organization = %s, email = %s, phone_number = %s, address = %s, educational_level = %s, skills = %s, freelancing_experience = %s, portfolio_link = %s, language_proficiency = %s, done_trainings = %s, wantTo_trainings = %s, password = %s WHERE trainee_id = %s"
+                cursor.execute(trainee_update_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings, password, trainee_id))
                 connection.commit()
 
             return jsonify({'success': 'Trainee info updated successfully'}), 200
