@@ -1175,17 +1175,17 @@ def trainee_list_edit(trainee_id):
         done_trainings = ', '.join(done_trainings)
         
         wantTo_trainings = []
-        if 'copywriting' in request.form:
+        if 'copywriting_want' in request.form:
             wantTo_trainings.append('Copywriting')
-        if 'digital_marketing' in request.form:
+        if 'digital_marketing_want' in request.form:
             wantTo_trainings.append('Digital Marketing')
-        if 'graphic_design' in request.form:
+        if 'graphic_design_want' in request.form:
             wantTo_trainings.append('Graphic Design')  
-        if 'data_entry' in request.form:
+        if 'data_entry_want' in request.form:
             wantTo_trainings.append('Data Entry')    
-        if 'seo' in request.form:
+        if 'seo_want' in request.form:
             wantTo_trainings.append('SEO')    
-        if 'uxui' in request.form:
+        if 'uxui_want' in request.form:
             wantTo_trainings.append('UX/UI Design') 
         if 'other_wantTo_training' in request.form:
             other_wantTo_training = request.form.get('other_wantTo_training')
@@ -1194,18 +1194,35 @@ def trainee_list_edit(trainee_id):
                     
         wantTo_trainings = ', '.join(wantTo_trainings) 
         
-        password = request.form.get('password')
+        # password = request.form.get('password')
 
         # Perform database operations
         try:
             with connection.cursor() as cursor:
-                trainee_update_sql = "UPDATE trainees SET full_name = %s, organization = %s, email = %s, phone_number = %s, address = %s, educational_level = %s, skills = %s, freelancing_experience = %s, portfolio_link = %s, language_proficiency = %s, done_trainings = %s, wantTo_trainings = %s, password = %s WHERE trainee_id = %s"
-                cursor.execute(trainee_update_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings, password, trainee_id))
+                trainee_update_sql = "UPDATE trainees SET full_name = %s, organization = %s, email = %s, phone_number = %s, address = %s, educational_level = %s, skills = %s, freelancing_experience = %s, portfolio_link = %s, language_proficiency = %s, done_trainings = %s, wantTo_trainings = %s WHERE trainee_id = %s"
+                cursor.execute(trainee_update_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings, trainee_id))
                 connection.commit()
 
             return jsonify({'success': 'Trainee info updated successfully'}), 200
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"}), 500
+        
+@app.route('/trainee_password_edit/<int:trainee_id>', methods=['GET','POST'])
+def trainee_password_edit(trainee_id):
+    if request.method == 'POST':
+        
+        password = request.form.get('password')
+
+        # Perform database operations
+        try:
+            with connection.cursor() as cursor:
+                trainee_update_sql = "UPDATE trainees SET password = %s WHERE trainee_id = %s"
+                cursor.execute(trainee_update_sql, (password, trainee_id))
+                connection.commit()
+
+            return jsonify({'success': 'Trainee password updated successfully'}), 200
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"}), 500        
 
 
 @app.route('/trainee_delete/<int:trainee_id>', methods=['GET','POST'])
