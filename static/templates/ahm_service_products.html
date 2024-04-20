@@ -1,0 +1,620 @@
+{% extends 'layout.html' %}
+{% block title %}AHM Profile - {{ super() }}{% endblock %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">Servies Status</h5>
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#addModal" class="btn btn-sm btn-outline-danger">Add Service</a>
+                </div>
+                <div class="card-body">
+                    <div class="row services_items"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">Products Status</h5>
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#addModal" class="btn btn-sm btn-outline-danger">Add Products</a>
+                </div>
+                <div class="card-body">
+                    <div class="row products_items"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="showModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content show_modal_content"></div>
+    </div>
+</div>
+<div class="modal fade" id="addModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_service_product" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Service/Products Logo</label>
+                        <input class="form-control service_file_input_add" name="service_photo" type="file" id="formFileAdd" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Service/Product Name</label>
+                        <input type="text" class="form-control service_name_input_add" name="service_name" id="basic-default-company">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Service/Product About</label>
+                        <textarea id="basic-default-message" name="service_details" class="form-control service_textarea_input_add"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-light fw-semibold d-block">Category</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" type="radio" name="addcategory" id="inlineRadio1" value="services" checked />
+                            <label class="form-check-label" for="inlineRadio1">Services</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="addcategory" id="inlineRadio2" value="products" />
+                            <label class="form-check-label" for="inlineRadio2">Products</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Your modal and form -->
+<div class="modal fade" id="editModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="update_service" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Service/Products Logo</label>
+                        <input class="form-control service_file_input" name="service_photo" type="file" id="formFileEdit" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Service/Product Name</label>
+                        <input type="text" class="form-control service_name_input" name="service_name" id="basic-default-company">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Service/Product About</label>
+                        <textarea id="basic-default-message" name="service_details" class="form-control service_textarea_input"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-light fw-semibold d-block">Category</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio1" value="services" checked />
+                            <label class="form-check-label" for="inlineRadio1">Services</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="inlineRadio2" value="products" />
+                            <label class="form-check-label" for="inlineRadio2">Products</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content delete_show_modal"></div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    function showFirstTwentyWords(text) {
+        let words = text.split(" ");
+        let firstTwentyWords = words.slice(0, 20).join(" ");
+        return firstTwentyWords;
+    }
+
+    function getCategoryValue() {
+        const categoryInputs = document.getElementsByName('category');
+        for (const input of categoryInputs) {
+            if (input.checked) {
+                return input.value;
+            }
+        }
+        return ''; // Default value if no category is selected
+    }
+
+    function getAddCategoryValue() {
+        const categoryInputs = document.getElementsByName('addcategory');
+        for (const input of categoryInputs) {
+            if (input.checked) {
+                return input.value;
+            }
+        }
+        return ''; // Default value if no category is selected
+    }
+
+    function showServices(){
+        var formData = new FormData();
+        fetch('/all_data', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log(data)
+            if(data.user_profile){
+                document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+            }
+            if(data.service_products && data.service_products.length > 0){
+                let service_count = 0;
+                let products_count = 0;
+                data.service_products.forEach(service => {
+                    if(service.category == 'services'){
+                        console.log(service.title_name)
+                        const col_main_services = document.createElement('div');
+                        col_main_services.className = 'col-lg-4 mb-3';
+
+                        const card_bordered = document.createElement("div");
+                        card_bordered.className = "card h-100 bordered";
+
+                        const image_main_div = document.createElement("div");
+                        image_main_div.className = "position-relative d-flex justify-content-center align-items-center";
+                        image_main_div.style.borderRadius = "7px 7px 0 0";
+                        image_main_div.style.overflow = "hidden";
+                        image_main_div.style.width = "auto";
+                        image_main_div.style.height = "250px";
+
+                        const noResultDivText = document.createElement("img");
+                        noResultDivText.className = "card-img-top w-100";
+                        noResultDivText.style.transform = "scale(1.0)";
+                        noResultDivText.style.height = "auto";
+                        const baseUrl = '/static/mainassets/images/media/'; // Replace with your base URL
+                        noResultDivText.src = baseUrl + service.cover_image;
+
+                        image_main_div.appendChild(noResultDivText);
+
+                        const card_body_services = document.createElement('div');
+                        card_body_services.className = 'card-body';
+
+                        const card_title = document.createElement("h5");
+                        card_title.className = "card-title";
+                        card_title.textContent = service.title_name;
+
+                        const card_text = document.createElement("p");
+                        card_text.className = "card-text";
+                        card_text.textContent = showFirstTwentyWords(service.description);
+
+                        const action_main_div = document.createElement('div');
+                        action_main_div.className = '';
+
+                        const show_action_button = document.createElement('a');
+                        show_action_button.className = 'btn btn-sm btn-outline-primary me-2';
+                        show_action_button.href = 'javascript:void(0);';
+                        show_action_button.setAttribute('data-bs-toggle','modal');
+                        show_action_button.setAttribute('data-bs-target','#showModal');
+                        show_action_button.addEventListener('click', function(){
+                            showData(service);
+                        })
+                        
+                        const show_action_button_icon = document.createElement('i');
+                        show_action_button_icon.className = 'bx bx-show me-1';
+
+                        show_action_button.appendChild(show_action_button_icon);
+
+                        const edit_action_button = document.createElement('a');
+                        edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                        edit_action_button.href = 'javascript:void(0);';
+                        edit_action_button.setAttribute('data-bs-toggle','modal');
+                        edit_action_button.setAttribute('data-bs-target','#editModal');
+                        edit_action_button.addEventListener('click', function(){
+                            editData(service);
+                        })
+                        
+                        const edit_action_button_icon = document.createElement('i');
+                        edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+
+                        edit_action_button.appendChild(edit_action_button_icon);
+
+                        const delete_action_button = document.createElement('a');
+                        delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
+                        delete_action_button.href = 'javascript:void(0);';
+                        delete_action_button.setAttribute('data-bs-toggle','modal');
+                        delete_action_button.setAttribute('data-bs-target','#deleteModal');
+                        delete_action_button.addEventListener('click', function(){
+                            deleteData(service);
+                        })
+                        
+                        const delete_action_button_icon = document.createElement('i');
+                        delete_action_button_icon.className = 'bx bx-trash me-1';
+
+                        delete_action_button.appendChild(delete_action_button_icon);
+
+                        action_main_div.appendChild(show_action_button);
+                        action_main_div.appendChild(edit_action_button);
+                        action_main_div.appendChild(delete_action_button);
+
+                        card_body_services.appendChild(card_title);
+                        card_body_services.appendChild(card_text);
+                        card_body_services.appendChild(action_main_div);
+
+                        card_bordered.appendChild(image_main_div);
+                        card_bordered.appendChild(card_body_services);
+                        col_main_services.appendChild(card_bordered);
+
+                        document.querySelector('.services_items').appendChild(col_main_services);
+                        service_count++
+
+                    }
+                    
+                    if(service.category == 'products'){
+                        
+                        const col_main_products = document.createElement('div');
+                        col_main_products.className = 'col-lg-4 mb-3';
+
+                        const card_bordered = document.createElement("div");
+                        card_bordered.className = "card h-100 bordered";
+
+                        const image_main_div = document.createElement("div");
+                        image_main_div.className = "position-relative d-flex justify-content-center align-items-center";
+                        image_main_div.style.borderRadius = "7px 7px 0 0";
+                        image_main_div.style.overflow = "hidden";
+                        image_main_div.style.width = "auto";
+                        image_main_div.style.height = "250px";
+
+                        const noResultDivText = document.createElement("img");
+                        noResultDivText.className = "card-img-top w-100";
+                        noResultDivText.style.transform = "scale(1.0)";
+                        noResultDivText.style.height = "auto";
+                        const baseUrl = '/static/mainassets/images/media/'; // Replace with your base URL
+                        noResultDivText.src = baseUrl + service.cover_image;
+
+                        image_main_div.appendChild(noResultDivText);
+
+                        const card_body_services = document.createElement('div');
+                        card_body_services.className = 'card-body';
+
+                        const card_title = document.createElement("h5");
+                        card_title.className = "card-title";
+                        card_title.textContent = service.title_name;
+
+                        const card_text = document.createElement("p");
+                        card_text.className = "card-text";
+                        card_text.textContent = showFirstTwentyWords(service.description);
+
+                        const action_main_div = document.createElement('div');
+                        action_main_div.className = '';
+
+                        const show_action_button = document.createElement('a');
+                        show_action_button.className = 'btn btn-sm btn-outline-primary me-2';
+                        show_action_button.href = 'javascript:void(0);';
+                        show_action_button.setAttribute('data-bs-toggle','modal');
+                        show_action_button.setAttribute('data-bs-target','#showModal');
+                        show_action_button.addEventListener('click', function(){
+                            showData(service);
+                        })
+                        
+                        const show_action_button_icon = document.createElement('i');
+                        show_action_button_icon.className = 'bx bx-show me-1';
+
+                        show_action_button.appendChild(show_action_button_icon);
+
+                        const edit_action_button = document.createElement('a');
+                        edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                        edit_action_button.href = 'javascript:void(0);';
+                        edit_action_button.setAttribute('data-bs-toggle','modal');
+                        edit_action_button.setAttribute('data-bs-target','#editModal');
+                        edit_action_button.addEventListener('click', function(){
+                            editData(service);
+                        })
+                        
+                        const edit_action_button_icon = document.createElement('i');
+                        edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+
+                        edit_action_button.appendChild(edit_action_button_icon);
+
+                        const delete_action_button = document.createElement('a');
+                        delete_action_button.className = 'btn btn-sm btn-outline-danger me-2';
+                        delete_action_button.href = 'javascript:void(0);';
+                        delete_action_button.setAttribute('data-bs-toggle','modal');
+                        delete_action_button.setAttribute('data-bs-target','#deleteModal');
+                        delete_action_button.addEventListener('click', function(){
+                            deleteData(service);
+                        })
+                        
+                        const delete_action_button_icon = document.createElement('i');
+                        delete_action_button_icon.className = 'bx bx-trash me-1';
+
+                        delete_action_button.appendChild(delete_action_button_icon);
+
+                        action_main_div.appendChild(show_action_button);
+                        action_main_div.appendChild(edit_action_button);
+                        action_main_div.appendChild(delete_action_button);
+
+                        card_body_services.appendChild(card_title);
+                        card_body_services.appendChild(card_text);
+                        card_body_services.appendChild(action_main_div);
+
+                        card_bordered.appendChild(image_main_div);
+                        card_bordered.appendChild(card_body_services);
+                        col_main_products.appendChild(card_bordered);
+
+                        document.querySelector('.products_items').appendChild(col_main_products);
+                        products_count++
+                    }
+                });
+                
+                if(service_count == 0){
+                    const noResultDiv = document.createElement("div");
+                    noResultDiv.className = "text-center h5 ";
+
+                    const noResultDivIcon = document.createElement("i");
+                    noResultDivIcon.className = "icon icon-close fs-70 text-danger lh-1 my-4 d-inline-block";
+
+                    const noResultDivText = document.createElement("p");
+                    noResultDivText.textContent = "No Content Here";
+                    
+                    noResultDiv.appendChild(noResultDivIcon);
+                    noResultDiv.appendChild(noResultDivText);
+                    document.querySelector('.services_items'). appendChild(noResultDiv);
+                }
+
+                if(products_count == 0){
+                    const noResultDiv = document.createElement("div");
+                    noResultDiv.className = "text-center h5 ";
+
+                    const noResultDivIcon = document.createElement("i");
+                    noResultDivIcon.className = "icon icon-close fs-70 text-danger lh-1 my-4 d-inline-block";
+
+                    const noResultDivText = document.createElement("p");
+                    noResultDivText.textContent = "No Content Here";
+                    
+                    noResultDiv.appendChild(noResultDivIcon);
+                    noResultDiv.appendChild(noResultDivText);
+                    document.querySelector('.products_items'). appendChild(noResultDiv);
+                }
+            }
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch or processing
+            console.error('Error:', error);
+        });
+    }
+    
+    showServices();
+
+    function showData(servicesData){
+        console.log(servicesData);
+        document.querySelector('.show_modal_content').innerHTML='';
+        const modal_header_show = document.createElement('div');
+        modal_header_show.className = 'modal-header';
+
+        const header_and_category = document.createElement("div");
+
+        const modal_title_name = document.createElement("h5");
+        modal_title_name.className = "modal-title";
+        modal_title_name.id = "modalShowLabel";
+        modal_title_name.textContent = servicesData.title_name;
+
+        const modal_category_div = document.createElement("div");
+        modal_category_div.className = "category";
+
+        const modal_category__name = document.createElement("div");
+        modal_category__name.className = "badge bg-primary";
+        modal_category__name.textContent = servicesData.category;
+
+        modal_category_div.appendChild(modal_category__name);
+        header_and_category.appendChild(modal_title_name);
+        header_and_category.appendChild(modal_category_div);
+
+        const modal_close_button = document.createElement('button');
+        modal_close_button.className = 'btn-close';
+        modal_close_button.type = 'button';
+        modal_close_button.setAttribute('data-bs-dismiss','modal');
+        modal_close_button.setAttribute('aria-label','Close');
+
+        modal_header_show.appendChild(header_and_category)
+        modal_header_show.appendChild(modal_close_button)
+
+        const modal_body = document.createElement("div");
+        modal_body.className = "modal-body";
+
+        const modal_image_div = document.createElement("div");
+        modal_image_div.className = "mb-3";
+
+        const baseUrl = '../static/mainassets/images/media/';
+        const modal_image = document.createElement("img");
+        modal_image.className = "";
+        modal_image.style.width = "auto";
+        modal_image.style.maxWidth = "100%";
+        modal_image.src = baseUrl + servicesData.cover_image;
+
+        modal_image_div.appendChild(modal_image);
+
+        const card_text = document.createElement("p");
+        card_text.className = "";
+        card_text.textContent = servicesData.description;
+
+        modal_body.appendChild(modal_image_div);
+        modal_body.appendChild(card_text);
+        document.querySelector('.show_modal_content').appendChild(modal_header_show)
+        document.querySelector('.show_modal_content').appendChild(modal_body)
+    }
+
+    function editData(servicesData) {
+        // Populate input values
+        document.querySelector('.service_name_input').value = servicesData.title_name || '';
+        document.querySelector('.service_textarea_input').value = servicesData.description || '';
+
+        const form = document.getElementById('update_service');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Create FormData object to handle file and additional form data
+            const formData = new FormData(form);
+
+            // Add JSON data to the FormData object
+            const jsonData = {
+            service_id: servicesData.service_product_id,
+            name: document.querySelector('.service_name_input').value,
+            details: document.querySelector('.service_textarea_input').value,
+            category: getCategoryValue() // Replace with your category value
+            // Add other JSON data properties here
+        };
+        formData.append('json_data', JSON.stringify(jsonData));
+        
+        const fileInput = document.getElementById('formFileEdit'); // Replace 'fileInputId' with your file input ID
+        const file = fileInput.files[0]; // Get the first file from the input
+
+        formData.append('file', file);
+
+            fetch('/services_edit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                console.log('Received data from server:', data);
+                // Handle the response data from the server
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    }
+
+    function deleteData(servicesData){
+        console.log(servicesData)
+        document.querySelector('.delete_show_modal').innerHTML = '';
+        const modal_header_show = document.createElement('div');
+        modal_header_show.className = 'modal-header';
+
+        const modal_title_name = document.createElement("h5");
+        modal_title_name.className = "modal-title w-100 text-center";
+        modal_title_name.id = "modalShowLabel";
+        modal_title_name.textContent = servicesData.title_name;
+
+        const modal_close_button = document.createElement('button');
+        modal_close_button.className = 'btn-close';
+        modal_close_button.type = 'button';
+        modal_close_button.setAttribute('data-bs-dismiss','modal');
+        modal_close_button.setAttribute('aria-label','Close');
+
+        modal_header_show.appendChild(modal_title_name);
+        modal_header_show.appendChild(modal_close_button);
+
+        const modal_body = document.createElement("div");
+        modal_body.className = "modal-body";
+
+        const modal_action_div = document.createElement("div");
+        modal_action_div.className = "d-flex justify-content-center align-items-center w-100 mb-3";
+
+        const modal_delete_button = document.createElement("a");
+        modal_delete_button.href = "javascript:void(0)";
+        modal_delete_button.className = "btn btn-sm btn-success mx-2";
+        modal_delete_button.textContent = "Delete";
+        
+        modal_delete_button.addEventListener('click', function(){
+            const deleteFormData = new FormData();
+            deleteFormData.append('id', servicesData.service_product_id);
+            fetch('/services_delete', {
+                method: 'POST',
+                body: deleteFormData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                console.log('Received data from server:', data);
+                if(data.success){
+                    location.reload()
+                }
+                // Handle the response data from the server
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        })
+
+        const modal_cencel_button = document.createElement("a");
+        modal_cencel_button.href = "javascript:void(0)";
+        modal_cencel_button.className = "btn btn-sm btn-danger mx-2";
+        modal_cencel_button.textContent = "Cencel";
+        modal_cencel_button.setAttribute('data-bs-dismiss','modal');
+
+        modal_action_div.appendChild(modal_delete_button);
+        modal_action_div.appendChild(modal_cencel_button);
+        modal_body.appendChild(modal_action_div);
+
+        document.querySelector('.delete_show_modal').appendChild(modal_header_show)
+        document.querySelector('.delete_show_modal').appendChild(modal_body)
+    }
+
+    const addform = document.getElementById('add_service_product');
+    addform.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Create FormData object to handle file and additional form data
+        const formData = new FormData(addform);
+
+        // Add JSON data to the FormData object
+        const jsonData = {
+        name: document.querySelector('.service_name_input_add').value,
+        details: document.querySelector('.service_textarea_input_add').value,
+        category: getAddCategoryValue() // Replace with your category value
+        // Add other JSON data properties here
+    };
+    formData.append('json_data', JSON.stringify(jsonData));
+    
+    const fileInput = document.getElementById('formFileAdd'); // Replace 'fileInputId' with your file input ID
+    const file = fileInput.files[0]; // Get the first file from the input
+
+    formData.append('file', file);
+
+        fetch('/services_add', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log('Received data from server:', data);
+            // Handle the response data from the server
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    });
+})
+</script>
+{% endblock %}
+{% set active_page = 'ahm_service_products' %}

@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sobjanta</title>
+    <!-- favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/sobjanta-favicon.ico') }}" type="image/x-icon" />
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- bootstrap 5 css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- BOX ICONS CSS-->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.4/marked.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="static\style.css" />
+
+    <!-- prism js  -->
+    <!-- <script src="{{ url_for('static', filename='marked.min.js') }}"></script> -->
+    <link href="{{ url_for('static', filename='prism.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='prism.js') }}"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Side-Nav -->
+    <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+      <ul class="nav flex-column text-white w-100">
+        <div class="logo" style="padding: 5px 0 0 20px">
+          <img src="{{ url_for('static', filename='images/logo-wh.png') }}" alt="Sobjanta Logo" style="width: 150px; height: auto" />
+        </div>
+        <li class="nav-link active" id="navLink1">
+          <a href="#" id="newChat"><i class="bx bx-conversation"></i>
+          <span class="mx-2"> New Chat</span></a>
+        </li>
+        
+        <li class="nav-link" id="navLink2">
+          <a href="{{ url_for('realchat') }}" >
+          <i class="bx bxl-graphql"></i>
+            <span class="mx-2">Real Time</span>
+          </a>
+        </li>
+        
+ 
+
+        <li href="#" class="nav-link">
+          <i class="bx bx-body"></i>
+          <span class="mx-2">AI Assistant</span>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button id="dropdown-button" class="dropbtn"><img id="langImg" src="{{ url_for('static', filename='images/usa-fg.png') }}" class="mx-2" /><span id="langName">English</span><i class="bx bx-chevron-down icon-chevron"></i></button>
+            <div class="dropdown-content">
+              <a href="#" onclick="event.preventDefault(); selectOption('English')"><img src="{{ url_for('static', filename='images/usa-fg.png') }}" class="nav-icon mx-2" />English</a>
+              <a href="#" onclick="event.preventDefault(); selectOption('Bengali')"><img src="{{ url_for('static', filename='images/bd-fg.png') }}" class="nav-icon mx-2" />Bengali</a>
+              <a href="#" onclick="event.preventDefault(); selectOption('Japanese')"><img src="{{ url_for('static', filename='images/jp-fg.png') }}" class="nav-icon mx-2" />Japanese</a>
+            </div>
+          </div>
+          <!-- enter button functionality  -->
+          <script>
+            document.addEventListener("keydown", function (event) {
+              if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission if applicable
+                document.getElementById("sendButton").click(); // Trigger click event on the send button
+              }
+            });
+          </script>
+          <script>
+            // Declare a global variable to store the selected menu name
+            var selectedOption = "";
+
+            document.addEventListener("DOMContentLoaded", function () {
+              var dropdowns = document.getElementsByClassName("dropdown");
+              for (var i = 0; i < dropdowns.length; i++) {
+                var dropdown = dropdowns[i];
+                dropdown.addEventListener("click", function () {
+                  this.getElementsByClassName("dropdown-content")[0].classList.toggle("show");
+                });
+              }
+            });
+
+            function selectOption(option) {
+              // Check if the selected menu is different from the last selected menu
+              if (option !== selectedOption) {
+                selectedOption = option; // Store the selected menu name in the variable
+              }
+              console.log("Selected option:", selectedOption);
+              
+              
+              if(selectedOption == "English"){
+                var imgLang = document.getElementById("langImg");
+                imgLang.src="{{ url_for('static', filename='images/usa-fg.png') }}";
+                var dropdownButton = document.getElementById("langName");
+                dropdownButton.textContent = selectedOption; // Append 'Selected option: ' to the option name
+              }
+              else if(selectedOption == "Bengali"){
+                var imgLang = document.getElementById("langImg");
+                imgLang.src="{{ url_for('static', filename='images/bd-fg.png') }}";
+                var dropdownButton = document.getElementById("langName");
+                dropdownButton.textContent = selectedOption; // Append 'Selected option: ' to the option name
+              }if(selectedOption == "Japanese"){
+                var imgLang = document.getElementById("langImg");
+                imgLang.src="{{ url_for('static', filename='images/jp-fg.png') }}";
+                var dropdownButton = document.getElementById("langName");
+                dropdownButton.textContent = selectedOption; // Append 'Selected option: ' to the option name
+              }
+              selectLanguage(selectedOption);
+            }
+          </script>
+        </li>
+      </ul>
+      
+      <div class=" d-flex justify-content-center">
+        <div style="font-size: 20px">
+          <div class="text-center">
+            <a href="javascript:void(0)" id="hear" style="text-decoration: none; color: #fff" onclick="startListening()"
+              ><i class="fas fa-microphone" style="font-size: 60px"></i>
+              <p id="hearing">Turn On</p></a
+            >
+            <div id="transcript"></div>
+          </div>
+
+          <div class="text-center">
+            <a href="javascript:void(0)" id="hear3" style="text-decoration: none; color: #fff" onclick="stopListening()"
+              ><i class="fas fa-microphone-slash" id="micOff" style="font-size: 60px"></i>
+              <p id="hearing2">Turn OFF</p></a>
+          </div>
+        </div>
+      </div>
+      <!--এই JAVASCRIPT কোড কেউ ছুয়েও দেখবা না-->
+      <audio id="audio"></audio>
+      <script>
+        let transcript = "";
+let recognition;
+let language = "English";
+let sentenceList = [];
+let newMessage;
+let isListening = false;
+
+function selectLanguage(option) {
+  language = option;
+  console.log("Selected option:", language);
+}
+
+function scrollToBottom() {
+  messageDisplay.scrollTop = messageDisplay.scrollHeight;
+}
+
+function startListening() {
+  const hearButton = document.getElementById("hear");
+  const hearButton2 = document.getElementById("hear2");
+  const hearingStatus = document.getElementById("hearing");
+  const hearingStatus2 = document.getElementById("messageInput").placeholder = "Listening...";
+  //const transcriptDiv = document.getElementById("transcript");
+
+  hearButton.style.color = "#fb010d";
+  hearButton2.style.color = "#fb010d";
+  hearingStatus.style.color = "#fff";
+  hearingStatus.textContent = "Listening...";
+
+  if (!isListening) {
+    isListening = true;
+    recognition = new webkitSpeechRecognition();
+
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    if (language == "Bengali") {
+      recognition.lang = "bn-BD";
+    } else if (language == "English") {
+      recognition.lang = "en-US";
+    } else if (language == "Japanese") {
+      recognition.lang = "ja-JP";
+    }
+    var newMessage = document.createElement("div");
+    newMessage.classList.add("message");
+    newMessage.style.display = "flex";
+    newMessage.style.padding = "10px";
+    userMessage = document.createElement("span");
+    userMessage.classList.add("content");
+    userMessage.setAttribute('id','tryAgain');
+    recognition.start();
+
+    recognition.onresult = function (event) {
+      let interimTranscript = "";
+      let finalTranscript = "";
+
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript + " ";
+          sentenceList.push(event.results[i][0].transcript); // Add each final sentence to the list
+        } else {
+          interimTranscript += event.results[i][0].transcript;
+        }
+      }
+
+      transcript = finalTranscript + interimTranscript;
+      const words = transcript.split(" ");
+      //transcriptDiv.textContent = words.join(" ");
+
+      //userMessage.textContent =sentenceList.join(words.join(" "));
+      userMessage.textContent = sentenceList.slice(0, -1) + words.join(" ");
+    };
+    console.log(sentenceList);
+
+    userMessage.style.padding = "10px 0 0 10px";
+    var userImg = document.createElement("img");
+    userImg.src = "{{ url_for('static', filename='images/human.gif') }}";
+    userImg.alt = "User";
+    userImg.className = "user-icon";
+    newMessage.appendChild(userImg);
+    newMessage.appendChild(userMessage);
+    messageDisplay.appendChild(newMessage);
+    scrollToBottom();
+  }
+}
+
+function stopListening() {
+  const hearButton = document.getElementById("hear");
+  const hearButton2 = document.getElementById("hear2");
+  const hearButton3 = document.getElementById("hear3");
+  const hearingStatus = document.getElementById("hearing");
+  const hearing2 = document.getElementById("hearing2");
+  const hearingStatus2 = document.getElementById("messageInput").placeholder = "Send Message...";
+  const transcriptDiv = document.getElementById("transcript");
+
+  if (!isListening) {
+    hearing2.textContent = "Click Turn On";
+    hearButton3.style.color = "red";
+    setTimeout(function() {
+      hearing2.textContent = "Turn Off";
+      hearButton3.style.color = "#fff";
+    }, 400);
+    return; // Exit the function if not listening
+  }
+    hearButton.style.color = "#fff";
+    hearingStatus.textContent = "Turn On";
+    hearButton3.style.color = "red";
+    setTimeout(function() {
+      hearButton3.style.color = "#fff";
+    }, 400);
+    const message = sentenceList.join(" ");
+    if(message !== ""){
+    const payload = {
+      message: message,
+      language: language,
+    };
+    fetch("/process_message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        var responseMessage = data.response;
+
+        var chatbotResponse = document.createElement("div");
+        chatbotResponse.id = "limitedContent";
+        chatbotResponse.style.padding = "10px";
+        chatbotResponse.style.marginRight = "10px";
+
+        var limitedContent = document.getElementById("limitedContent");
+        var content = responseMessage;
+
+        function highlightCode(code) {
+          const codeElement = document.getElementById("code");
+          // Wrap brackets with <span> tags having the "bracket" class
+          code = code.replace(/([\[\]{}(),.])/g, '<span class="bracket">$1</span>');
+          code = code.replace(/\b(var|let|const)\b/g, '<span class="variable" style="color:#2e95d3">$1</span>');
+          code = code.replace(/\b(\d+)\b/g, '<span class="number" style="color:#4CAF50">$1</span>');
+          code = code.replace(/\bfunction\b/g, '<span class="function">function</span>');
+
+          return code;
+        }
+
+        /* Display the code as markdown
+          var codeBlock = document.getElementById('codeBlock');
+          codeBlock.innerHTML = html;*/
+
+        // Convert the content to markdown using marked.js
+        var markdown = marked(content);
+        markdown = markdown.replace(/&#39;/g, "'");
+        // Apply code highlighting
+        var highlightedCode = highlightCode(markdown);
+        // Create a <div> element to hold the converted HTML
+        var htmlElement = document.createElement("div");
+        htmlElement.innerHTML = highlightedCode;
+
+        // Append the converted HTML to the chatbotResponse element
+        chatbotResponse.appendChild(htmlElement);
+
+        // Append the chatbotResponse element to the messageDisplay container
+        messageDisplay.appendChild(chatbotResponse);
+        Prism.highlightAll();
+        scrollToBottom();
+        //speakResponse(responseMessage)
+        var chatbotResponseImg = document.createElement("img");
+        chatbotResponseImg.src = "{{ url_for('static', filename='images/ai.gif') }}";
+        chatbotResponseImg.alt = "Chatbot";
+        chatbotResponseImg.className = "user-icon";
+
+        var chatbotMessage = document.createElement("div");
+        chatbotMessage.classList.add("message");
+        chatbotMessage.style.display = "flex";
+        chatbotMessage.style.padding = "10px";
+        chatbotMessage.style.backgroundColor = "#d9d9d994";
+        chatbotMessage.style.borderRadius = "15px";
+
+        var volumeIcon = document.createElement("i");
+        volumeIcon.className = "fa-solid fa-volume-high";
+
+        chatbotMessage.appendChild(chatbotResponseImg);
+        chatbotMessage.appendChild(chatbotResponse);
+        chatbotMessage.appendChild(volumeIcon);
+        messageDisplay.appendChild(chatbotMessage);
+
+
+        var voiceName = "";
+        var languageCode = "";
+
+        if (language === "English") {
+          voiceName = "en-US-Neural2-F";
+          languageCode = "en-US";
+        } else if (language === "Bengali") {
+          voiceName = "bn-IN-Wavenet-A";
+          languageCode = "bn-BD";
+        } else if (language === "Japanese") {
+          voiceName = "ja-JP-Neural2-B";
+          languageCode = "ja-JP";
+        } else {
+          voiceName = "en-US-Neural2-F";
+          languageCode = "en-US";
+        }
+
+        var audioEncoding = "MP3";
+        var url = "https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyA9HrJuGqcAGm5myrQLUdXvJyl_bLtaOWI"; // Replace with your API key
+
+        var request = {
+          "input": {
+            "text": responseMessage
+          },
+          "voice": {
+            "languageCode": languageCode,
+            "name": voiceName
+          },
+          "audioConfig": {
+            "audioEncoding": audioEncoding
+          }
+        };
+        var isSpeaking = false;
+        var previousContent = ""; // Variable to store the previous content
+
+        // Add an event listener to the volumeIcon button
+        volumeIcon.addEventListener("click", function () {
+          var audio = document.getElementById("audio");
+          if (isSpeaking) {
+            audio.pause();
+            isSpeaking = false;
+            volumeIcon.classList.remove("speaking");
+          } else {
+            if (previousContent !== "") {
+              // Set the previous content as the audio source
+              audio.src = "data:audio/" + audioEncoding + ";base64," + previousContent;
+              audio.play();
+              isSpeaking = true;
+              volumeIcon.classList.add("speaking");
+            }
+          }
+        });
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(request)
+        })
+          .then(response => response.json())
+          .then(data => {
+            var audioData = data.audioContent;
+            var audio = document.getElementById("audio");
+            audio.src = "data:audio/" + audioEncoding + ";base64," + audioData;
+            audio.play();
+            volumeIcon.classList.add("speaking");
+
+            audio.addEventListener("ended", function () {
+              isSpeaking = false;
+              volumeIcon.classList.remove("speaking");
+            });
+
+            // Store the current audio content as previous content
+            previousContent = audioData;
+          })
+          .catch(error => {
+            console.log("Error: " + error);
+          });
+
+        scrollToBottom();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    recognition.stop();
+    message.value = "";
+    sentenceList = []; // Reset sentenceList to an empty array
+    transcript = "";
+    isListening = false; // Reset isListening to false
+    }
+    else{
+        var chatbotMessage1 = document.createElement("div");
+        chatbotMessage1.classList.add("message");
+        chatbotMessage1.style.display = "flex";
+        chatbotMessage1.style.padding = "10px";
+        chatbotMessage1.style.backgroundColor = "#d9d9d994";
+        chatbotMessage1.style.borderRadius = "15px";
+        chatbotMessage1.style.marginBottom = "10px";
+
+        var tryMessage = "No Voice Detected.Please Try Again!";
+        var chatbotResponse1 = document.createElement("div");
+        chatbotResponse1.id = "limitedContent";
+        chatbotResponse1.style.padding = "10px";
+        chatbotResponse1.style.marginRight = "10px";
+        chatbotResponse1.textContent = tryMessage ;
+
+        var chatbotResponseImg1 = document.createElement("img");
+        chatbotResponseImg1.src = "{{ url_for('static', filename='images/ai.gif') }}";
+        chatbotResponseImg1.alt = "Chatbot";
+        chatbotResponseImg1.className = "user-icon";
+
+        var volumeIcon1 = document.createElement("i");
+        volumeIcon1.className = "fa-solid fa-volume-high";
+
+        chatbotMessage1.appendChild(chatbotResponseImg1);
+        chatbotMessage1.appendChild(chatbotResponse1);
+        chatbotMessage1.appendChild(volumeIcon1);
+        messageDisplay.appendChild(chatbotMessage1);
+
+
+        var voiceName = "";
+        var languageCode = "";
+
+        if (language === "English") {
+          voiceName = "en-US-Neural2-F";
+          languageCode = "en-US";
+        } else if (language === "Bengali") {
+          voiceName = "bn-IN-Wavenet-A";
+          languageCode = "bn-BD";
+        } else if (language === "Japanese") {
+          voiceName = "ja-JP-Neural2-B";
+          languageCode = "ja-JP";
+        } else {
+          voiceName = "en-US-Neural2-F";
+          languageCode = "en-US";
+        }
+
+        var audioEncoding = "MP3";
+        var url = "https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyA9HrJuGqcAGm5myrQLUdXvJyl_bLtaOWI"; // Replace with your API key
+
+        var request = {
+          "input": {
+            "text": tryMessage
+          },
+          "voice": {
+            "languageCode": languageCode,
+            "name": voiceName
+          },
+          "audioConfig": {
+            "audioEncoding": audioEncoding
+          }
+        };
+        var isSpeaking = false;
+        var previousContent = ""; // Variable to store the previous content
+
+        // Add an event listener to the volumeIcon button
+        volumeIcon1.addEventListener("click", function () {
+          var audio = document.getElementById("audio");
+          if (isSpeaking) {
+            audio.pause();
+            isSpeaking = false;
+            volumeIcon1.classList.remove("speaking");
+          } else {
+            if (previousContent !== "") {
+              // Set the previous content as the audio source
+              audio.src = "data:audio/" + audioEncoding + ";base64," + previousContent;
+              audio.play();
+              isSpeaking = true;
+              volumeIcon1.classList.add("speaking");
+            }
+          }
+        });
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(request)
+        })
+          .then(response => response.json())
+          .then(data => {
+            var audioData = data.audioContent;
+            var audio = document.getElementById("audio");
+            audio.src = "data:audio/" + audioEncoding + ";base64," + audioData;
+            audio.play();
+            volumeIcon1.classList.add("speaking");
+
+            audio.addEventListener("ended", function () {
+              isSpeaking = false;
+              volumeIcon1.classList.remove("speaking");
+            });
+
+            // Store the current audio content as previous content
+            previousContent = audioData;
+          })
+          .catch(error => {
+            console.log("Error: " + error);
+          });
+      
+        recognition.stop();
+        message.value = "";
+        sentenceList = []; // Reset sentenceList to an empty array
+        transcript = "";
+        isListening = false; // Reset isListening to false
+    }
+  }
+
+
+        // Clear the sentence list
+
+        //এই কোড অনেক বিপদজনক কেউ ধরবেন না অনুমতি ছাড়া.
+        /*function createChatbotMessage(message, isResponse) {
+          var messageElement = document.createElement("div");
+          messageElement.classList.add("message");
+
+          if (isResponse) {
+            messageElement.style.textAlign = "left";
+
+            var recognizedText = message.recognizedText;
+            var recognizedTextContent = document.createElement("div");
+            recognizedTextContent.style.display = "flex";
+            recognizedTextContent.style.padding = "10px";
+
+            var recognizedTextContentImg = document.createElement("img");
+            recognizedTextContentImg.className = "user-icon";
+            recognizedTextContentImg.src =
+              "{{ url_for('static', filename='images/human.png') }}";
+            recognizedTextContent.appendChild(recognizedTextContentImg);
+
+            var recognizedTextContentPara = document.createElement("div");
+            recognizedTextContentPara.classList.add("question");
+            recognizedTextContentPara.textContent = recognizedText;
+            recognizedTextContent.appendChild(recognizedTextContentPara);
+
+            messageElement.appendChild(recognizedTextContent);
+
+            var responseMessage = message.responseMessage;
+            var responseMessageContent = document.createElement("div");
+            responseMessageContent.style.display = "flex";
+            responseMessageContent.style.padding = "10px";
+            responseMessageContent.style.backgroundColor =
+              "rgb(217 217 217 / 58%)";
+
+            var responseMessageContentImg = document.createElement("img");
+            responseMessageContentImg.className = "user-icon";
+            responseMessageContentImg.src =
+              "{{ url_for('static', filename='images/ai.png') }}";
+            responseMessageContent.appendChild(responseMessageContentImg);
+
+            var responseMessageContentPara = document.createElement("div");
+            responseMessageContentPara.id = "answer";
+
+            if (responseMessage) {
+              var content = responseMessage;
+
+              function highlightCode(code) {
+                const codeElement = document.getElementById("code");
+                // Wrap brackets with <span> tags having the "bracket" class
+                code = code.replace(
+                  /([\[\]{}(),.])/g,
+                  '<span class="bracket">$1</span>'
+                );
+                code = code.replace(
+                  /\b(var|let|const)\b/g,
+                  '<span class="variable" style="color:#2e95d3">$1</span>'
+                );
+                code = code.replace(
+                  /\b(\d+)\b/g,
+                  '<span class="number" style="color:#4CAF50">$1</span>'
+                );
+                code = code.replace(
+                  /\bfunction\b/g,
+                  '<span class="function">function</span>'
+                );
+                return code;
+              }
+
+              /* Display the code as markdown
+                var codeBlock = document.getElementById('codeBlock');
+                codeBlock.innerHTML = html;*/
+
+        // Convert the content to markdown using marked.js
+        /*var markdown = marked(content);
+              markdown = markdown.replace(/&#39;/g, "'");
+              // Apply code highlighting
+              var highlightedCode = highlightCode(markdown);
+              // Create a <div> element to hold the converted HTML
+              var htmlElement = document.createElement("div");
+              htmlElement.innerHTML = highlightedCode;
+              responseMessageContentPara.appendChild(htmlElement);
+            }
+            responseMessageContent.appendChild(responseMessageContentPara);
+            messageElement.appendChild(responseMessageContent);
+          }
+          return messageElement;
+        }*/
+      </script>
+
+      <span href="#" class="lf-footer d-flex justify-content-between">
+        <a href="#" class="setting"><i class="fas fa-cog text-white"></i> Setting</a>
+
+        <!--It's Dark Mode & Light Mode Switch -->
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="darkSwitch" />
+        </div>
+        <script>
+          var darkSwitch = document.getElementById("darkSwitch");
+
+          window.addEventListener("load", function () {
+            if (darkSwitch) {
+              initTheme();
+              darkSwitch.addEventListener("change", function () {
+                resetTheme();
+              });
+            }
+          });
+
+          function initTheme() {
+            var darkThemeSelected = localStorage.getItem("darkSwitch") !== null && localStorage.getItem("darkSwitch") === "dark";
+            darkSwitch.checked = darkThemeSelected;
+            darkThemeSelected ? document.body.setAttribute("data-theme", "dark") : document.body.removeAttribute("data-theme");
+          }
+          function resetTheme() {
+            if (darkSwitch.checked) {
+              document.body.setAttribute("data-theme", "dark");
+              localStorage.setItem("darkSwitch", "dark");
+            } else {
+              document.body.removeAttribute("data-theme");
+              localStorage.removeItem("darkSwitch");
+            }
+          }
+        </script>
+      </span>
+    </div>
+
+    <!--Side Bar Headng. It's Only Work in Responsive OR Phone-->
+    <div class="offcanvas offcanvas-start" id="demo" style="background-color: #063d40">
+      <div class="offcanvas-header" style="padding-bottom: 0">
+        <img src="{{ url_for('static', filename='images/logo-wh.png') }}" alt="Sobjanta Logo" style="width: 150px; height: auto; padding:0 0 0 15px" />
+        <button type="button" style="background:none;color:#fff;font-size:30px" class="btn-close" data-bs-dismiss="offcanvas"><i class="fa fa-close"></i></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="bx bx-conversation"></i>
+              <span class="mx-2">Chat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/TalkGPT Project/website/templates/signup.html" class="nav-link">
+              <i class="bx bxl-graphql"></i>
+              <span class="mx-2">Real Time</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="bx bx-body"></i>
+              <span class="mx-2">AI Assistant</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <div class="dropdown">
+              <button id="dropdown-button" class="dropbtn">
+                <img id="langImg" src="{{ url_for('static', filename='images/chat.png') }}" class="mx-2" /><span id="selected-language">English</span>
+                <i class="bx bx-chevron-down icon-chevron"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" class="active" onclick="event.preventDefault(); selectOption('English')"> <img src="{{ url_for('static', filename='images/usa-fg.png') }}" class="nav-icon mx-2" />English </a>
+                <a href="#" onclick="event.preventDefault(); selectOption('Bengali')"> <img src="{{ url_for('static', filename='images/bd-fg.png') }}" class="nav-icon mx-2" />Bengali </a>
+                <a href="#" onclick="event.preventDefault(); selectOption('Japanese')"> <img src="{{ url_for('static', filename='images/jp-fg.png') }}" class="nav-icon mx-2" />Japanese </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+
+    <!--<script>
+      var selectedOption = "";
+
+      function selectOption(option) {
+        if (option !== selectedOption) {
+          selectedOption = option;
+          if(selectedOption = "English"){
+            var dropdownButton = document.getElementById("langImg");
+            dropdownButton.src="{{ url_for('static', filename='images/usa-fg.png') }}";
+            var selectedLanguage = document.getElementById("selected-language");
+            selectedLanguage.textContent = selectedOption;
+            selectLanguage(selectedOption);
+          }
+          
+        }
+      }
+    </script>-->
+
+    <div class="container-fluid fixed-bar">
+      <a class="sideMenu" href="#" data-bs-toggle="offcanvas" data-bs-target="#demo"><i class="fas fa-bars"></i></a>
+      <h3 class="text-center">Sobjanta</h3>
+    </div>
+
+    <div class="p-1 my-container active-cont d-flex justify-content-between flex-wrap flex-column">
+      <!--<div id="messageDisplay" class="p-3" style="margin-bottom: 70px">
+      
+    </div>-->
+
+      <!--Here Any Message Send Option From Input Box-->
+      <!-- <div class="fot" style="position: fixed; justify-content: center; align-items: center; width: 100%; bottom: 0; padding-bottom: 20px">
+        <div class="row wrapper">
+          <div class="file-input col-2 col-sm-2 col-md-1">
+            <input type="file" id="attachmentInput" style="display: none; align-items: center" />
+            <label for="attachmentInput" class="btn"><i class="bx bxs-cloud-upload"></i></label>
+          </div>
+          <div class="col-10 col-sm-10 col-md-11">
+            <div class="search-input">
+              <a href="" target="_blank" hidden></a>
+              <input type="text" placeholder="Send Message.." id="messageInput" />
+              <div class="autocom-box"></div>
+              <div class="icon" id="sendButton">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+        <div class="message-container">
+          
+          <div class="d-flex wrapper">
+            <div class="mic2 text-center">
+              <a href="javascript:void(0)" style="text-decoration: none; color: #000" onclick="stopListening()"
+                ><i class="fas fa-microphone-slash" style="font-size: 30px"></i>
+                <p>OFF</p></a>
+            </div>
+            <div class="message-btn input-group mb-3 display" id ="displayForm1" >
+              <div class="generatingData" id="generateText" style="display:none">
+                <div class="generateText">
+                  <p class="fw-bold"><i class="fa fa-cog generateIcon"></i> Generating...</p>
+                </div>
+              </div>
+              <div class="input-group-prepend">
+                <textarea style="overflow:hidden; border-radius: 7px; resize: none;" type="text" class="form-control" placeholder="Send Message.." id="messageInput"></textarea>
+                <div class="icon" id="sendButton">
+                  <i class="fas fa-paper-plane" id="sendIcon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="mic1 text-center">
+              <a href="javascript:void(0)" id="hear2" style="text-decoration: none; color: #000" onclick="startListening()"
+                ><i class="fas fa-microphone" style="font-size: 30px"></i>
+                <p id="hearing2"> On</p></a>
+              <div id="transcript"></div>
+            </div>
+          </div>
+        </div>
+        <script>
+          // Get references to the button and form elements
+        const newChat = document.getElementById('newChat');
+        const showFormButton = document.getElementById('showFormButton');
+
+
+        newChat.addEventListener('click', function() {
+          var navActive = document.getElementById("navLink1");
+          navActive.classList.add("active");
+          var navActive = document.getElementById("navLink2");
+          navActive.classList.remove("active");
+          var displayForm1 = document.getElementById("displayForm1");
+          displayForm1.style.display = "block";
+          var displayForm2 = document.getElementById("displayForm2");
+          displayForm2.style.display = "none";
+          var messageDisplay1 = document.getElementById("messageDisplay");
+          messageDisplay1.style.display = "block";
+          var messageDisplay2 = document.getElementById("messageDisplay2");
+          messageDisplay2.style.display = "none";
+          location.reload();
+        });
+        // Add click event listener to the button
+        showFormButton.addEventListener('click', function() {
+          // Check the current display state of the form
+          location.href="realChat.html";
+
+        });
+        </script>
+        <style>
+          #sendIcon {
+            transition: all 0.3s ease-in-out;
+          }
+          .transition-effect {
+            transform: rotate(-45deg) translate(3em, 0);
+            color: red;
+          }
+        </style>
+  
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const sendButton = document.getElementById("sendButton");
+            const messageInput = document.getElementById("messageInput");
+            const sendIcon = document.getElementById("sendIcon");
+  
+            sendButton.addEventListener("click", addTransitionEffect);
+            messageInput.addEventListener("keydown", (event) => {
+              if (event.key === "Enter") {
+                addTransitionEffect();
+              }
+            });
+  
+            function addTransitionEffect() {
+              sendIcon.classList.add("transition-effect");
+              setTimeout(() => {
+                sendIcon.classList.remove("transition-effect");
+              }, 300);
+            }
+          });
+        </script>       
+
+      <!-- <div class="container message-btn">
+        <form>
+          <input type="text" class="form-control" placeholder="Send Message..." id="messageInput">
+          <div class="icon" id="sendButton"  style="padding-left: 10%; padding-right: 10%;">
+            <i class="fas fa-paper-plane"></i>
+          </div>
+      </div> -->
+
+      
+    <!--<div id="stars3"></div>-->
+      <!--It's Every Message for Question and Talk || Question and Respond-->
+      <div id="messageDisplay" class="text-center">
+        
+        <div style="margin-top: 150px">
+          <img id="logoImage" src="{{ url_for('static', filename='images/logo-bk.png') }}" alt="Sobjanta Logo" style="width: 150px; height: auto" />
+          <p class="text-center">Disclaimer: Sobjanta may occasionally provide information that is not entirely accurate or up to date regarding individuals, locations, or facts. It's important to remember that as an AI language model, its responses are generated based on patterns and information. Since the knowledge cutoff, new developments, discoveries, or changes may have occurred, which could lead to inaccuracies in its responses. Therefore, it's always a good idea to fact-check and verify information from reliable and up-to-date sources to ensure its accuracy.</p>
+        </div>
+      </div>
+      
+      <script>
+        // Check if dark mode is enabled in local storage
+        var darkModeEnabled = localStorage.getItem("darkModeEnabled");
+        var darkSwitch = document.getElementById("darkSwitch");
+        var logoImage = document.getElementById("logoImage");
+        var logoImage2 = document.getElementById("logoImage2");
+
+        // Set the initial state based on the value in local storage
+        if (darkModeEnabled && darkModeEnabled === "true") {
+          darkSwitch.checked = true;
+          logoImage.src = "{{ url_for('static', filename='images/logo-wh.png') }}";
+        }
+
+        // Event listener for checkbox change
+        darkSwitch.addEventListener("change", function () {
+          if (this.checked) {
+            // Enable dark mode and update image source
+            localStorage.setItem("darkModeEnabled", "true");
+            logoImage.src = "{{ url_for('static', filename='images/logo-wh.png') }}";
+          } else {
+            // Disable dark mode and update image source
+            localStorage.setItem("darkModeEnabled", "false");
+            logoImage.src = "{{ url_for('static', filename='images/logo-bk.png') }}";
+          }
+        });
+      </script>
+      <audio id="audio"></audio>
+      <!--এই JAVASCRIPT কোড কেউ ছুয়েও দেখবা না-->
+      <script>
+        var messageInput = document.getElementById("messageInput");
+        var sendButton = document.getElementById("sendButton");
+        var messageDisplay = document.getElementById("messageDisplay");
+        function scrollToBottom() {
+          messageDisplay.scrollTop = messageDisplay.scrollHeight;
+        }
+        //function speakResponse(message) {
+        // var speechMsg = new SpeechSynthesisUtterance(message);
+        // speechSynthesis.speak(speechMsg);
+        //}
+        
+        //User Question Message Catch from Input Box
+        sendButton.addEventListener("click", function () {
+          var message = messageInput.value;
+          if(message.trim() !== ""){
+          messageInput.disabled = true;
+          var generatingText = document.getElementById("generateText");
+          generatingText.style.display = "block";
+          var newMessage = document.createElement("div");
+          newMessage.classList.add("message");
+          newMessage.style.display = "flex";
+          newMessage.style.padding = "10px";
+
+          userMessage = document.createElement("span");
+          userMessage.classList.add("content");
+          userMessage.textContent = message;
+          userMessage.style.padding = "10px 0 0 10px";
+
+          var userImg = document.createElement("img");
+          userImg.src = "{{ url_for('static', filename='images/human.gif') }}";
+          userImg.alt = "User";
+          userImg.className = "user-icon";
+
+
+          newMessage.appendChild(userImg);
+          newMessage.appendChild(userMessage);
+          messageDisplay.appendChild(newMessage);
+          scrollToBottom();
+          const payload = {
+            message: message,
+            language: language,
+          };
+          //Input Message catch from input box and here Respond Message by ChatBot
+          fetch("/process_message", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              messageInput.disabled = false;
+              var generatingText = document.getElementById("generateText");
+              generatingText.style.display = "none";
+              function downloadFile(responseMessage, fileName, fileType) {
+                // Convert responseMessage to a Blob
+                var blob = new Blob([responseMessage], { type: fileType });
+            
+                // Create a temporary anchor element
+                var downloadLink = document.createElement("a");
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = fileName;
+            
+                // Trigger a click event on the anchor element to initiate the download
+                downloadLink.click();
+            
+                // Cleanup: remove the temporary URL and the anchor element
+                URL.revokeObjectURL(downloadLink.href);
+                downloadLink.remove();
+              }
+              var responseMessage = data.response;
+              var chatbotResponse = document.createElement("div");
+              chatbotResponse.id = "limitedContent";
+              chatbotResponse.style.padding = "10px";
+              chatbotResponse.style.marginRight = "10px";
+
+              var limitedContent = document.getElementById("limitedContent");
+              var content = responseMessage;
+
+              function highlightCode(code) {
+                const codeElement = document.getElementById("code");
+                // Wrap brackets with <span> tags having the "bracket" class
+                //code = code.replace(/([\[\]{}(),.])/g, '<span class="bracket">$1</span>');
+                code = code.replace(/\b(var|let|const)\b/g, '<span class="variable" style="color:#2e95d3">$1</span>');
+                code = code.replace(/\b(\d+)\b/g, '<span class="number" style="color:#4CAF50">$1</span>');
+                code = code.replace(/\bfunction\b/g, '<span class="function">function</span>');
+
+                return code;
+              }
+
+              /* Display the code as markdown
+              var codeBlock = document.getElementById('codeBlock');
+              codeBlock.innerHTML = html;*/
+
+              // Convert the content to markdown using marked.js
+              var markdown = marked(content);
+              markdown = markdown.replace(/&#39;/g, "'");
+              // Apply code highlighting
+              var highlightedCode = highlightCode(markdown);
+              // Create a <div> element to hold the converted HTML
+              var htmlElement = document.createElement("div");
+              htmlElement.innerHTML = highlightedCode;
+
+              // Append the converted HTML to the chatbotResponse element
+              chatbotResponse.appendChild(htmlElement);
+
+              // Append the chatbotResponse element to the messageDisplay container
+              messageDisplay.appendChild(chatbotResponse);
+              Prism.highlightAll();
+              scrollToBottom();
+              //speakResponse(responseMessage)
+              var chatbotResponseImg = document.createElement("img");
+              chatbotResponseImg.src = "{{ url_for('static', filename='images/ai.gif') }}";
+              chatbotResponseImg.alt = "Chatbot";
+              chatbotResponseImg.className = "user-icon";
+
+              var chatbotMessage = document.createElement("div");
+              chatbotMessage.classList.add("message");
+              chatbotMessage.style.display = "flex";
+              chatbotMessage.style.padding = "10px";
+              chatbotMessage.style.backgroundColor = "#d9d9d994";
+              chatbotMessage.style.borderRadius = "15px";
+              
+              var dropup = document.createElement("div");
+              dropup.className = "dropup";
+
+              var dropDownBtn = document.createElement("i");
+              dropDownBtn.className = "fa fa-download";
+              dropDownBtn.style.padding = "0 10px";
+              dropDownBtn.style.fontSize = "15px";
+
+              var dropmenu = document.createElement("ul");
+              dropmenu.className = "dropdown-menu dropdown-menu-right";
+              dropmenu.style.display = "none"; // Hide the menu initially
+
+              var dropLiWord = document.createElement("li");
+              var dropHrefWord = document.createElement("a");
+              dropHrefWord.href = "#";
+              var wordIcon = document.createElement("i");
+              wordIcon.className = "fa fa-file-pdf text-danger";
+              wordIcon.style.padding = "0 5px 0 0";
+              var wordIconText = document.createElement("span");
+              wordIconText.textContent = "PDF";
+
+
+              var dropLiPdf = document.createElement("li");
+              var dropHrefPdf = document.createElement("a");
+              dropHrefPdf.href = "#";
+              var pdfIcon = document.createElement("i");
+              pdfIcon.className = "fa fa-file-word text-primary";
+              pdfIcon.style.padding = "0 5px 0 0";
+              var pdfIconText = document.createElement("span");
+              pdfIconText.textContent = "Word";
+
+              dropmenu.appendChild(dropLiWord);
+              dropmenu.appendChild(dropLiPdf);
+              dropHrefWord.appendChild(wordIcon);
+              dropHrefWord.appendChild(wordIconText);
+              dropLiWord.appendChild(dropHrefWord);
+              dropHrefPdf.appendChild(pdfIcon);
+              dropHrefPdf.appendChild(pdfIconText);
+              dropLiPdf.appendChild(dropHrefPdf);
+
+              // Function to toggle the dropdown menu visibility
+              function toggleDropdown() {
+                dropmenu.style.display = dropmenu.style.display === "block" ? "none" : "block";
+              }
+
+              // Function to handle PDF button click
+              function handlePDFClick() {
+                console.log("PDF button clicked!");
+                downloadFile(responseMessage, "chatbot_response.pdf", "application/pdf");
+                // Add your code here to handle the PDF button click
+              }
+
+              // Function to handle Word button click
+              function handleWordClick() {
+                console.log("Word button clicked!");
+                downloadFile(responseMessage, "chatbot_response.doc", "application/msword");
+                // Add your code here to handle the Word button click
+              }
+
+              dropDownBtn.addEventListener("click", toggleDropdown);
+              dropHrefWord.addEventListener("click", function(event) {
+                event.stopPropagation();
+                handlePDFClick();
+              });
+              dropHrefPdf.addEventListener("click", function(event) {
+                event.stopPropagation();
+                handleWordClick();
+              });
+
+              dropup.appendChild(dropDownBtn);
+              dropup.appendChild(dropmenu);
+
+              // Append the dropup element to your desired container in the DOM
+              // Example: document.body.appendChild(dropup);
+
+
+              var volumeIcon = document.createElement("i");
+              volumeIcon.className = "fa-solid fa-volume-high";
+
+              chatbotMessage.appendChild(chatbotResponseImg);
+              chatbotMessage.appendChild(chatbotResponse);
+              chatbotMessage.appendChild(dropup);
+              chatbotMessage.appendChild(volumeIcon);
+              messageDisplay.appendChild(chatbotMessage);
+
+
+              var voiceName = "";
+              var languageCode = "";
+
+              if (language === "English") {
+                voiceName = "en-US-Neural2-F";
+                languageCode = "en-US";
+              } else if (language === "Bengali") {
+                voiceName = "bn-IN-Wavenet-A";
+                languageCode = "bn-BD";
+              } else if (language === "Japanese") {
+                voiceName = "ja-JP-Neural2-B";
+                languageCode = "ja-JP";
+                
+              }
+              else{
+                voiceName = "en-US-Neural2-F";
+                languageCode = "en-US";
+              }
+
+              var audioEncoding = "MP3";
+              var url = "https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyA9HrJuGqcAGm5myrQLUdXvJyl_bLtaOWI"; // Replace with your API key
+
+              var request = {
+                "input": {
+                  "text": responseMessage
+                },
+                "voice": {
+                  "languageCode": languageCode,
+                  "name": voiceName
+              },
+                "audioConfig": {
+                  "audioEncoding": audioEncoding
+                }
+              };
+              var isSpeaking = false;
+              var previousContent = ""; // Variable to store the previous content
+
+              // Add an event listener to the volumeIcon button
+              volumeIcon.addEventListener("click", function() {
+              var audio = document.getElementById("audio");
+              if (isSpeaking) {
+                audio.pause();
+                isSpeaking = false;
+                volumeIcon.classList.remove("speaking");
+              } else {
+                if (previousContent !== "") {
+                  // Set the previous content as the audio source
+                  audio.src = "data:audio/" + audioEncoding + ";base64," + previousContent;
+                  audio.play();
+                  isSpeaking = true;
+                  volumeIcon.classList.add("speaking");
+                }
+              }
+              });
+
+              fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(request)
+              })
+              .then(response => response.json())
+              .then(data => {
+                var audioData = data.audioContent;
+                var audio = document.getElementById("audio");
+                audio.src = "data:audio/" + audioEncoding + ";base64," + audioData;
+                audio.play();
+                volumeIcon.classList.add("speaking");
+                
+                audio.addEventListener("ended", function() {
+                  isSpeaking = false;
+                  volumeIcon.classList.remove("speaking");
+                });
+
+                // Store the current audio content as previous content
+                previousContent = audioData;
+              })
+              .catch(error => {
+              console.log("Error: " + error);
+              });
+
+
+              
+              scrollToBottom();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+
+          messageInput.value = "";
+          }
+          else{
+            var fileInputError = messageInput.classList.add("filePlaceholder");
+            fileInputError = document.getElementById("messageInput").placeholder ="Please Write Something...";
+            messageInput.style.border="2px solid red";
+
+            setTimeout(function() {
+              messageInput.placeholder = "Send Message...";
+              messageInput.style.border = "none";
+              messageInput.classList.remove("filePlaceholder");
+            }, 2000);
+          }
+        });
+      </script>
+    </div>
+    <!-- bootstrap js -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+  </body>
+</html>

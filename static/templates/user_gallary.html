@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+    <html
+    lang="en"
+    class="light-style customizer-hide"
+    dir="ltr"
+    data-theme="theme-default"
+    data-assets-path="../assets/"
+    data-template="vertical-menu-template-free"
+  >
+    <head>
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+      />
+  
+      <title>Gallery</title>
+  
+      <meta name="description" content="" />
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/img/favicon/favicon.ico') }}" />
+      <!-- Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
+  
+      <!-- Icons. Uncomment required icon fonts -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/pages/page-auth.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/fonts/boxicons.css') }}" />
+      <!-- Core CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/demo.css') }}" />
+      <!-- Vendors CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+      <!-- Page CSS -->
+      <!-- Helpers -->
+      <script src="{{ url_for('static', filename='assets/vendor/js/helpers.js') }}"></script>
+      <script src="{{ url_for('static', filename='assets/js/config.js') }}"></script>
+      <!-- Page CSS -->
+      <!-- Page -->
+  
+    </head>
+    <style>
+       
+    .logo a:hover {
+
+    border-bottom: 1px solid #fff; /* Add underline on hover */
+    color: #000; /* Change text color on hover */
+    }
+
+    .card-form{
+        width: 500px;
+    }
+
+    .form-group{
+        margin: 16px;
+    }
+    
+    .space{
+        margin: 40px;
+    }
+    
+    .card-body {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .app-brand {
+        text-align: center; /* Center the content */
+        margin-bottom: 10px; /* Adjust margin for smaller screens */
+    }
+
+    .logo {
+        text-align: center; /* Center the content */
+    }
+
+    .logo img {
+        height: 80px; /* Adjust image height for smaller screens */
+        width: 100px; /* Ensure image width scales accordingly */
+    }
+
+    .btn-primary {
+        width: 100%; /* Make the button full width */
+        margin-top: 10px; /* Add some margin to separate from other elements */
+    }
+
+    .scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: #6c5ffc;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  font-size: 20px;
+  display: none; /* Hide initially */
+}
+
+.scroll-to-top:hover {
+  background-color: #5c51da;
+}
+
+.navbar-scrolled{
+      background-image: linear-gradient(90deg, #6c5ffc, #ffffff);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-scrolled{
+      background-color: #ffffff;
+      color: #6c5ffc;
+    }
+
+    .heading-scrolled{
+      color: #ffffff;
+    }
+
+    </style>
+
+<style>
+  .thumbnail {
+    cursor: pointer;
+  }
+  .thumbnail img {
+    transition: transform 0.3s ease; /* Apply transition effect */
+  }
+
+  .thumbnail:hover img {
+    transform: scale(1.1); /* Zoom effect */
+  }
+
+  @media(min-width: 1200px) {
+        {
+          .container{
+            margin-top: 10px;
+          }
+        }
+      };
+</style>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://freelancingpathshala.com/" title="Go back to home page"> <span class="logo">
+       
+            <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}" alt="Logo" style="height: 100px; width: auto;">
+        
+    </span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          
+          <li class="nav-item">
+            <a href="{{ url_for('user_gallary') }}" title="Go back to main gallery">
+              <!-- <p style="display: flex;align-self: center;"><h1 style="color: #0c0c1a; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 2.5px 1px #292e4a;">Gallery!</h1></p> -->
+              <p style="display: flex;align-self: center;"><h1 style="color: #fff; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 4px 2px #6c5ffc">Gallery!</h1></p>
+          </a>
+            
+          </li>
+         
+        </ul>
+      </div>
+    <div class="dropdown" style="width: 300px">
+      <button class="btn btn-primary dropdown-toggle" type="submit" id="yearDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        See Image Based on Year
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="yearDropdown">
+        <li><a class="dropdown-item" href="#" data-year="2019">2019</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2020">2020</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2021">2021</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2022">2022</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2023">2023</a></li>
+        <li><a class="dropdown-item" href="#" data-year="2024">2024</a></li>
+      </ul>
+      <button class="btn btn-primary dropdown-toggle" type="submit" id="eventDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        See Image Based on Event
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="eventDropdown">
+        <li><a class="dropdown-item" href="#">Basis</a></li>
+        <li><a class="dropdown-item" href="#">Techknowgram</a></li>
+        <li><a class="dropdown-item" href="#">Bacco</a></li>
+      </ul>
+    </div>
+    <div class="dropdown" style="margin: 10px;">
+      
+    </div>
+  </nav>
+   <!-- <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Add click event listener to dropdown items
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedYear = this.dataset.year;
+            fetch('/user_gallery_by_year', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({year: selectedYear})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                // Handle the response, e.g., update the gallery with new data
+                console.log(data);
+                updatePagination(data.current_page, response.total_pages);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    });
+});
+
+
+   </script> -->
+    
+
+    <div class="card" style="background-image: linear-gradient(90deg, #ffffff, #d2eaf5)">
+    <div class="card-body">
+    <div class="bg-image-landing section header_5_id" >
+    <div class="container" style="padding-bottom: 40px; padding-top: 20px;">
+    <!-- <div class="table"> -->
+      <div class="container" style="padding-bottom: 40px; padding-top: 20px; margin-top: 100px;"></div>
+      <h2 style="color:#6c5ffc; font-style: bold; font-weight: 700; font-size: 40px; margin-left: 200px; margin-bottom: 40px;">Enjoy the sneak picks to celebrate our memories!</h2>
+        
+      <div class="container">
+          
+          <div class="row" id="image-gallery">
+
+            {% for gallery in gallaries %}
+              <div class="col-md-4">
+                  <div class="thumbnail" style="width: 18rem; margin: 16px;" data-gallery-id="{{ gallery.g_p_id }}" data-bs-toggle="modal" data-image_title="{{ gallery.image_title }}" data-image_short_details="{{ gallery.image_short_details }}" data-year="{{ gallery.year }}" data-event="{{ gallery.event }}" data-image_name="{{ gallery.image_name }}" data-bs-toggle="modal" data-bs-target="#seeThisImage">
+                      <div>
+                          <img src="{{ url_for('static', filename='mainassets/images/media/' + gallery.image_name) }}" alt="Image" style="width:100%">
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+
+
+           
+          </div>
+          
+
+          <div class="row" id="pagination-container" style="margin-top: 40px;">
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                  <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                      <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                      </a>
+                  </li>
+                  {% for page in range(1, total_pages + 1) %}
+                  <li class="page-item {% if page == current_page %}active{% endif %}">
+                      <a class="page-link" href="#">{{ page }}</a>
+                  </li>
+                  {% endfor %}
+                  <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                      <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                      </a>
+                  </li>
+              </ul>
+          </nav>
+          
+          </div>
+        
+        </div>
+    </div>
+        </div>
+    </div>
+   
+    <div class="modal fade" id="seeThisImage" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none; margin: 20px 0" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" style="width: 600px;">
+          <div class="modal-content show_modal_content" style="background-image: linear-gradient(90deg, #ffffff, #99d5f1)">
+              <div class="modal-header">
+                  <!-- <h5 class="modal-title" id="modalToggleLabel">Image</h5> -->
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="" method="POST" action="/user_gallery">
+                  <!-- <div class="mb-3">
+                    <label class="form-label" for="image_id_input_update">Image No.</label>
+                    
+                    <p id="image_id_input_update" style="color:#000; font-family: sans-serif">
+
+                    </p>
+                </div> -->
+                      <img src="" style="height:auto; width:90%; padding-left: 100px ;" id="image_modal" />
+                      <div class="mb-3">
+                          <label class="form-label" for="image_title_input_update">Image Title</label>
+                          <!-- <input type="text" class="form-control writers_name_input_update" name="writers_name" id="writers_name_modal"> -->
+                          <p id="image_title_modal" style="color: #6c5ffc; font-size: 400;">
+
+                          </p>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label" for="image_short_details_input_update">Image Short Details</label>
+                          <!-- <input type="text" class="form-control topic_input_update" name="topic" id="topic_modal"> -->
+                          <p id="image_short_details_modal" style="color:#000; font-family: sans-serif">
+
+                          </p>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label" for="year_input_update">Year</label>
+                          <!-- <input type="email" class="form-control blog_headline_input_update" name="blog_headline" id="blog_headline_modal"> -->
+                          <p id="year_modal" style="color:#000; font-family: sans-serif">
+
+                          </p>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label" for="event_input_update">Event</label>
+                          <!-- <input type="text" class="form-control created_at_input_update" name="created_at" id="created_at"> -->
+                          <p id="event_modal" style="color:#000; font-family: sans-serif">
+
+                          </p>
+                      </div>
+
+                      <!-- <img src="" style="height: auto; width: 100%" id="image_modal" /> -->
+                      
+                                            
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+    <button>
+      <a href="#" class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+      </a>
+      </button>
+      
+</div>
+</div>
+</div>
+
+        
+            
+
+            <!-- </div> -->
+</script>
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+<script>
+  $(document).ready(function() {
+
+    $('#image-gallery').on('click', '.thumbnail', function() {
+    var galleryId = $(this).data('gallery-id');
+    var image_title = $(this).data('image_title');
+    var image_short_details = $(this).data('image_short_details');
+    var year = $(this).data('year');
+    var event = $(this).data('event');
+    var image_name = $(this).data('image_name');
+    openModalPag(galleryId, image_title, image_short_details, year, event, image_name);
+});
+      // Function to load data for a specific page via AJAX
+      function loadData(page) {
+          var yearValue= "";
+         
+          selectedYear= $("#yearDropdown").text();
+          debugger;
+
+          if (selectedYear.trim()=="See Image Based on Year") {
+            yearValue= "";
+          } else {
+            yearValue= selectedYear;
+          }
+
+          $.ajax({
+              url: '/user_gallary_pagination',
+              type: 'GET',
+              data: { page: page, selected_year: yearValue },
+              success: function(response) {
+                  // Update the gallery content with the loaded data
+                  $('#image-gallery').empty();
+                  $.each(response.galleries, function(index, gallery) {
+                      var imageSrc = '{{ url_for("static", filename="mainassets/images/media/") }}' + gallery.image_name;
+                      $('#image-gallery').append('<div class="col-md-4"><div class="thumbnail" style="width: 18rem; margin: 16px;" data-gallery-id="' + gallery.g_p_id + '" data-bs-toggle="modal" data-image_title="' + gallery.image_title + '" data-image_short_details="' + gallery.image_short_details + '" data-year="' + gallery.year + '" data-event="' + gallery.event + '" data-image_name="' + gallery.image_name + '" data-bs-target="#seeThisImage"><div><img src="' + imageSrc + '" alt="Image" style="width:100%"></div></div></div>');
+                  });
+                  // Update pagination links
+                  updatePagination(response.page, response.total_pages);
+              },
+              error: function(xhr, status, error) {
+                  console.error('Error loading data:', error);
+              }
+          });
+      }
+
+      // Function to update pagination links
+      function updatePagination(currentPage, totalPages) {
+          debugger;
+          var paginationHtml = '';
+          paginationHtml += '<nav aria-label="Page navigation">';
+          paginationHtml += '<ul class="pagination justify-content-center">';
+          paginationHtml += '<li class="page-item ' + (currentPage == 1 ? 'disabled' : '') + '">';
+          paginationHtml += '<a class="page-link" href="#" aria-label="Previous">';
+          paginationHtml += '<span aria-hidden="true">&laquo;</span>';
+          paginationHtml += '</a></li>';
+          for (var page = 1; page <= totalPages; page++) {
+              paginationHtml += '<li class="page-item ' + (page == currentPage ? 'active' : '') + '">';
+              paginationHtml += '<a class="page-link" href="#">' + page + '</a></li>';
+          }
+          paginationHtml += '<li class="page-item ' + (currentPage == totalPages ? 'disabled' : '') + '">';
+          paginationHtml += '<a class="page-link" href="#" aria-label="Next">';
+          paginationHtml += '<span aria-hidden="true">&raquo;</span>';
+          paginationHtml += '</a></li></ul></nav>';
+
+          // Update the pagination HTML
+          $('#pagination-container').html(paginationHtml);
+      }
+
+      // Function to handle pagination clicks
+      $(document).on('click', '.pagination a.page-link', function(e) {
+          e.preventDefault();
+          // Get the page number from the link
+          var page = $(this).text();
+          // Load data for the selected page
+          loadData(page);
+      });
+
+      // Initially load data for the first page
+      // loadData(1);
+
+      //for filtering event handler
+      const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedYear = this.dataset.year;
+            $("#yearDropdown").text(selectedYear);
+            fetch('/user_gallery_by_year', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({year: selectedYear})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle the response, e.g., update the gallery with new data
+                // console.log(data);
+                debugger;
+                console.log("gelleries data", data);
+                // Update the gallery content with the loaded data
+                // Update the gallery content with the loaded data
+                $('#image-gallery').empty();
+                  $.each(data.galleries, function(index, gallery) {
+                      var imageSrc = '{{ url_for("static", filename="mainassets/images/media/") }}' + gallery.image_name;
+                      $('#image-gallery').append('<div class="col-md-4"><div class="thumbnail" style="width: 18rem; margin: 16px;" data-gallery-id="' + gallery.g_p_id + '" data-bs-toggle="modal" data-image_title="' + gallery.image_title + '" data-image_short_details="' + gallery.image_short_details + '" data-year="' + gallery.year + '" data-event="' + gallery.event + '" data-image_name="' + gallery.image_name + '" data-bs-target="#seeThisImage"><div><img src="' + imageSrc + '" alt="Image" style="width:100%"></div></div></div>');
+                  });
+                debugger;
+                updatePagination(data.current_page, data.total_pages);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    });
+  });
+
+
+  function fillFormWithData(data) {
+
+            debugger;
+           
+        
+            // document.getElementById("image_id_input_update").innerText = data.g_p_id ;
+            document.getElementById("image_title_modal").innerText = data.image_title;
+            document.getElementById("image_short_details_modal").innerText = data.image_short_details;
+            document.getElementById("year_modal").innerText = data.year;
+            document.getElementById("event_modal").innerText = data.event;
+            // document.getElementById("image_modal").innerText = data.image_name;
+            // Get the image element by its id
+            var image = document.getElementById('image_modal');
+
+            // Set the image source
+            image.src = '{{ url_for("static", filename="mainassets/images/media/") }}' +data.image_name;
+        }
+
+
+
+
+  function openModalPag(galleryId, image_title, image_short_details, year, event, image_name) {
+
+    debugger;
+
+
+
+
+
+
+
+var image= {
+  g_p_id: galleryId,
+  image_title: image_title,
+  image_short_details: image_short_details,
+  year: year,
+  event: event,
+  image_name: image_name
+};
+
+console.log(image);
+
+// Call the function to fill the form with JSON data
+fillFormWithData(image);
+
+}
+
+
+</script>
+
+<script>
+  const navEl = document.querySelector('.navbar');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      navEl.classList.add('navbar-scrolled');
+    } else {
+      navEl.classList.remove('navbar-scrolled');
+    }
+  });
+
+
+  const btnEl = document.querySelector('.btn.btn-primary');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      btnEl.classList.add('btn-scrolled');
+    } else {
+      btnEl.classList.remove('btn-scrolled');
+    }
+  });
+
+  const btn2El = document.querySelector('#eventDropdown');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      btn2El.classList.add('btn-scrolled');
+    } else {
+      btn2El.classList.remove('btn-scrolled');
+    }
+  });
+
+
+ 
+  const headingEl = document.querySelector('.nav-item p h1');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      headingEl.classList.add('heading-scrolled');
+    } else {
+      headingEl.classList.remove('heading-scrolled');
+    }
+  });
+
+
+</script>
+
+
+
+</body>
+</html>

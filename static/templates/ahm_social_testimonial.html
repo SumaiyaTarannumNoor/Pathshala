@@ -1,0 +1,706 @@
+{% extends 'layout.html' %}
+{% block title %}AHM Profile - {{ super() }}{% endblock %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center w-100">
+                    <h5 class="m-0">Social Links</h5>
+                    <a class="btn btn-sm btn-outline-primary" data-bs-toggle='modal' data-bs-target='#addSocialModal'>Add Social</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Show</th>
+                                    <th>Social Name</th>
+                                    <th>Social Links</th>
+                                    <th>Created Date</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="social_table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center w-100">
+                    <h5 class="m-0">Working Status</h5>
+                    <a class="btn btn-sm btn-outline-primary" data-bs-toggle='modal' data-bs-target='#addTestModal'>Add Testimonial</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Testimonial</th>
+                                    <th>Reviwer Name</th>
+                                    <th>Reviewer Photo</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="test_table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addSocialModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Add Social Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_social" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Social Link</label>
+                        <input type="text" class="form-control social_link_input_add" name="social_link" id="basic-default-company" required >
+                    </div>
+                    <div class="col-md mb-3">
+                        <small class="text-light fw-semibold d-block">Show</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" name="show_social" type="checkbox" id="inlineCheckbox1" value="1" checked />
+                            <label class="form-check-label" for="inlineCheckbox1">Show Or Not</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Insert</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addTestModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_test" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Reviewer Name</label>
+                        <input type="text" class="form-control reviewer_name_add" name="social_name" id="basic-default-company">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Reviewer Images</label>
+                        <input class="form-control reviwer_file_input" name="file_photo" type="file" id="formFileAuthorPhoto" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Testimonial Text</label>
+                        <textarea id="basic-default-message" name="testimonial" class="form-control testimonial_text_add" required></textarea>                    
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="showModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content show_modal_content">
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center">Show Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h5 class="modal-title" id="edu_work_title"></h5>
+                    <p  class=""  id="edu_work_position"></p>
+                    <p class="badge bg-label-primary me-1" id="edu_work_title_time"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editTestModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="update_test" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-company-name">Reviewer Name</label>
+                        <input type="text" class="form-control reviewer_name_input_update" name="social_name" id="basic-default-company">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="service-logo">Reviewer Images</label>
+                        <input class="form-control reviwer_file_input_update" name="file_photo" type="file" id="formFileAuthorUpdate" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Testimonial Text</label>
+                        <textarea id="basic-default-message" name="testimonial" class="form-control testimonial_text" required></textarea>                    
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editSocialModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Edit Social Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="update_social" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-message">Social Link</label>
+                        <input type="text" class="form-control social_link_input_update" name="social_link" id="basic-default-company">                    
+                    </div>
+                    <div class="col-md mb-3">
+                        <small class="text-light fw-semibold d-block">Show</small>
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" name="update_show_social" type="checkbox" id="inlineCheckbox1" value="1" />
+                            <label class="form-check-label" for="inlineCheckbox1">Show Or Not</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content delete_show_modal"></div>
+    </div>
+
+<script>
+
+    function displayMonthYear(dateString) {
+        const date = new Date(dateString);
+        if (isNaN(date)) {
+            return "Present";
+        }
+        const options = { year: 'numeric', month: 'short' };
+        return date.toLocaleDateString('en-US', options);
+    }
+    function showEducation(){
+        var formData = new FormData();
+        fetch('/all_data', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if(data.user_profile){
+                document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+            }
+            console.log(data);
+            const edu_table = document.querySelector('.social_table');
+            const work_table = document.querySelector('.test_table');
+            data.social_media.forEach(socialItems => {
+                // Create elements
+                const tr = document.createElement('tr');
+
+                const tdshow = document.createElement('td');
+                tdshow.className = 'text-center'
+
+                if(socialItems.social_show === 1){
+                    const showicon = document.createElement('i');
+                    showicon.style.fontSize = "12px";
+                    showicon.className = "bx bxs-circle text-success me-2";
+                    tdshow.appendChild(showicon);
+                }
+                else{
+                    const showicon = document.createElement('i');
+                    showicon.style.fontSize = "12px";
+                    showicon.className = "bx bxs-circle text-danger me-2";
+                    tdshow.appendChild(showicon);
+                }
+
+                const td1 = document.createElement('td');
+
+                const strong = document.createElement('strong');
+                strong.textContent = socialItems.social_name;
+
+                const td2 = document.createElement('td');
+                td2.textContent = socialItems.social_link;
+
+                const td3 = document.createElement('td');
+
+                const span = document.createElement('span');
+                span.className = 'badge bg-label-primary me-1';
+                span.textContent = socialItems.created_at;
+
+                const td4 = document.createElement('td');
+
+                const div = document.createElement('div');
+                div.className = 'd-flex justify-content-center w-100';
+
+                const a1 = document.createElement('a');
+                a1.href = 'javascript:void(0);';
+                a1.className = '';
+                a1.setAttribute('data-bs-toggle','modal');
+                a1.setAttribute('data-bs-target','#showModal');
+                a1.addEventListener('click', function(){
+                    showData(socialItems);
+                })
+
+                const a2 = document.createElement('a');
+                a2.href = 'javascript:void(0);';
+                a2.className = '';
+                a2.setAttribute('data-bs-toggle','modal');
+                a2.setAttribute('data-bs-target','#editSocialModal');
+                a2.addEventListener('click', function(){
+                    editSocialData(socialItems);
+                })
+
+                const a3 = document.createElement('a');
+                a3.href = 'javascript:void(0);';
+                a3.className = '';
+                a3.setAttribute('data-bs-toggle','modal');
+                a3.setAttribute('data-bs-target','#deleteModal');
+                a3.addEventListener('click', function(){
+                    deleteSocialData(socialItems);
+                })
+
+                const i1 = document.createElement('i');
+                i1.className = 'bx bx-show me-1';
+
+                const i2 = document.createElement('i');
+                i2.className = 'bx bx-edit-alt me-1';
+
+                const i3 = document.createElement('i');
+                i3.className = 'bx bx-trash me-1';
+
+                td1.appendChild(strong);
+                td3.appendChild(span);
+                a1.appendChild(i1);
+                a2.appendChild(i2);
+                a3.appendChild(i3);
+
+                div.appendChild(a1);
+                div.appendChild(a2);
+                div.appendChild(a3);
+                td4.appendChild(div);
+
+                // Append elements to the row
+                tr.appendChild(tdshow);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+
+                edu_table.appendChild(tr);
+            });
+
+            data.testimonial.forEach(testimonialItems => {
+                // Create elements
+                const tr = document.createElement('tr');
+
+                const td1 = document.createElement('td');
+                td1.style.whiteSpace = 'break-word !important';
+                td1.style.width = '30% !important';
+
+                const strong = document.createElement('strong');
+                strong.textContent = testimonialItems.testimonial_details;
+
+                const td2 = document.createElement('td');
+                td2.textContent = testimonialItems.testimonial_name;
+
+                const td3 = document.createElement('td');
+
+                const avatar_image_div = document.createElement("div");
+                avatar_image_div.className = "d-flex justify-content-center align-items-center";
+
+                const avatar_div = document.createElement('div');
+                avatar_div.className = 'avatar';
+                
+                const avatar_image = document.createElement('img');
+                avatar_image.className = 'rounded-circle';
+                const baseUrl = 'static/images/avatars/';// Replace with your base URL
+                avatar_image.src = baseUrl + testimonialItems.testimonial_photo;
+
+                avatar_div.appendChild(avatar_image);
+                avatar_image_div.appendChild(avatar_div);
+                
+
+                const td4 = document.createElement('td');
+
+                const div = document.createElement('div');
+                div.className = 'd-flex justify-content-center w-100';
+
+                const a1 = document.createElement('a');
+                a1.href = 'javascript:void(0);';
+                a1.className = '';
+                a1.setAttribute('data-bs-toggle','modal');
+                a1.setAttribute('data-bs-target','#showModal');
+                a1.addEventListener('click', function(){
+                    showData(testimonialItems);
+                })
+
+                const a2 = document.createElement('a');
+                a2.href = 'javascript:void(0);';
+                a2.className = '';
+                a2.setAttribute('data-bs-toggle','modal');
+                a2.setAttribute('data-bs-target','#editTestModal');
+                a2.addEventListener('click', function(){
+                    editTestModal(testimonialItems);
+                })
+
+                const a3 = document.createElement('a');
+                a3.href = 'javascript:void(0);';
+                a3.className = '';
+                a3.setAttribute('data-bs-toggle','modal');
+                a3.setAttribute('data-bs-target','#deleteModal');
+                a3.addEventListener('click', function(){
+                    deleteTestData(testimonialItems);
+                })
+
+                const i1 = document.createElement('i');
+                i1.className = 'bx bx-show me-1';
+
+                const i2 = document.createElement('i');
+                i2.className = 'bx bx-edit-alt me-1';
+
+                const i3 = document.createElement('i');
+                i3.className = 'bx bx-trash me-1';
+
+                td1.appendChild(strong);
+                td3.appendChild(avatar_image_div);
+                a1.appendChild(i1);
+                a2.appendChild(i2);
+                a3.appendChild(i3);
+
+                div.appendChild(a1);
+                div.appendChild(a2);
+                div.appendChild(a3);
+                td4.appendChild(div);
+
+                // Append elements to the row
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+
+                work_table.appendChild(tr);
+            });
+        })
+    }
+    showEducation();
+
+    function showData(socialData){
+        document.getElementById('edu_work_title').textContent = socialData.social_name;
+        document.getElementById('edu_work_position').textContent = socialData.social_link;
+        document.getElementById('edu_work_title_time').textContent = socialData.created_at;
+    }
+
+    function editSocialData(socialData){
+        document.querySelector('.social_link_input_update').value = socialData.social_link || '';
+
+        const showSocialCheckbox = document.querySelector('input[name="update_show_social"]');
+        if (socialData.social_show === 1) {
+            showSocialCheckbox.checked = true;
+        } else {
+            showSocialCheckbox.checked = false;
+        }
+
+        const form = document.getElementById('update_social');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const checkboxes = document.querySelectorAll('input[name^="update_show_social"]');
+            const showNotValues = {};
+
+            checkboxes.forEach(checkbox => {
+                const name = checkbox.name.replace('update_show_', ''); // Extract the variable name
+                showNotValues[name] = checkbox.checked ? checkbox.value : '0';
+            });
+            const jsonData = {
+                id: socialData.social_id,
+                link: document.querySelector('.social_link_input_update').value,
+                show: showNotValues,
+            };
+            formData.append('json_data', JSON.stringify(jsonData));
+
+            fetch('/social_update', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if(data.success){
+                    location.reload();
+                }
+                console.log('Received data from server:', data);
+                // Handle the response data from the server
+            })
+        })
+    } 
+    
+    function editTestModal(socialData){
+        document.querySelector('.reviewer_name_input_update').value = socialData.testimonial_name || '';
+        document.querySelector('.testimonial_text').value = socialData.testimonial_details || '';
+
+        const formTestUpdate = document.getElementById('update_test');
+        formTestUpdate.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Create FormData object to handle file and additional form data
+            const updateFormData = new FormData(formTestUpdate);
+            const fileInput = document.getElementById('formFileAuthorUpdate');
+
+            // Add the file to the FormData object if a file is selected
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                updateFormData.append('file_photo', file);
+            }
+
+            // Add JSON data to the FormData object
+            const jsonData = {
+                id: socialData.social_id ,
+                name: document.querySelector('.reviewer_name_input_update').value,
+                testimonial: document.querySelector('.testimonial_text').value,
+            };
+            updateFormData.append('json_data', JSON.stringify(jsonData));
+
+            fetch('/test_update', {
+                method: 'POST',
+                body: updateFormData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if(data.success){
+                    location.reload();
+                }
+                console.log('Received data from server:', data);
+                // Handle the response data from the server
+            })
+        })
+    }
+
+    function deleteSocialData(socialData){
+        document.querySelector('.delete_show_modal').innerHTML = '';
+        const modal_header_show = document.createElement('div');
+        modal_header_show.className = 'modal-header';
+
+        const modal_title_name = document.createElement("h5");
+        modal_title_name.className = "modal-title w-100 text-center";
+        modal_title_name.id = "modalShowLabel";
+        modal_title_name.textContent = socialData.social_name +' Link';
+
+        const modal_close_button = document.createElement('button');
+        modal_close_button.className = 'btn-close';
+        modal_close_button.type = 'button';
+        modal_close_button.setAttribute('data-bs-dismiss','modal');
+        modal_close_button.setAttribute('aria-label','Close');
+
+        modal_header_show.appendChild(modal_title_name);
+        modal_header_show.appendChild(modal_close_button);
+
+        const modal_body = document.createElement("div");
+        modal_body.className = "modal-body";
+
+        const modal_action_div = document.createElement("div");
+        modal_action_div.className = "d-flex justify-content-center align-items-center w-100 mb-3";
+
+        const modal_delete_button = document.createElement("a");
+        modal_delete_button.href = "javascript:void(0)";
+        modal_delete_button.className = "btn btn-sm btn-success mx-2";
+        modal_delete_button.textContent = "Delete";
+
+        modal_delete_button.addEventListener('click', function(){
+            const deleteFormData = new FormData();
+            deleteFormData.append('deleted_id', socialData.social_id);
+            fetch('/social_delete', {
+                method: 'POST',
+                body: deleteFormData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if(data.success){
+                    location.reload()
+                }
+                console.log('Received data from server:', data);
+                // Handle the response data from the server
+            })
+        })
+
+        const modal_cencel_button = document.createElement("a");
+        modal_cencel_button.href = "javascript:void(0)";
+        modal_cencel_button.className = "btn btn-sm btn-danger mx-2";
+        modal_cencel_button.textContent = "Cencel";
+        modal_cencel_button.setAttribute('data-bs-dismiss','modal');
+
+        modal_action_div.appendChild(modal_delete_button);
+        modal_action_div.appendChild(modal_cencel_button);
+        modal_body.appendChild(modal_action_div);
+
+        document.querySelector('.delete_show_modal').appendChild(modal_header_show)
+        document.querySelector('.delete_show_modal').appendChild(modal_body)
+    }
+
+    function deleteTestData(socialData){
+        document.querySelector('.delete_show_modal').innerHTML = '';
+        const modal_header_show = document.createElement('div');
+        modal_header_show.className = 'modal-header';
+
+        const modal_title_name = document.createElement("h5");
+        modal_title_name.className = "modal-title w-100 text-center";
+        modal_title_name.id = "modalShowLabel";
+        modal_title_name.textContent = socialData.testimonial_name +' Testimonial';
+
+        const modal_close_button = document.createElement('button');
+        modal_close_button.className = 'btn-close';
+        modal_close_button.type = 'button';
+        modal_close_button.setAttribute('data-bs-dismiss','modal');
+        modal_close_button.setAttribute('aria-label','Close');
+
+        modal_header_show.appendChild(modal_title_name);
+        modal_header_show.appendChild(modal_close_button);
+
+        const modal_body = document.createElement("div");
+        modal_body.className = "modal-body";
+
+        const modal_action_div = document.createElement("div");
+        modal_action_div.className = "d-flex justify-content-center align-items-center w-100 mb-3";
+
+        const modal_delete_button = document.createElement("a");
+        modal_delete_button.href = "javascript:void(0)";
+        modal_delete_button.className = "btn btn-sm btn-success mx-2";
+        modal_delete_button.textContent = "Delete";
+
+        modal_delete_button.addEventListener('click', function(){
+            const deleteTestFormData = new FormData();
+            deleteTestFormData.append('deleted_id', socialData.testimonial_id);
+            fetch('/test_delete', {
+                method: 'POST',
+                body: deleteTestFormData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if(data.success){
+                    location.reload()
+                }
+                console.log('Received data from server:', data);
+                // Handle the response data from the server
+            })
+        })
+
+        const modal_cencel_button = document.createElement("a");
+        modal_cencel_button.href = "javascript:void(0)";
+        modal_cencel_button.className = "btn btn-sm btn-danger mx-2";
+        modal_cencel_button.textContent = "Cencel";
+        modal_cencel_button.setAttribute('data-bs-dismiss','modal');
+
+        modal_action_div.appendChild(modal_delete_button);
+        modal_action_div.appendChild(modal_cencel_button);
+        modal_body.appendChild(modal_action_div);
+
+        document.querySelector('.delete_show_modal').appendChild(modal_header_show)
+        document.querySelector('.delete_show_modal').appendChild(modal_body)
+    }
+    
+    const addsocialform = document.getElementById('add_social');
+    addsocialform.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const addSocialFormData = new FormData(addsocialform);
+        const checkboxes = document.querySelectorAll('input[name^="show_social"]');
+        const showNotValues = {};
+        checkboxes.forEach(checkbox => {
+            const name = checkbox.name.replace('show_', '');
+            showNotValues[name] = checkbox.checked ? checkbox.value : '0';
+        });
+        const jsonData = {
+            link: document.querySelector('.social_link_input_add').value,
+            show: showNotValues,
+        };
+        addSocialFormData.append('json_data', JSON.stringify(jsonData));
+        fetch('/social_add', {
+            method: 'POST',
+            body: addSocialFormData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if(data.success){
+                location.reload();
+            }
+            console.log('Received data from server:', data);
+            // Handle the response data from the server
+        })
+    })
+    const addtestform = document.getElementById('add_test');
+    addtestform.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const addTestFormData = new FormData(addtestform);
+        const fileInput = document.getElementById('formFileAuthorPhoto');
+
+        // Add the file to the FormData object if a file is selected
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            addTestFormData.append('file_photo', file);
+        }
+        const jsonData = {
+            name: document.querySelector('.reviewer_name_add').value,
+            testimonial: document.querySelector('.testimonial_text_add').value,
+        };
+        addTestFormData.append('json_data', JSON.stringify(jsonData));
+        fetch('/test_add', {
+            method: 'POST',
+            body: addTestFormData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if(data.success){
+                location.reload();
+            }
+            console.log('Received data from server:', data);
+            // Handle the response data from the server
+        })
+    })
+
+</script>
+{% endblock %}
+{% set active_page = 'ahm_social' %}

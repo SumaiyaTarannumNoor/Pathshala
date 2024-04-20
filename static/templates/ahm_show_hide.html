@@ -1,0 +1,199 @@
+{% extends 'layout.html' %} {% block title %}Ahmedul Show Hide - {{ super() }}{%
+endblock %} {% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div
+          class="card-header d-flex justify-content-between align-items-center w-100"
+        >
+          <h5 class="m-0">Section Hide and Show</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive text-nowrap">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Section Name</th>
+                  <th>Status</th>
+                  <th>Updated Date</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="social_table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="editSocialModal"
+  aria-labelledby="modalToggleLabel"
+  tabindex="-1"
+  style="display: none"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalToggleLabel">Edit Form</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="update_show_hide" method="POST">
+          <div class="mb-3">
+            <label class="form-label" for="basic-company-name"
+              >Section Name</label
+            >
+            <input
+              type="text"
+              class="form-control social_name_input_update"
+              name="social_name"
+              id="basic-default-company"
+            />
+          </div>
+          <div class="form-check form-switch mb-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="flexSwitchCheckChecked"
+            />
+            <label class="form-check-label" for="flexSwitchCheckChecked"
+              >Show or Hide</label
+            >
+          </div>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+<script>
+  function showEducation() {
+    var formData = new FormData();
+    fetch("/all_data", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.user_profile) {
+          document.querySelector(".header_image").src =
+            "../static/mainassets/images/logos/" + data.user_profile.logo;
+        }
+        const edu_table = document.querySelector(".social_table");
+        data.hide_show_data.forEach((socialItems) => {
+          // Create elements
+          const tr = document.createElement("tr");
+
+          const td1 = document.createElement("td");
+
+          const strong = document.createElement("strong");
+          strong.textContent = socialItems.name;
+
+          const td2 = document.createElement("td");
+          if (socialItems.status === 1) {
+            td2.textContent = "Show";
+          } else {
+            td2.textContent = "Hide";
+          }
+
+          const td3 = document.createElement("td");
+
+          const span = document.createElement("span");
+          span.className = "badge bg-label-primary me-1";
+          span.textContent = socialItems.update_at;
+
+          const td4 = document.createElement("td");
+
+          const div = document.createElement("div");
+          div.className = "d-flex justify-content-center w-100";
+
+          const a2 = document.createElement("a");
+          a2.href = "javascript:void(0);";
+          a2.className = "";
+          a2.setAttribute("data-bs-toggle", "modal");
+          a2.setAttribute("data-bs-target", "#editSocialModal");
+          a2.addEventListener("click", function () {
+            updateData(socialItems);
+          });
+
+          const i2 = document.createElement("i");
+          i2.className = "bx bx-edit-alt me-1";
+
+          td1.appendChild(strong);
+          td3.appendChild(span);
+          a2.appendChild(i2);
+          div.appendChild(a2);
+          td4.appendChild(div);
+
+          // Append elements to the row
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          tr.appendChild(td3);
+          tr.appendChild(td4);
+
+          edu_table.appendChild(tr);
+        });
+      });
+  }
+  showEducation();
+
+  function updateData(socialItems) {
+    const checkboxUpdate = document.getElementById("flexSwitchCheckChecked");
+    checkboxUpdate.checked = socialItems.status === 1;
+
+    document.querySelector(".social_name_input_update").value =
+      socialItems.name;
+    const service_grid_update = document.getElementById("update_show_hide");
+    service_grid_update.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const serviceFormData = new FormData(service_grid_update);
+      const checkbox = document.getElementById("flexSwitchCheckChecked");
+      const checkboxValue = checkbox.checked ? 1 : 0;
+      console.log(checkboxValue);
+
+      const jsonData = {
+        id: socialItems.id,
+        name: document.querySelector(".social_name_input_update").value,
+        status: checkboxValue,
+      };
+      serviceFormData.append("json_data", JSON.stringify(jsonData));
+
+      fetch("/show_hide_update", {
+        method: "POST",
+        body: serviceFormData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
+        })
+        .then((data) => {
+          if (data.success) {
+            location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+        });
+    });
+  }
+</script>
+{% endblock %} {% set active_page = 'ahm_show_hide' %}

@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- META DATA -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Freelancing Pathshala" />
+    <meta name="author" content="Spruko Technologies Private Limited" />
+    <meta
+      name="keywords"
+      content="ahmedul, akm, ahmedulislambabu, babu, basis, bacco"
+    />
+
+    <!-- FAVICON -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='assets/img/favicon/favicon.ico')}}"
+    />
+
+    <!-- TITLE -->
+    <title>Freelancing Pathshala</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link
+      id="style"
+      href="{{ url_for('static', filename='mainassets/plugins/bootstrap/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- STYLE CSS -->
+    <link
+      href="{{ url_for('static', filename='mainassets/css/style.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Plugins CSS -->
+    <link
+      href="{{ url_for('static', filename='mainassets/css/plugins.css') }}"
+      rel="stylesheet"
+    />
+
+    <!--- FONT-ICONS CSS -->
+    <link
+      href="{{ url_for('static', filename='mainassets/css/icons.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- INTERNAL Switcher css -->
+    <link
+      href="{{ url_for('static', filename='mainassets/switcher/css/switcher.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='mainassets/switcher/demo.css') }}"
+      rel="stylesheet"
+    />
+    <style>
+      .about-me__text {
+        column-width: 360px;
+        column-count: 2;
+        column-gap: 64px;
+      }
+
+      .large-12,
+      .large-full {
+        max-width: 100%;
+        flex: 0 0 100%;
+      }
+
+      /* Slideshow container */
+      .slideshow-container {
+        /*position: absolute;*/
+        width: 414px;
+        top: -217px;
+        /* right: 0px; */
+        height: 485px;
+        box-sizing: content-box;
+        margin: 10px;
+        /* height: 250px; */
+        /* width: 350px; */
+        overflow: hidden;
+        display: inline-block;
+        color: white;
+        /* position: relative; */
+        background-color: white;
+      }
+
+      .mySlides {
+        display: block;
+        /* width: 560px; */
+        height: auto;
+        height: auto;
+        /* width: 443px; */
+        transform: scale(1);
+      }
+
+      /* Fading animation */
+      .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0.4;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      .container {
+        overflow: hidden;
+      }
+
+      .container .slider {
+        animation: slidein 30s linear infinite;
+        white-space: nowrap;
+      }
+
+      .container .slider .logos {
+        width: 100%;
+        display: inline-block;
+        margin: 0px 0;
+      }
+
+      .container .slider .logos img {
+        margin: 10px;
+        animation: fade-in 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+      }
+
+      @keyframes slidein {
+        from {
+          transform: translate3d(0, 0, 0);
+        }
+
+        to {
+          transform: translate3d(-100%, 0, 0);
+        }
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .profile_outer_img_class {
+        height: 510px;
+      }
+
+      .profile_inner_img_class {
+        height: auto;
+        width: 350px;
+        transform: scale(1);
+        transition: transform 0.4s ease;
+      }
+      
+      @media(min-width: 1200px) {
+        {
+          padding-left: 25px; 
+          color:#23272b;
+        }
+      }
+
+    </style>
+  </head>
+
+  <body class="app ltr landing-page horizontal">
+    <!-- 
+    <div id="global-loader">
+        <img src="mainassets/images/loader.svg" class="loader-img" alt="Loader">
+    </div>
+     -->
+
+    <!-- PAGE -->
+    <div class="page">
+      <div class="page-main">
+        <!-- app-Header -->
+        <div class="hor-header header">
+          <div class="container main-container">
+            <div class="d-flex justify-content-between">
+              <!-- sidebar-toggle-->
+
+              <a class="logo-horizontal" href="{{url_for('index')}}">
+                <img
+                  class="header-brand-img desktop-logo"
+                  alt="logo"
+                  width="150px"
+                />
+                <img
+                  class="header-brand-img dark-logo"
+                  alt="logo"
+                  width="150px"
+                />
+              </a>
+              <div>
+                <a
+                  aria-label="Hide Sidebar"
+                  class="app-sidebar__toggle"
+                  data-bs-toggle="sidebar"
+                  href="javascript:void(0)"
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /app-Header -->
+        <div class="landing-top-header overflow-hidden">
+          <div class="top sticky">
+            <!--APP-SIDEBAR-->
+            <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+            <div class="app-sidebar bg-transparent horizontal-main">
+              <div class="container">
+                <div class="row">
+                  <div class="main-sidemenu navbar px-0">
+                    <a
+                      class="navbar-brand ps-2 d-none d-lg-block"
+                      href="{{url_for('index')}}"
+                    >
+                      <img alt="" class="logo-2" width="150px" />
+                      <img alt="logo" class="logo-3" width="150px" />
+                    </a>
+                    <ul class="side-menu">
+                      <li class="slide">
+                        <a
+                          class="side-menu__item active header_1_link"
+                          data-bs-toggle="slide"
+                        >
+                          <span class="side-menu__label header_1"></span>
+                        </a>
+                      </li>
+                      <li class="slide education_work_hide">
+                        <a
+                          class="side-menu__item header_2_link"
+                          data-bs-toggle="slide"
+                        >
+                          <span class="side-menu__label header_2"></span>
+                        </a>
+                      </li>
+                      <li class="slide service_product_hide">
+                        <a
+                          class="side-menu__item header_3_link"
+                          data-bs-toggle="slide"
+                        >
+                          <span class="side-menu__label header_3"></span>
+                        </a>
+                      </li>
+                      <li class="slide partners_gallery_hide">
+                        <a
+                          class="side-menu__item header_4_link"
+                          data-bs-toggle="slide"
+                        >
+                          <span class="side-menu__label header_4"></span>
+                        </a>
+                      </li>
+                      <li class="slide contact_hide">
+                        <a
+                          class="side-menu__item header_5_link"
+                          data-bs-toggle="slide"
+                        >
+                          <span class="side-menu__label header_5"></span>
+                        </a>
+                      </li>
+                      <li class="slide contact_hide" style="@media(max-width: 1200px) {
+                        margin-left: 20px;
+                      }">
+                        <a data-bs-toggle="slide" href="{{ url_for('blogs') }}">
+                          <span class="side-menu__label header_5">Blogs & Articles</span>
+                        </a>
+                      </li>
+                      <li>
+                        <div style="width: 10rem; margin-left: 20px;">
+                        <a
+                          data-bs-toggle="slide"
+                          href="{{ url_for('trainee_registration') }}"
+                          style="width: 7.5rem; margin-top: 10px;"
+                          class="btn btn-primary"
+                          >Registration</a
+                        >
+                      <!-- </li>
+                      <li> -->
+                        <a
+                          data-bs-toggle="slide"
+                          href="{{ url_for('trainee_login') }}"
+                          style="width: 7.5rem; margin-top: 10px;"
+                          class="btn btn-primary"
+                          > Log In</a
+                        >
+                      </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/APP-SIDEBAR-->
+          </div>
+          <div
+            class="demo-screen-headline main-demo main-demo-1 spacing-top overflow-hidden reveal header_1_id"
+          >
+            <div class="container px-sm-0">
+              <div class="row">
+                <div
+                  class="col-xl-6 col-lg-6 mb-5 pb-5 animation-zidex pos-relative"
+                >
+                  <h4 class="fw-semibold mt-7">This is</h4>
+                  <h1 class="text-start fw-bold name_show"></h1>
+                  <h6 class="pb-3 short_about"></h6>
+                  <a
+                    data-bs-toggle="slide"
+                    href="#Education"
+                    class="btn ripple btn-min w-lg mb-3 me-2 btn-primary"
+                  >
+                    See More <i class="fe fe-arrow-down me-2"></i
+                  ></a>
+                </div>
+                <div class="col-xl-6 col-lg-6 my-auto">
+                  <div
+                    id="carousel-indicators3"
+                    class="carousel slide"
+                    data-bs-ride="carousel"
+                  >
+                    <div class="carousel-inner imae_slide_profile br-5"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--app-content open-->
+        <div class="main-content mt-0">
+          <div class="side-app">
+            <!-- CONTAINER -->
+            <div class="main-container">
+              <div class="">
+                <!-- ROW-1 OPEN -->
+                <div class="section pb-0 about_show_hide">
+                  <div class="container">
+                    <div class="row">
+                      <h4 class="text-center fw-semibold">About</h4>
+                      <span class="landing-title"></span>
+                    </div>
+                    <div
+                      class="row text-center services-statistics landing-statistics"
+                    >
+                      <div class="col-xl-12 col-md-12 col-lg-12">
+                        <div class="about-me">
+                          <div class="row about-me__content" data-aos="fade-up">
+                            <div
+                              class="column large-full about-me__text text-start"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW-1 CLOSED -->
+
+                <!-- ROW-2 OPEN -->
+                <div class="sptb section bg-white header_2_id">
+                  <div class="container">
+                    <div class="row">
+                      <h4 class="text-center fw-semibold header_2_title"></h4>
+                      <span class="landing-title"></span>
+                      <div class="row mt-7">
+                        <div
+                          class="education_show_hide col-lg-6 col-md-12 wow fadeInUp reveal revealleft"
+                        >
+                          <div class="px-3">
+                            <h4 class="d-flex align-items-center fw-bold">
+                              <i class="icon icon-graduation me-2"></i>
+                              <span class="m-0 p-0 header_2_title_first"></span>
+                            </h4>
+                          </div>
+                          <ul class="task-list education_show"></ul>
+                          <div class="px-3">
+                            <h4 class="d-flex align-items-center fw-bold">
+                              <i class="icon icon-graduation me-2"></i>
+                              <span class="m-0 p-0">Training</span>
+                            </h4>
+                          </div>
+                          <ul class="task-list training_show"></ul>
+                        </div>
+                        <div
+                          class="work_show_hide col-lg-6 col-md-12 wow fadeInUp reveal revealright"
+                        >
+                          <div class="px-3">
+                            <h4 class="d-flex align-items-center fw-bold">
+                              <i class="icon icon-briefcase me-2"></i>
+                              <span class="m-0 p-0 header_2_title_last"></span>
+                            </h4>
+                          </div>
+                          <ul class="task-list work_show"></ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW-2 CLOSED -->
+
+                <!-- ROW-3 OPEN -->
+                <div class="section bg-landing pb-5 bg-image-style header_3_id">
+                  <div class="container">
+                    <div class="row">
+                      <h4 class="text-center fw-semibold header_3_title"></h4>
+                      <span class="landing-title"></span>
+                      <div class="row service_show"></div>
+                    </div>
+                    <div
+                      class="pagination pagination-service justify-content-center"
+                    ></div>
+                  </div>
+                </div>
+                <!-- ROW-3 CLOSED -->
+
+                <!-- ROW-5 OPEN -->
+                <div class="section product_show_hide">
+                  <div class="container">
+                    <div class="row">
+                      <section class="sptb demo-screen-demo">
+                        <div class="container">
+                          <div class="row align-items-center">
+                            <h4
+                              class="text-center fw-semibold header_3_title_last"
+                            ></h4>
+                            <span class="landing-title"></span>
+                            <div class="row products_show"></div>
+                          </div>
+                          <div
+                            class="pagination pagination-product justify-content-center"
+                          ></div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW-5 CLOSED -->
+
+                <!-- ROW-4 OPEN -->
+                <div class="section testimonial-owl-landing header_4_id">
+                  <div class="container">
+                    <div class="row">
+                      <div class="card bg-transparent mb-0">
+                        <h4
+                          class="text-center fw-semibold text-white header_4_first"
+                        ></h4>
+                        <span class="landing-title"></span>
+                        <div
+                          class="demo-screen-skin code-quality"
+                          id="dependencies"
+                        >
+                          <div class="text-center p-0">
+                            <div class="row justify-content-center">
+                              <div class="col-lg-12 px-0">
+                                <div class="container h-100">
+                                  <div class="row align-items-center h-100">
+                                    <div class="container">
+                                      <div class="slider"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW-4 CLOSED -->
+
+                <!-- ROW-6 OPEN -->
+                <div
+                  class="bg-landing section bg-image-style gallery_show_hide"
+                >
+                
+                
+                  <div class="container">
+                    <div class="row">
+                      <h4 class="text-center fw-semibold header_4_last"></h4>
+                      <span class="landing-title"></span>
+                      <div class="pricing-tabs">
+                        <ul
+                          id="lightgallery"
+                          class="gallery_show list-unstyled row"
+                          lg-uid="lg0"
+                          lg-event-uid=""
+                        ></ul>
+                      </div>
+                      <a
+                    data-bs-toggle="slide"
+                    href="{{ url_for('user_gallary') }}"
+                    style="width: 7.5rem;margin-left: 1000px;"
+                    class="btn btn-primary"
+                    >See More</a
+                  >
+                      <div
+                        class="pagination pagination-gallery justify-content-center"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW-6 CLOSED -->
+
+                <!-- modal-footer-demo -->
+                <div class="modal fade" id="modaldemo4">
+                  <div
+                    class="modal-dialog modal-dialog-centered text-center"
+                    role="document"
+                  >
+                    <div class="modal-content tx-size-sm">
+                      <div class="modal-body text-center p-4 pb-5">
+                        <button
+                          aria-label="Close"
+                          class="btn-close position-absolute text-danger"
+                          data-bs-dismiss="modal"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div>
+                          <img src="" class="gallery_image_modal_show" alt="" />
+                        </div>
+                        <div>
+                          <h4 class="gallary_title"></h4>
+                          <p class="gallary_details"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ROW-9 OPEN -->
+                <div
+                  class="testimonial-owl-landing section pb-0 testimonial_hide_show"
+                >
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="card bg-transparent">
+                          <div class="card-body pt-5">
+                            <h4 class="text-center fw-semibold text-white-80">
+                              Testimonials
+                            </h4>
+                            <span class="landing-title"></span>
+                            <h2 class="text-center fw-semibold text-white mb-7">
+                              What People Are Saying About Our Product.
+                            </h2>
+                            <div class="testimonial-carousel"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW-9 CLOSED -->
+
+                <!-- ROW-10 OPEN -->
+                <div class="bg-image-landing section header_5_id">
+                  <div class="container">
+                    <div class="">
+                      <div class="card card-shadow reveal">
+                        <h4
+                          class="text-center fw-semibold mt-7 header_5_title"
+                        ></h4>
+                        <span class="landing-title"></span>
+                        <h2 class="text-center fw-semibold mb-0 px-2">
+                          Get in Touch with<span class="text-primary mx-2"
+                            >Us</span
+                          >
+                        </h2>
+                        <div class="card-body p-5 pb-6 text-dark">
+                          <div class="statistics-info p-4">
+                            <div class="row justify-content-center">
+                              <div class="col-xl-9">
+                                <div class="">
+                                  <form
+                                    class="form-horizontal reveal revealrotate m-t-20"
+                                    action="{{url_for('email_send')}}"
+                                    method="POST"
+                                  >
+                                    <div class="form-group">
+                                      <div class="col-xs-12">
+                                        <input
+                                          class="form-control"
+                                          type="text"
+                                          required
+                                          placeholder="Username*"
+                                          name="name"
+                                          id="name"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <div class="col-xs-12">
+                                        <input
+                                          class="form-control"
+                                          type="email"
+                                          required=""
+                                          placeholder="Email*"
+                                          id="email"
+                                          name="email"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <div class="col-xs-12">
+                                        <textarea
+                                          class="form-control"
+                                          rows="5"
+                                          name="message"
+                                          style="resize: none"
+                                          placeholder="Your Comment*"
+                                          required
+                                        ></textarea>
+                                      </div>
+                                    </div>
+                                    <div class="">
+                                      <button
+                                        class="btn btn-primary send-button"
+                                        id="submit"
+                                        type="submit"
+                                        value="SEND"
+                                      >
+                                        <div class="alt-send-button">
+                                          <span class="send-text">SEND</span>
+                                        </div>
+                                      </button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW-10 CLOSED -->
+              </div>
+            </div>
+            <!-- CONTAINER CLOSED-->
+          </div>
+        </div>
+        <!--app-content closed-->
+      </div>
+
+      <!-- FOOTER OPEN -->
+      <div class="demo-footer">
+        <div class="container">
+          <div class="row">
+            <div class="card mb-0">
+              <div class="card-body">
+                <div class="top-footer">
+                  <div class="row address_show_footer">
+                    <div class="col-lg-4 col-sm-12 col-md-4 reveal revealleft">
+                      <h6>Follow Us</h6>
+                      <div class="btn-list mt-6 social_media"></div>
+                      <hr />
+                    </div>
+                  </div>
+                </div>
+                <footer class="main-footer px-0 pb-0 text-center">
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                      Copyright © <span id="year"></span>
+                      <a href="https://www.techknowgram.com/" target="_blank"
+                        ><img
+                          src="static\assets\img\logos\techknowgram_big.png"
+                          alt=""
+                          style="height: 2rem; width: 4.8rem" /></a
+                      >. All rights reserved.
+                    </div>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- FOOTER CLOSED -->
+    </div>
+
+    <!-- BACK-TO-TOP -->
+    <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <script>
+      function displayMonthYear(dateString) {
+        const date = new Date(dateString);
+        if (isNaN(date)) {
+          return "Present";
+        }
+        const options = { year: "numeric", month: "short" };
+        return date.toLocaleDateString("en-US", options);
+      }
+
+      function toggleText(button) {
+        const textSpan =
+          button.previousSibling.querySelector(".truncated_text");
+        const fullText =
+          button.previousSibling.querySelector(".card_text_content");
+
+        if (textSpan.style.display === "none") {
+          textSpan.style.display = "inline";
+          fullText.style.display = "none";
+          button.textContent = "See more";
+        } else {
+          textSpan.style.display = "none";
+          fullText.style.display = "inline";
+          button.textContent = "See less";
+        }
+      }
+      function getRandomKeyword() {
+        const keywords = [
+          "primary",
+          "danger",
+          "success",
+          "info",
+          "secondary",
+          "azure",
+          "orange",
+          "pink",
+          "purple",
+          "yellow",
+          "lime",
+        ];
+        const randomIndex = Math.floor(Math.random() * keywords.length);
+        return keywords[randomIndex];
+      }
+      function getTruncatedText(text) {
+        const words = text.split(" ").slice(0, 20).join(" ");
+        return `${words}...`;
+      }
+
+      function extractFirstTwoSentences(text) {
+        const sentences = text.split(".");
+        const firstTwoSentences = sentences.slice(0, 2);
+        const result = firstTwoSentences.join(".") + ".";
+        return result;
+      }
+      function capitalizeLastWord(inputString) {
+        const words = inputString.split(" ");
+        if (words.length > 0) {
+          const lastWord =
+            words[words.length - 1].charAt(0).toUpperCase() +
+            words[words.length - 1].slice(1);
+          return lastWord;
+        } else {
+          return "";
+        }
+      }
+
+      function capitalizeFirstWord(inputString) {
+        const words = inputString.split(" ");
+        if (words.length > 0) {
+          const firstWord =
+            words[0].charAt(0).toUpperCase() + words[0].slice(1);
+          return firstWord;
+        } else {
+          return "";
+        }
+      }
+
+      function showEducation() {
+        var formData = new FormData();
+        fetch("/all_data", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Network response was not ok.");
+          })
+          .then((data) => {
+            console.log(data);
+            if (data && data.user_profile) {
+              //const logo = document.createElement("img");
+              //logo.src = "mainstatic/images/logos/" + data.user_profile.logo;
+              //document.querySelector(".site-logo").appendChild(logo);
+              document.querySelector(".name_show").innerHTML =
+                data.user_profile.name;
+              document.querySelector(".short_about").innerHTML =
+                extractFirstTwoSentences(data.user_profile.about);
+              document.querySelector(".about-me__text").innerHTML =
+                data.user_profile.about;
+
+              document.querySelector(".header_1").innerHTML =
+                data.user_profile.header_1;
+              document.querySelector(".header_2").innerHTML =
+                data.user_profile.header_2;
+              document.querySelector(".header_3").innerHTML =
+                data.user_profile.header_3;
+              document.querySelector(".header_4").innerHTML =
+                data.user_profile.header_4;
+              document.querySelector(".header_5").innerHTML =
+                data.user_profile.header_5;
+             
+              document.querySelector(".header_1_link").href =
+                "#" + capitalizeFirstWord(data.user_profile.header_1);
+              document.querySelector(".header_2_link").href =
+                "#" + capitalizeFirstWord(data.user_profile.header_2);
+              document.querySelector(".header_3_link").href =
+                "#" + capitalizeFirstWord(data.user_profile.header_3);
+              document.querySelector(".header_4_link").href =
+                "#" + capitalizeFirstWord(data.user_profile.header_4);
+              document.querySelector(".header_5_link").href =
+                "#" + capitalizeFirstWord(data.user_profile.header_5);
+             
+
+              document.querySelector(".header_1_id").id = capitalizeFirstWord(
+                data.user_profile.header_1
+              );
+
+              document.querySelector(".header_2_id").id = capitalizeFirstWord(
+                data.user_profile.header_2
+              );
+              document.querySelector(".header_2_title").textContent =
+                data.user_profile.header_2;
+              document.querySelector(".header_2_title_first").textContent =
+                capitalizeFirstWord(data.user_profile.header_2);
+              document.querySelector(".header_2_title_last").textContent =
+                capitalizeLastWord(data.user_profile.header_2);
+
+              document.querySelector(".header_3_id").id = capitalizeFirstWord(
+                data.user_profile.header_3
+              );
+              document.querySelector(".header_3_title").textContent =
+                capitalizeFirstWord(data.user_profile.header_3);
+              document.querySelector(".header_3_title_last").textContent =
+                capitalizeLastWord(data.user_profile.header_3);
+
+              document.querySelector(".header_4_id").id = capitalizeFirstWord(
+                data.user_profile.header_4
+              );
+              document.querySelector(".header_4_first").textContent =
+                capitalizeFirstWord(data.user_profile.header_4);
+              document.querySelector(".header_4_last").textContent =
+                capitalizeLastWord(data.user_profile.header_4);
+
+              document.querySelector(".header_5_id").id = capitalizeFirstWord(
+                data.user_profile.header_5
+              );
+              document.querySelector(".header_5_title").textContent =
+                capitalizeFirstWord(data.user_profile.header_5);
+
+              document.querySelector(".desktop-logo").src =
+                "../static/mainassets/images/logos/" + data.user_profile.logo;
+              document.querySelector(".dark-logo").src =
+                "../static/mainassets/images/logos/" + data.user_profile.logo;
+              document.querySelector(".logo-2").src =
+                "../static/mainassets/images/logos/" + data.user_profile.logo;
+              document.querySelector(".logo-3").src =
+                "../static/mainassets/images/logos/" + data.user_profile.logo;
+            }
+
+            if (data && data.social_media.length > 0) {
+              data.social_media.forEach((socialItems) => {
+                const url = new URL(socialItems.social_link);
+                const parts = url.hostname.split(".");
+                const platformName = parts[1];
+                console.log(platformName);
+                if (platformName == "facebook") {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-facebook";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                } else if (platformName == "twitter") {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-twitter";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                } else if (platformName == "linkedin") {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-linkedin";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                } else if (platformName == "instagram") {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-instagram";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                } else if (platformName == "tiktok") {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-facebook";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                } else if (platformName == "github") {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-github";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                } else if (platformName == "behance") {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-behance";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                } else {
+                  if (socialItems.social_show == 1) {
+                    const socialButton = document.createElement("a");
+                    socialButton.href = socialItems.social_link;
+                    socialButton.className = "btn btn-icon rounded-pill";
+                    const socialIcon = document.createElement("i");
+                    socialIcon.className = "fa fa-globe";
+                    socialButton.appendChild(socialIcon);
+                    document
+                      .querySelector(".social_media")
+                      .appendChild(socialButton);
+                  }
+                }
+              });
+            }
+
+            if (data && data.profile_photos.length > 0) {
+              data.profile_photos.forEach((photoItems, index) => {
+                if (photoItems.photos_name != "") {
+                  const carouselItemDiv = document.createElement("div");
+                  carouselItemDiv.className =
+                    "carousel-item profile_outer_img_class";
+                  if (index === 0) {
+                    carouselItemDiv.classList.add("active");
+                  }
+                  const imageElement = document.createElement("img");
+                  imageElement.className =
+                    "d-block w-100 profile_inner_img_class";
+                  imageElement.alt = "";
+                  imageElement.src =
+                    "../static/mainassets/images/users/" +
+                    photoItems.photos_name;
+                  imageElement.setAttribute("data-bs-holder-rendered", "true");
+                  carouselItemDiv.appendChild(imageElement);
+                  document
+                    .querySelector(".imae_slide_profile")
+                    .appendChild(carouselItemDiv);
+                }
+              });
+            }
+
+            if (data.edu_work && data.edu_work.length > 0) {
+              data.edu_work.forEach((element) => {
+                if (element.category == "work") {
+                  const mainDiv = document.createElement("li");
+                  mainDiv.className = "d-sm-flex";
+
+                  const bulletDiv = document.createElement("div");
+
+                  const edu_icon = document.createElement("i");
+                  edu_icon.className = "task-icon bg-" + getRandomKeyword();
+
+                  if (element.name_show == 1) {
+                    const titleh5 = document.createElement("h5");
+                    titleh5.className = "fw-semibold";
+                    titleh5.textContent = element.institute_name;
+                    bulletDiv.appendChild(titleh5);
+                  }
+
+                  if (element.position_show == 1) {
+                    const edu_title = document.createElement("p");
+                    edu_title.className = "mb-0";
+                    edu_title.textContent = element.degree_or_position;
+                    bulletDiv.appendChild(edu_title);
+                  }
+                  if (element.time_frame_show == 1) {
+                    const edu_time = document.createElement("p");
+
+                    const main_time = document.createElement("span");
+                    main_time.className = "text-muted fs-11 fw-normal";
+                    main_time.textContent = `${displayMonthYear(
+                      element.start_date
+                    )}-${displayMonthYear(element.end_date)}`;
+                    edu_time.appendChild(main_time);
+                    bulletDiv.appendChild(edu_time);
+                  }
+                  bulletDiv.appendChild(edu_icon);
+                  mainDiv.appendChild(bulletDiv);
+                  document.querySelector(".work_show").appendChild(mainDiv);
+                }
+
+                if (element.category == "education") {
+                  const mainDiv = document.createElement("li");
+                  mainDiv.className = "d-sm-flex";
+
+                  const bulletDiv = document.createElement("div");
+
+                  const edu_icon = document.createElement("i");
+                  edu_icon.className = "task-icon bg-" + getRandomKeyword();
+
+                  if (element.name_show == 1) {
+                    const titleh5 = document.createElement("h5");
+                    titleh5.className = "fw-semibold";
+                    titleh5.textContent = element.institute_name;
+                    bulletDiv.appendChild(titleh5);
+                  }
+
+                  if (element.position_show == 1) {
+                    const edu_title = document.createElement("p");
+                    edu_title.className = "mb-0";
+                    edu_title.innerHTML = element.degree_or_position;
+                    bulletDiv.appendChild(edu_title);
+                  }
+
+                  if (element.time_frame_show == 1) {
+                    const edu_time = document.createElement("p");
+
+                    const main_time = document.createElement("span");
+                    main_time.className = "text-muted fs-11 fw-normal";
+                    main_time.textContent = `${displayMonthYear(
+                      element.start_date
+                    )}-${displayMonthYear(element.end_date)}`;
+
+                    edu_time.appendChild(main_time);
+                    bulletDiv.appendChild(edu_time);
+                  }
+                  bulletDiv.appendChild(edu_icon);
+
+                  mainDiv.appendChild(bulletDiv);
+                  document
+                    .querySelector(".education_show")
+                    .appendChild(mainDiv);
+                }
+                if (element.category == "training") {
+                  const mainDiv = document.createElement("li");
+                  mainDiv.className = "d-sm-flex";
+
+                  const bulletDiv = document.createElement("div");
+
+                  const edu_icon = document.createElement("i");
+                  edu_icon.className = "task-icon bg-" + getRandomKeyword();
+
+                  if (element.name_show == 1) {
+                    const titleh5 = document.createElement("h5");
+                    titleh5.className = "fw-semibold";
+                    titleh5.textContent = element.institute_name;
+                    bulletDiv.appendChild(titleh5);
+                  }
+
+                  if (element.position_show == 1) {
+                    const edu_title = document.createElement("p");
+                    edu_title.className = "mb-0";
+                    edu_title.innerHTML = element.degree_or_position;
+                    bulletDiv.appendChild(edu_title);
+                  }
+
+                  if (element.time_frame_show == 1) {
+                    const edu_time = document.createElement("p");
+
+                    const main_time = document.createElement("span");
+                    main_time.className = "text-muted fs-11 fw-normal";
+                    main_time.textContent = `${displayMonthYear(
+                      element.start_date
+                    )}-${displayMonthYear(element.end_date)}`;
+
+                    edu_time.appendChild(main_time);
+                    bulletDiv.appendChild(edu_time);
+                  }
+                  bulletDiv.appendChild(edu_icon);
+
+                  mainDiv.appendChild(bulletDiv);
+                  document.querySelector(".training_show").appendChild(mainDiv);
+                }
+              });
+            }
+
+            ///Service Start Pagination
+            if (data.service_products && data.service_products.length > 0) {
+              var serviceData = [];
+              if (data.service_products && data.service_products.length > 0) {
+                data.service_products.forEach((serviceHere) => {
+                  if (serviceHere.category == "services") {
+                    serviceData.push(serviceHere);
+                  }
+                });
+              }
+              const serviceElements = document.querySelector(".service_show");
+              const serviceItemsPerPage = 4;
+              let serviceTotalPages = Math.ceil(
+                serviceData.length / serviceItemsPerPage
+              );
+              let serviceCurrentPage = 1;
+              if (serviceTotalPages === 0) {
+                serviceTotalPages = 1;
+              }
+              serviceRenderPagination();
+              serviceShowData();
+              function serviceShowData() {
+                serviceElements.innerHTML = "";
+                const startIndex =
+                  (serviceCurrentPage - 1) * serviceItemsPerPage;
+                const endIndex = startIndex + serviceItemsPerPage;
+                const serviceItems = serviceData.slice(startIndex, endIndex);
+
+                serviceItems.forEach((serviceItem) => {
+                  const main_div = document.createElement("div");
+                  main_div.className =
+                    "col-lg-3 wow fadeInUp reveal revealleft";
+
+                  const divCard = document.createElement("div");
+                  divCard.className = "card border";
+
+                  const div_image = document.createElement("div");
+                  div_image.className =
+                    "card_image d-flex justify-content-center align-items-center";
+                  div_image.style.height = "180px";
+
+                  const img = document.createElement("img");
+                  //img.src = "static/images/logos/" + serviceItems.cover_image;
+                  img.src =
+                    "../static/mainassets/images/media/" +
+                    serviceItem.cover_image;
+                  img.style.padding = "40px";
+
+                  const divCardBody = document.createElement("div");
+                  divCardBody.className = "card_body d-flex flex-column p-3";
+
+                  const h2 = document.createElement("h4");
+                  h2.className = "card_title fw-bold";
+                  h2.textContent = serviceItem.title_name;
+
+                  function truncateText(text, maxLength) {
+                    return text.split(" ").slice(0, maxLength).join(" ");
+                  }
+
+                  var truncatedText = truncateText(serviceItem.description, 18);
+
+                  const p = document.createElement("p");
+                  p.className = "card_text sobjanta_ai";
+
+                  const ori_text = document.createElement("span");
+                  ori_text.className = "main-text";
+                  ori_text.textContent = truncatedText;
+
+                  const aReadMore = document.createElement("a");
+                  aReadMore.setAttribute("href", "javascript:void(0)");
+                  aReadMore.setAttribute(
+                    "style",
+                    "color: red; margin: 0 5px 0 5px"
+                  );
+                  aReadMore.textContent = "Read More";
+                  aReadMore.setAttribute(
+                    "data-fulltext",
+                    serviceItem.description
+                  );
+
+                  aReadMore.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    var paragraph =
+                      this.parentNode.parentNode.querySelector(".main-text");
+                    var fullText = this.getAttribute("data-fulltext");
+
+                    if (!paragraph) {
+                      console.error("Paragraph element not found");
+                      return;
+                    }
+
+                    if (paragraph.textContent === truncatedText) {
+                      paragraph.textContent = fullText;
+                      this.textContent = "Read Less";
+                    } else {
+                      paragraph.textContent = truncatedText;
+                      this.textContent = "Read More";
+                    }
+                  });
+
+                  // Append elements together
+                  div_image.appendChild(img);
+
+                  divCardBody.appendChild(h2);
+                  p.appendChild(ori_text);
+                  p.appendChild(aReadMore);
+                  divCardBody.appendChild(p);
+
+                  divCard.appendChild(div_image);
+                  divCard.appendChild(divCardBody);
+
+                  main_div.appendChild(divCard);
+
+                  // Function to toggle text
+                  function toggleText(link) {
+                    const moreText = link.previousSibling;
+                    if (moreText.style.display === "none") {
+                      moreText.style.display = "block";
+                      link.textContent = "Read Less";
+                    } else {
+                      moreText.style.display = "none";
+                      link.textContent = "Read More";
+                    }
+                  }
+
+                  serviceElements.appendChild(main_div);
+                });
+                serviceRenderPagination();
+              }
+
+              function serviceRenderPagination() {
+                const pagination = document.querySelector(
+                  ".pagination-service"
+                );
+                pagination.innerHTML = "";
+
+                const prevButton = document.createElement("li");
+                prevButton.innerHTML =
+                  '<a class="page-link" href="javascript:void(0)">Prev</a>';
+                prevButton.className = "page-item";
+                prevButton.addEventListener("click", function () {
+                  if (serviceCurrentPage > 1) {
+                    serviceCurrentPage--;
+                    serviceShowData();
+                    serviceUpdatePaginationButtons();
+                  }
+                });
+
+                if (serviceCurrentPage === 1) {
+                  prevButton.classList.add("disabled");
+                }
+
+                pagination.appendChild(prevButton);
+
+                for (let i = 1; i <= serviceTotalPages; i++) {
+                  const pageli = document.createElement("li");
+                  pageli.className = "page-item";
+                  const pageButton = document.createElement("a");
+                  pageButton.href = "javascript:void(0)";
+                  pageButton.className = "page-link";
+                  pageButton.textContent = i;
+                  pageButton.addEventListener("click", function () {
+                    serviceCurrentPage = i;
+                    serviceShowData();
+                    serviceUpdatePaginationButtons();
+                  });
+                  pageli.appendChild(pageButton);
+                  pagination.appendChild(pageli);
+                }
+
+                const nextButton = document.createElement("li");
+                nextButton.innerHTML =
+                  '<a class="page-link" href="javascript:void(0)">Next</a>';
+                nextButton.className = "page-item";
+                nextButton.addEventListener("click", function () {
+                  if (serviceCurrentPage < serviceTotalPages) {
+                    serviceCurrentPage++;
+                    serviceShowData();
+                    serviceUpdatePaginationButtons();
+                  }
+                });
+                pagination.appendChild(nextButton);
+
+                serviceUpdatePaginationButtons();
+              }
+
+              function serviceUpdatePaginationButtons() {
+                const buttons = document.querySelectorAll(
+                  ".pagination-service li"
+                );
+                buttons.forEach((button) =>
+                  button.classList.remove("active", "disabled")
+                );
+                buttons[serviceCurrentPage].classList.add("active");
+
+                if (serviceCurrentPage === 1) {
+                  buttons[0].classList.add("disabled");
+                }
+                if (serviceCurrentPage === serviceTotalPages) {
+                  buttons[buttons.length - 1].classList.add("disabled");
+                }
+              }
+
+              var productData = [];
+
+              if (data.service_products && data.service_products.length > 0) {
+                data.service_products.forEach((productHere) => {
+                  if (productHere.category == "products") {
+                    productData.push(productHere);
+                  }
+                });
+              }
+
+              const productElements = document.querySelector(".products_show");
+              const productItemsPerPage = 4;
+              let productTotalPages = Math.ceil(
+                productData.length / productItemsPerPage
+              );
+              let productCurrentPage = 1;
+              if (productTotalPages === 0) {
+                productTotalPages = 1;
+              }
+              productRenderPagination();
+              productShowData();
+              function productShowData() {
+                productElements.innerHTML = "";
+                const startIndex =
+                  (productCurrentPage - 1) * productItemsPerPage;
+                const endIndex = startIndex + productItemsPerPage;
+                const productItems = productData.slice(startIndex, endIndex);
+
+                productItems.forEach((productItem) => {
+                  const main_div = document.createElement("div");
+                  main_div.className =
+                    "col-lg-4  wow fadeInUp reveal revealleft";
+
+                  const divCard = document.createElement("div");
+                  divCard.className = "card border";
+
+                  const div_image = document.createElement("div");
+                  div_image.className =
+                    "card_image d-flex justify-content-center align-items-center";
+                  div_image.style.height = "180px";
+
+                  const img = document.createElement("img");
+                  img.src =
+                    "../static/mainassets/images/media/" +
+                    productItem.cover_image;
+                  img.style.padding = "40px";
+
+                  const divCardBody = document.createElement("div");
+                  divCardBody.className = "card_body d-flex flex-column p-3";
+
+                  const h2 = document.createElement("h4");
+                  h2.className = "card_title fw-bold";
+                  h2.textContent = productItem.title_name;
+
+                  function truncateText(text, maxLength) {
+                    return text.split(" ").slice(0, maxLength).join(" ");
+                  }
+
+                  var truncatedText = truncateText(productItem.description, 18);
+
+                  const p = document.createElement("p");
+                  p.className = "card_text sobjanta_ai";
+
+                  const ori_text = document.createElement("span");
+                  ori_text.className = "main-text";
+                  ori_text.textContent = truncatedText;
+
+                  const aReadMore = document.createElement("a");
+                  aReadMore.setAttribute("href", "javascript:void(0)");
+                  aReadMore.setAttribute(
+                    "style",
+                    "color: red; margin: 0 5px 0 5px"
+                  );
+                  aReadMore.textContent = "Read More";
+                  aReadMore.setAttribute(
+                    "data-fulltext",
+                    productItem.description
+                  );
+
+                  aReadMore.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    var paragraph =
+                      this.parentNode.parentNode.querySelector(".main-text");
+                    var fullText = this.getAttribute("data-fulltext");
+
+                    if (!paragraph) {
+                      console.error("Paragraph element not found");
+                      return;
+                    }
+
+                    if (paragraph.textContent === truncatedText) {
+                      paragraph.textContent = fullText;
+                      this.textContent = "Read Less";
+                    } else {
+                      paragraph.textContent = truncatedText;
+                      this.textContent = "Read More";
+                    }
+                  });
+
+                  // Append elements together
+                  div_image.appendChild(img);
+
+                  divCardBody.appendChild(h2);
+                  p.appendChild(ori_text);
+                  p.appendChild(aReadMore);
+                  divCardBody.appendChild(p);
+
+                  divCard.appendChild(div_image);
+                  divCard.appendChild(divCardBody);
+
+                  main_div.appendChild(divCard);
+
+                  // Function to toggle text
+                  function toggleText(link) {
+                    const moreText = link.previousSibling;
+                    if (moreText.style.display === "none") {
+                      moreText.style.display = "block";
+                      link.textContent = "Read Less";
+                    } else {
+                      moreText.style.display = "none";
+                      link.textContent = "Read More";
+                    }
+                  }
+
+                  productElements.appendChild(main_div);
+                });
+                productRenderPagination();
+              }
+
+              function productRenderPagination() {
+                const pagination = document.querySelector(
+                  ".pagination-product"
+                );
+                pagination.innerHTML = "";
+
+                const prevButton = document.createElement("li");
+                prevButton.innerHTML =
+                  '<a class="page-link" href="javascript:void(0)">Prev</a>';
+                prevButton.className = "page-item";
+                prevButton.addEventListener("click", function () {
+                  if (productCurrentPage > 1) {
+                    productCurrentPage--;
+                    productShowData();
+                    productUpdatePaginationButtons();
+                  }
+                });
+
+                if (productCurrentPage === 1) {
+                  prevButton.classList.add("disabled");
+                }
+
+                pagination.appendChild(prevButton);
+
+                for (let i = 1; i <= productTotalPages; i++) {
+                  const pageli = document.createElement("li");
+                  pageli.className = "page-item";
+                  const pageButton = document.createElement("a");
+                  pageButton.href = "javascript:void(0)";
+                  pageButton.className = "page-link";
+                  pageButton.textContent = i;
+                  pageButton.addEventListener("click", function () {
+                    productCurrentPage = i;
+                    productShowData();
+                    productUpdatePaginationButtons();
+                  });
+                  pageli.appendChild(pageButton);
+                  pagination.appendChild(pageli);
+                }
+
+                const nextButton = document.createElement("li");
+                nextButton.innerHTML =
+                  '<a class="page-link" href="javascript:void(0)">Next</a>';
+                nextButton.className = "page-item";
+                nextButton.addEventListener("click", function () {
+                  if (productCurrentPage < productTotalPages) {
+                    productCurrentPage++;
+                    productShowData();
+                    productUpdatePaginationButtons();
+                  }
+                });
+                pagination.appendChild(nextButton);
+
+                productUpdatePaginationButtons();
+              }
+
+              function productUpdatePaginationButtons() {
+                const buttons = document.querySelectorAll(
+                  ".pagination-product li"
+                );
+                buttons.forEach((button) =>
+                  button.classList.remove("active", "disabled")
+                );
+                buttons[productCurrentPage].classList.add("active");
+
+                if (productCurrentPage === 1) {
+                  buttons[0].classList.add("disabled");
+                }
+                if (productCurrentPage === productTotalPages) {
+                  buttons[buttons.length - 1].classList.add("disabled");
+                }
+              }
+            }
+
+            let partnersCount = 1;
+            if (data.gallary_partners && data.gallary_partners.length > 0) {
+              var galleryData = [];
+
+              if (data.gallary_partners && data.gallary_partners.length > 0) {
+                data.gallary_partners.forEach((dataHere) => {
+                  if (dataHere.category == "gallary") {
+                    galleryData.push(dataHere);
+                  }
+                });
+              }
+
+              const galleryContainer = document.querySelector(".gallery_show");
+              const galleryItemsPerPage = 4;
+              let galleryTotalPages = Math.ceil(
+                galleryData.length / galleryItemsPerPage
+              );
+              let galleryCurrentPage = 1;
+              if (galleryTotalPages === 0) {
+                galleryTotalPages = 1;
+              }
+              galleryRenderPagination();
+              galleryShowData();
+              function galleryShowData() {
+                galleryContainer.innerHTML = "";
+                const startIndex =
+                  (galleryCurrentPage - 1) * galleryItemsPerPage;
+                const endIndex = startIndex + galleryItemsPerPage;
+                const galleryItems = galleryData.slice(startIndex, endIndex);
+
+                galleryItems.forEach((gallaryItem) => {
+                  const liElement = document.createElement("li");
+                  liElement.className =
+                    "col-xs-12 col-sm-12 col-md-3 col-xl-3 mb-5 border-bottom-0";
+
+                  liElement.setAttribute("data-bs-target", "#modaldemo4");
+                  liElement.setAttribute("data-bs-toggle", "modal");
+
+                  // Create the a element
+                  const aElement = document.createElement("a");
+                  aElement.href = "javascript:void(0)";
+                  aElement.addEventListener("click", function () {
+                    displayGalleryModal(gallaryItem);
+                  });
+
+                  const imgElement = document.createElement("img");
+                  imgElement.className = "img-responsive br-5 w-100 h-100";
+                  imgElement.src =
+                    "../static/mainassets/images/media/" +
+                    gallaryItem.image_name;
+                  imgElement.alt = "Thumb-1";
+
+                  aElement.appendChild(imgElement);
+                  liElement.appendChild(aElement);
+
+                  document
+                    .querySelector(".gallery_show")
+                    .appendChild(liElement);
+                });
+                galleryRenderPagination();
+              }
+
+              function galleryRenderPagination() {
+                const pagination = document.querySelector(
+                  ".pagination-gallery"
+                );
+                pagination.innerHTML = "";
+
+                const prevButton = document.createElement("li");
+                prevButton.innerHTML =
+                  '<a class="page-link" href="javascript:void(0)">Prev</a>';
+                prevButton.className = "page-item";
+                prevButton.addEventListener("click", function () {
+                  if (galleryCurrentPage > 1) {
+                    galleryCurrentPage--;
+                    galleryShowData();
+                    galleryUpdatePaginationButtons();
+                  }
+                });
+
+                if (galleryCurrentPage === 1) {
+                  prevButton.classList.add("disabled");
+                }
+
+                pagination.appendChild(prevButton);
+
+                for (let i = 1; i <= galleryTotalPages; i++) {
+                  const pageli = document.createElement("li");
+                  pageli.className = "page-item";
+                  const pageButton = document.createElement("a");
+                  pageButton.href = "javascript:void(0)";
+                  pageButton.className = "page-link";
+                  pageButton.textContent = i;
+                  pageButton.addEventListener("click", function () {
+                    galleryCurrentPage = i;
+                    galleryShowData();
+                    galleryUpdatePaginationButtons();
+                  });
+                  pageli.appendChild(pageButton);
+                  pagination.appendChild(pageli);
+                }
+
+                const nextButton = document.createElement("li");
+                nextButton.innerHTML =
+                  '<a class="page-link" href="javascript:void(0)">Next</a>';
+                nextButton.className = "page-item";
+                nextButton.addEventListener("click", function () {
+                  if (galleryCurrentPage < galleryTotalPages) {
+                    galleryCurrentPage++;
+                    galleryShowData();
+                    galleryUpdatePaginationButtons();
+                  }
+                });
+                pagination.appendChild(nextButton);
+
+                galleryUpdatePaginationButtons();
+              }
+
+              function galleryUpdatePaginationButtons() {
+                const buttons = document.querySelectorAll(
+                  ".pagination-gallery li"
+                );
+                buttons.forEach((button) =>
+                  button.classList.remove("active", "disabled")
+                );
+                buttons[galleryCurrentPage].classList.add("active");
+
+                if (galleryCurrentPage === 1) {
+                  buttons[0].classList.add("disabled");
+                }
+                if (galleryCurrentPage === galleryTotalPages) {
+                  buttons[buttons.length - 1].classList.add("disabled");
+                }
+              }
+
+              const partnersElement = document.createElement("div");
+              partnersElement.className = "logos";
+
+              const partnersElement2 = document.createElement("div");
+              partnersElement2.className = "logos";
+
+              data.gallary_partners.forEach((gallaryItem) => {
+                if (gallaryItem.category == "partners") {
+                  if (gallaryItem.show == 1) {
+                    const imgElement = document.createElement("img");
+                    imgElement.src =
+                      "../static/mainassets/images/media/" +
+                      gallaryItem.image_name;
+                    imgElement.className = "partnersimage";
+
+                    partnersElement.appendChild(imgElement);
+
+                    const imgElementClone = imgElement.cloneNode(true);
+                    partnersElement2.appendChild(imgElementClone);
+                    partnersCount++;
+                  }
+                }
+              });
+              document.querySelector(".slider").appendChild(partnersElement);
+              document.querySelector(".slider").appendChild(partnersElement2);
+              const partnersImages =
+                document.querySelectorAll(".partnersimage");
+              const partnersWidth = `calc(100% / ${
+                partnersCount + partnersCount * 0.25
+              })`;
+              partnersImages.forEach(
+                (img) => (img.style.width = partnersWidth)
+              );
+            }
+
+            if (data.testimonial && data.testimonial.length > 0) {
+              data.testimonial.forEach((dataItems) => {
+                // Create elements
+                const slideDiv = document.createElement("div");
+                slideDiv.className = "slide text-center";
+
+                const rowDiv = document.createElement("div");
+                rowDiv.className = "row";
+
+                const colDiv = document.createElement("div");
+                colDiv.className = "col-xl-8 col-md-12 d-block mx-auto";
+
+                const testimonialDiv = document.createElement("div");
+                testimonialDiv.className = "testimonia";
+
+                const quoteIcon = document.createElement("i");
+                quoteIcon.className = "fa fa-quote-left fs-20 text-white-80";
+
+                const testimonialText = document.createElement("span");
+                testimonialText.textContent = dataItems.testimonial_details;
+
+                const textParagraph = document.createElement("p");
+                textParagraph.className = "text-white-80";
+                textParagraph.appendChild(quoteIcon);
+                textParagraph.appendChild(testimonialText);
+
+                const titleHeader = document.createElement("h3");
+                titleHeader.className = "title";
+                titleHeader.textContent = dataItems.testimonial_name;
+
+                // Append elements to the document
+                testimonialDiv.appendChild(textParagraph);
+                testimonialDiv.appendChild(titleHeader);
+
+                colDiv.appendChild(testimonialDiv);
+                rowDiv.appendChild(colDiv);
+                slideDiv.appendChild(rowDiv);
+                document
+                  .querySelector(".testimonial-carousel")
+                  .appendChild(slideDiv);
+              });
+            }
+
+            if (data.users_address_data && data.users_address_data.length > 0) {
+              data.users_address_data.forEach((addressElements) => {
+                // Create a div element
+                const divElement = document.createElement("div");
+                divElement.className =
+                  "col-lg-4 col-sm-6 col-md-4 reveal revealright show_address_show_hide)";
+
+                // Create an h6 element for the heading
+                const headingElement = document.createElement("h6");
+                headingElement.textContent =
+                  addressElements.address_title + " Address";
+
+                // Create a ul element for the list
+                const ulElement = document.createElement("ul");
+                ulElement.className = "list-unstyled mb-4";
+
+                const addressliElement = document.createElement("li");
+                const adsressaElement = document.createElement("a");
+                adsressaElement.href = "javascript:void(0);";
+                adsressaElement.textContent = addressElements.address;
+
+                addressliElement.appendChild(adsressaElement);
+                ulElement.appendChild(addressliElement);
+
+                if (addressElements.phone != "") {
+                  const phoneliElement = document.createElement("li");
+                  const phoneaElement = document.createElement("a");
+                  phoneaElement.href = "javascript:void(0);";
+                  phoneaElement.textContent = "Phone: " + addressElements.phone;
+
+                  phoneliElement.appendChild(phoneaElement);
+                  ulElement.appendChild(phoneliElement);
+                }
+                if (addressElements.mobile != "") {
+                  const mobileliElement = document.createElement("li");
+                  const mobileaElement = document.createElement("a");
+                  mobileaElement.href = "javascript:void(0);";
+                  mobileaElement.textContent =
+                    "Mobile: " + addressElements.mobile;
+
+                  mobileliElement.appendChild(mobileaElement);
+                  ulElement.appendChild(mobileliElement);
+                }
+
+                if (addressElements.whatsapp != "") {
+                  const whatsappliElement = document.createElement("li");
+                  const whatsappaElement = document.createElement("a");
+                  whatsappaElement.href = "javascript:void(0);";
+                  whatsappaElement.textContent =
+                    "WhatsApp: " + addressElements.whatsapp;
+
+                  whatsappliElement.appendChild(whatsappaElement);
+                  ulElement.appendChild(whatsappliElement);
+                }
+                if (addressElements.mail != "") {
+                  const emailliElement = document.createElement("li");
+                  const emailaElement = document.createElement("a");
+                  emailaElement.href = "javascript:void(0);";
+                  emailaElement.textContent = "Email: " + addressElements.mail;
+
+                  emailliElement.appendChild(emailaElement);
+                  ulElement.appendChild(emailliElement);
+                }
+
+                divElement.appendChild(headingElement);
+                divElement.appendChild(ulElement);
+
+                // Append the div element to the document body (or another container)
+                document
+                  .querySelector(".address_show_footer")
+                  .appendChild(divElement);
+              });
+            }
+            if (data.hide_show_data && data.hide_show_data.length > 0) {
+              data.hide_show_data.forEach((showItems) => {
+                if (showItems.identity === "about" && showItems.status === 0) {
+                  document.querySelector(".about_show_hide").style.display =
+                    "none";
+                }
+                if (
+                  showItems.identity === "education" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(".education_show_hide").style.display =
+                    "none";
+                }
+                if (showItems.identity === "work" && showItems.status === 0) {
+                  document.querySelector(".work_show_hide").style.display =
+                    "none";
+                }
+                if (
+                  showItems.identity === "education" &&
+                  showItems.status === 0 &&
+                  showItems.identity === "work" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(".education_work_hide").style.display =
+                    "none";
+                }
+                if (
+                  showItems.identity === "service" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(".header_3_id").style.display = "none";
+                }
+                if (
+                  showItems.identity === "product" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(".product_show_hide").style.display =
+                    "none";
+                }
+                if (
+                  showItems.identity === "service" &&
+                  showItems.status === 0 &&
+                  showItems.identity === "product" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(
+                    ".service_product_hide"
+                  ).style.display = "none";
+                }
+
+                if (showItems.identity === "client" && showItems.status === 0) {
+                  document.querySelector(".header_4_id").style.display = "none";
+                }
+                if (
+                  showItems.identity === "gallery" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(".gallery_show_hide").style.display =
+                    "none";
+                }
+                if (
+                  showItems.identity === "client" &&
+                  showItems.status === 0 &&
+                  showItems.identity === "gallery" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(
+                    ".partners_gallery_hide"
+                  ).style.display = "none";
+                }
+
+                if (
+                  showItems.identity === "testimonial" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(
+                    ".testimonial_hide_show"
+                  ).style.display = "none";
+                }
+                if (
+                  showItems.identity === "contact" &&
+                  showItems.status === 0
+                ) {
+                  document.querySelector(".header_5_id").style.display = "none";
+                  document.querySelector(".contact_hide").style.display =
+                    "none";
+                }
+                if (showItems.identity === "social" && showItems.status === 0) {
+                  document.querySelector(".social_grid").style.display = "none";
+                }
+                if (
+                  showItems.identity === "address" &&
+                  showItems.status === 0
+                ) {
+                  const addressElements = document.querySelectorAll(
+                    ".show_address_show_hide"
+                  );
+                  addressElements.forEach((element) => {
+                    element.style.display = "none";
+                  });
+                }
+              });
+            }
+          });
+      }
+      showEducation();
+      function displayGalleryModal(gallaryData) {
+        document.querySelector(".gallery_image_modal_show").src =
+          "../static/mainassets/images/media/" + gallaryData.image_name;
+        document.querySelector(".gallary_title").textContent =
+          gallaryData.image_title;
+        document.querySelector(".gallary_details").textContent =
+          gallaryData.image_short_details;
+      }
+    </script>
+    <!-- JQUERY JS -->
+    <script src="{{ url_for('static', filename='mainassets/js/jquery.min.js') }}"></script>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="{{ url_for('static', filename='mainassets/plugins/bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='mainassets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+
+    <!-- Perfect SCROLLBAR JS-->
+    <script src="{{ url_for('static', filename='mainassets/plugins/owl-carousel/owl.carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='mainassets/plugins/company-slider/slider.js') }}"></script>
+
+    <!-- Star Rating Js-->
+    <script src="{{ url_for('static', filename='mainassets/plugins/rating/jquery-rate-picker.js') }}"></script>
+    <script src="{{ url_for('static', filename='mainassets/plugins/rating/rating-picker.js') }}"></script>
+
+    <!-- Star Rating-1 Js-->
+    <script src="{{ url_for('static', filename='mainassets/plugins/ratings-2/jquery.star-rating.js') }}"></script>
+    <script src="{{ url_for('static', filename='mainassets/plugins/ratings-2/star-rating.js') }}"></script>
+    <!-- Sticky js -->
+    <script src="{{ url_for('static', filename='mainassets/js/sticky.js') }}"></script>
+
+    <!-- CUSTOM JS -->
+    <script src="{{ url_for('static', filename='mainassets/js/landing.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+    <html
+    lang="en"
+    class="light-style customizer-hide"
+    dir="ltr"
+    data-theme="theme-default"
+    data-assets-path="../assets/"
+    data-template="vertical-menu-template-free"
+  >
+    <head>
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+      />
+  
+      <title>Blogs</title>
+  
+      <meta name="description" content="" />
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/img/favicon/favicon.ico') }}" />
+      <!-- Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
+  
+      <!-- Icons. Uncomment required icon fonts -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/pages/page-auth.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/fonts/boxicons.css') }}" />
+      <!-- Core CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/demo.css') }}" />
+      <!-- Vendors CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+      <!-- Page CSS -->
+      <!-- Helpers -->
+      <script src="{{ url_for('static', filename='assets/vendor/js/helpers.js') }}"></script>
+      <script src="{{ url_for('static', filename='assets/js/config.js') }}"></script>
+      <!-- Page CSS -->
+      <!-- Page -->
+  
+    </head>
+    <style>
+       
+    .logo a:hover {
+
+    border-bottom: 1px solid #fff; /* Add underline on hover */
+    color: #000; /* Change text color on hover */
+    }
+
+    .card-form{
+        width: 500px;
+    }
+
+    .form-group{
+        margin: 16px;
+    }
+    
+    .space{
+        margin: 40px;
+    }
+    
+    .card-body {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .app-brand {
+        text-align: center; /* Center the content */
+        margin-bottom: 10px; /* Adjust margin for smaller screens */
+    }
+
+    .logo {
+        text-align: center; /* Center the content */
+    }
+
+    .logo img {
+        height: 80px; /* Adjust image height for smaller screens */
+        width: 100px; /* Ensure image width scales accordingly */
+    }
+
+    .btn-primary {
+        width: 100%; /* Make the button full width */
+        margin-top: 10px; /* Add some margin to separate from other elements */
+    }
+
+    .scroll-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        background-color: #6c5ffc;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        font-size: 20px;
+        display: none; /* Hide initially */
+      }
+
+  .scroll-to-top:hover {
+      background-color: #6c5ffc;
+    }
+
+    .navbar-scrolled{
+      background-image: linear-gradient(90deg, #6c5ffc, #ffffff);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-scrolled{
+      background-color: #ffffff;
+      color: #6c5ffc;
+    }
+
+    .heading-scrolled{
+      color: #ffffff;
+    }
+
+    .card_to:hover{
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+    </style>
+
+<body style="color:#30314e;">
+  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top navbar-scrolled"> -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://freelancingpathshala.com/" title="Go back to home page"> <span class="logo">
+       
+            <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}" alt="Logo" style="height: 100px; width: auto;">
+        
+    </span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          
+          <li class="nav-item">
+            <!-- <p style="display: flex; align-self: center; "><h1 style="color: #0c0c1a; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 2.5px 1px #292e4a">Blogs & Articles</h1></p> -->
+            <p style="display: flex;align-self: center;"><h1 style="color: #fff; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 4px 2px #6c5ffc">Blogs & Articles</h1></p>
+          </li>
+         
+        </ul>
+        <!-- <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
+        <button style="width: 9rem;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#writeABlog">Write a Blog</button> 
+      </div>
+    </div>
+  </nav>
+  
+
+
+    <div class="card" style="background-image: linear-gradient(90deg, #ffffff, #d2eaf5)">
+    <div class="card-body">
+    <div class="bg-image-landing section header_5_id" >
+    <div class="container" style="padding-bottom: 40px; padding-top: 20px; margin-top: 100px;">
+      <h2 style="color:#6c5ffc; font-style: bold; font-weight: 700; font-size: 40px; margin-left: 300px; margin-bottom: 40px;">Read Blogs from People around the world!</h2>
+    <!-- <div class="table">
+        <h1 style="color:#6c5ffc;">Read Blogs from People around the world!</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered ">
+              <thead>
+                <tr>
+                  
+                  <th scope="col" style="color:#000; font-family: sans-serif">Blog HeadLine</th>
+                  <th scope="col" style="color:#000; font-family: sans-serif">Topic</th>
+                  <th scope="col" style="color:#000; font-family: sans-serif">Writer's Name</th>
+                  <th scope="col" style="color:#000; font-family: sans-serif">Blog Details</th>
+                  <th scope="col" style="color:#000; font-family: sans-serif">Created At</th>
+                  <th scope="col" style="color:#000; font-family:sans-serif">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for blog in blogs %}
+                <tr>
+                  
+                  <td>{{ blog.blog_headline }}</td>
+                  <td>{{ blog.topic}}</td>
+                  <td>{{ blog.writers_name }}</td>
+                  <td>{{ blog.blog_details[:50] }}{{ '...' if blog.blog_details|length > 50 else '' }}</td>
+                  <td>{{ blog.created_at }}</td>
+                  <td> 
+                    <button class="btn btn-sm btn-outline-info" onclick="openModal({{ blog.blog_id }})" data-bs-toggle="modal" data-bs-target="#readBlog">Read The Blog</button>
+
+                    
+                </tbody>
+                </tr>
+                {% endfor %}
+                
+                <tbody class="education_table">
+                </tbody>
+            </table>
+          </div> -->
+          <div class="container">
+          <div class="row" id="all_blogs">
+          {% for blog in blogs %}
+          <div class="col-md-4">
+          <div class="card_to"
+           
+           style="width: 18rem; margin: 16px; background-image: linear-gradient(90deg, #ffffff, #99d5f1)">
+            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+            {% if blog.image %}
+            <img class="card-img-top" src="{{ url_for('static', filename='mainassets/images/blog_images/' + blog.image) }}" alt="Card image cap">
+             {% else %}
+            <!-- Provide a placeholder image or alternative content if no image is available -->
+            <img class="card-img-top" src="{{ url_for('static', filename='placeholder_image.jpg') }}" alt="Placeholder Image">
+             {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ blog.blog_headline }}</h5>
+              <p class="card-text" style="margin-bottom: 5px;">
+              <p>{{ blog.topic}}</p>
+              <p>{{ blog.writers_name }}</p>
+              <p>{{ blog.blog_details[:50] }}{{ '...' if blog.blog_details|length > 50 else '' }}</p>
+              <!-- <p>{{ blog.created_at }}</p> -->
+              <p>Date: {{ blog.created_at.strftime('%d-%m-%Y') }}</p>
+              </p>
+              <a href="#" class="btn btn-primary">
+                <button class="btn btn-sm btn-outline-info readBlogButton" 
+                data-writers_name="{{ blog.writers_name }}"
+                data-blog_headline="{{ blog.blog_headline }}"
+                data-topic="{{ blog.topic }}"
+                data-blog_details="{{ blog.blog_details }}"
+                data-created_at="{{ blog.created_at }}"
+                data-image="{{ blog.image }}"
+                 data-bs-toggle="modal" data-bs-target="#readBlog">Read The Blog</button>
+              </a>
+            </div>
+          </div>
+          </div>
+          {% endfor %}
+          </div>
+          <div class="row" id="pagination-container" style="margin-top: 40px;">
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                  <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                      <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                      </a>
+                  </li>
+                  {% for page in range(1, total_pages + 1) %}
+                  <li class="page-item {% if page == current_page %}active{% endif %}">
+                      <a class="page-link" href="#">{{ page }}</a>
+                  </li>
+                  {% endfor %}
+                  <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                      <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                      </a>
+                  </li>
+              </ul>
+          </nav>
+          
+          </div>
+          </div>
+          </div>
+        </div>
+    </div>
+   
+
+    
+    <button>
+      <a href="#" class="scroll-to-top" style="color: #fff;">
+        <i class="fas fa-arrow-up" ></i>
+      </a>
+      </button>
+      
+</div>
+</div>
+</div>
+
+ 
+        <div class="modal fade" id="readBlog" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content show_modal_content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalToggleLabel">Blog Image will be here</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="" method="POST" action="/blogs">
+                        <!-- <div class="mb-3">
+                          <label class="form-label" for="blog_id_input_update">Blog No.</label>
+                          
+                          <p id="blog_id_input_update" style="color:#000; font-family: sans-serif">
+
+                          </p>
+                      </div> -->
+                      <img src="" style="height:auto; width:80%; padding-left: 100px ;" id="image_modal" />
+                       
+                            <div class="mb-3">
+                                <label class="form-label" for="writers_name_input_update">Writer</label>
+                                <!-- <input type="text" class="form-control writers_name_input_update" name="writers_name" id="writers_name_modal"> -->
+                                <p id="writers_name_modal" style="color: #6c5ffc; font-size: 400;">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="topic_input_update">Topic</label>
+                                <!-- <input type="text" class="form-control topic_input_update" name="topic" id="topic_modal"> -->
+                                <p id="topic_modal" style="color:#000; font-family: sans-serif">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="blog_headline_input_update">Blog Headline</label>
+                                <!-- <input type="email" class="form-control blog_headline_input_update" name="blog_headline" id="blog_headline_modal"> -->
+                                <p id="blog_headline_modal" style="color:#000; font-family: sans-serif">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="created_at_input_update">Created At</label>
+                                <!-- <input type="text" class="form-control created_at_input_update" name="created_at" id="created_at"> -->
+                                <p id="created_at" style="color:#000; font-family: sans-serif">
+
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="blog_details_input_update">Blog Details</label>
+                                <!-- <input type="text" class="form-control blog_details_input_update" name="blog_details" id="blog_details_modal"> -->
+                                <p id="blog_details_modal" style="color:#000; font-family: sans-serif">
+
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="writeABlog" tabindex="-1" aria-labelledby="modalToggleLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <!-- <h5 class="modal-title" id="modalToggleLabel">Write a Blog</h5> -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                
+                  
+                <h4 class="text-center fw-semibold mt-7 header_5_title"></h4>
+                <span class="landing-title"></span>
+                <h2 class="text-center fw-semibold mb-0 px-2">Create Your<span
+                    class="text-primary mx-2">Blog & Article</span></h2>
+                    <div class="">
+                      <form class="form-horizontal reveal revealrotate m-t-20"
+                      action="/blog_creation" method="POST" id="blogForm" enctype="multipart/form-data">
+                          <div class="form-group">
+                          <div class="col-xs-12">
+                            <input class="form-control service_file_input" name="file_photo" type="file" id="formFile" required />
+                          </div>
+                        </div> 
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                            <input class="form-control" type="text" required placeholder="Blog Headline*"
+                              name="blog_headline" id="blog_headline" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                            <input class="form-control" type="text" required="" placeholder="Writer's Name*"
+                              id="writers_name" name="writers_name" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                            <input class="form-control" type="text" required="" placeholder="Topic*"
+                              id="topic" name="topic" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                            <textarea class="form-control" name="blog_details" id="blog_details" style="overflow:auto;"
+                              placeholder="Blog Details*" required></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
+                            <div class="alt-send-button">
+                              <span class="send-text">Create</span>
+                            </div>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                       
+                
+              </div>
+              <!-- Optionally, include a modal footer -->
+              <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        
+            
+
+            <!-- </div> -->
+</script>
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/registration', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            // Handle success response
+            console.log(data);
+            alert('Registration successful!');
+            // Redirect or perform other actions as needed
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error:', error);
+            alert('Registration failed! Please try again.');
+        });
+    });
+</script> -->
+<script>
+    // document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    //     event.preventDefault();
+    //     const formData = new FormData(this);
+    //     fetch('/registration', {
+    //         method: 'POST',
+    //         body: formData
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             // Show registration successful alert
+    //             alert('Registration successful!');
+    //             // Reload the page after a short delay (adjust the delay as needed)
+    //             setTimeout(() => {
+    //                 window.location.reload();
+    //             }, 2000); // Refresh after 2 seconds (adjust as needed)
+    //         }
+    //         else {
+    //             throw new Error('Network response was not ok.');
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //         alert('Registration failed! Please try again.');
+    //     });
+    // });
+
+    function fillFormWithData(data) {
+        
+            // document.getElementById("blog_id_input_update").innerText = data.blog_id;
+            document.getElementById("writers_name_modal").innerText = data.writers_name;
+            document.getElementById("blog_headline_modal").innerText = data.blog_headline;
+            document.getElementById("topic_modal").innerText = data.topic;
+            document.getElementById("blog_details_modal").innerText = data.blog_details;
+            // document.getElementById("created_at").innerText = data.created_at;
+            var created_at_date = new Date(data.created_at);
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var formatted_date = created_at_date.toLocaleDateString('en-UK', options);
+            document.getElementById("created_at").innerText = formatted_date;
+
+            var image = document.getElementById('image_modal');
+
+            // Set the image source
+            image.src = '{{ url_for("static", filename="mainassets/images/blog_images/") }}' +data.image;
+
+        }
+
+
+    function openModal(blogID) {
+   
+    console.log(blogID);
+    var blogs= {{ blogs | tojson }};
+
+    var blog= blogs.find(function (item) {
+        return item.blog_id== blogID;
+    });
+
+    console.log(blog);
+
+    // Call the function to fill the form with JSON data
+    fillFormWithData(blog);
+  }
+
+  document.getElementById('blogForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        fetch('/blog_creation', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show registration successful alert
+                alert('Blog Creation successful!');
+                // Reload the page after a short delay (adjust the delay as needed)
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000); // Refresh after 2 seconds (adjust as needed)
+            }
+            else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Blog Creation failed! Please try again.');
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+  var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (scrollPosition > 300) { // Adjust the scroll position where the button appears
+    document.querySelector('.scroll-to-top').style.display = 'block';
+  } else {
+    document.querySelector('.scroll-to-top').style.display = 'none';
+  }
+});
+
+</script>
+
+<script>
+  const navEl = document.querySelector('.navbar');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      navEl.classList.add('navbar-scrolled');
+    } else {
+      navEl.classList.remove('navbar-scrolled');
+    }
+  });
+
+
+  const btnEl = document.querySelector('.btn.btn-primary');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      btnEl.classList.add('btn-scrolled');
+    } else {
+      btnEl.classList.remove('btn-scrolled');
+    }
+  });
+
+ 
+  const headingEl = document.querySelector('.nav-item p h1');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      headingEl.classList.add('heading-scrolled');
+    } else {
+      headingEl.classList.remove('heading-scrolled');
+    }
+  });
+
+
+
+</script>
+
+
+
+<script>
+  // Function to handle pagination clicks
+  $(document).on('click', '.pagination a.page-link', function(e) {
+          e.preventDefault();
+          // Get the page number from the link
+          var page = $(this).text();
+          // Load data for the selected page
+          loadData(page);
+      });
+
+      function loadData(page) {
+         
+          // var yearValue= "";
+         
+          // selectedYear= $("#yearDropdown").text();
+          // debugger;
+
+          // if (selectedYear.trim()=="See Image Based on Year") {
+          //   yearValue= "";
+          // } else {
+          //   yearValue= selectedYear;
+          // }
+
+          $.ajax({
+              url: '/blog_pagination',
+              type: 'GET',
+              data: { page: page},
+              success: function(response) {
+                console.log("responseData", response);
+                  // Update the gallery content with the loaded data
+                  $('#all_blogs').empty();
+                  $.each(response.blogs, function(index, blog) {
+                    debugger;
+                      // var imageSrc = '{{ url_for("static", filename="mainassets/images/media/") }}' + gallery.image_name;
+                      // $('#all_blogs').append('<div class="col-md-4"><div class="thumbnail" style="width: 18rem; margin: 16px;" data-gallery-id="' + gallery.g_p_id + '" data-bs-toggle="modal" data-image_title="' + gallery.image_title + '" data-image_short_details="' + gallery.image_short_details + '" data-year="' + gallery.year + '" data-event="' + gallery.event + '" data-image_name="' + gallery.image_name + '" data-bs-target="#seeThisImage"><div><img src="' + imageSrc + '" alt="Image" style="width:100%"></div></div></div>');
+                      // Construct the HTML structure
+                      var imageSrc = '{{ url_for("static", filename="mainassets/images/blog_images/") }}' + blog.image;
+                      var cardHtml = '<div class="col-md-4">' +
+                        '<div class="card_to" style="width: 18rem; margin: 16px; background-image: linear-gradient(90deg, #ffffff, #99d5f1)">' +
+                        '<img class="card-img-top" src="' + (blog.image ? imageSrc : 'placeholder_image.jpg') + '" alt="Card image cap">' +
+                        '<div class="card-body">' +
+                        '<h5 class="card-title">' + blog.blog_headline + '</h5>' +
+                        '<p class="card-text" style="margin-bottom: 5px;">' + blog.topic + '</p>' +
+                        '<p>' + blog.writers_name + '</p>' +
+                        '<p>' + (blog.blog_details ? blog.blog_details.slice(0, 50) + (blog.blog_details.length > 50 ? '...' : '') : '') + '</p>' +
+                        '<p>Date: ' + blog.created_at + '</p>' +
+                        '<a href="#" class="btn btn-primary">' +
+                        '<button class="btn btn-sm btn-outline-info readBlogButton" ' +
+                        'data-writers_name="' + blog.writers_name + '" ' +
+                        'data-blog_headline="' + blog.blog_headline + '" ' +
+                        'data-topic="' + blog.topic + '" ' +
+                        'data-blog_details="' + blog.blog_details + '" ' +
+                        'data-created_at="' + blog.created_at + '" ' +
+                        'data-image="' + (blog.image ? blog.image : 'placeholder_image.jpg') + '" ' +
+                        'data-bs-toggle="modal" data-bs-target="#readBlog">Read The Blog</button>' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+
+                      // Append the HTML to the container
+                      $('#all_blogs').append(cardHtml);
+                    });
+                  // Update pagination links
+                  updatePagination(response.page, response.total_pages);
+              },
+              error: function(xhr, status, error) {
+                  console.error('Error loading data:', error);
+              }
+          });
+      }
+
+      function updatePagination(currentPage, totalPages) {
+          debugger;
+          var paginationHtml = '';
+          paginationHtml += '<nav aria-label="Page navigation">';
+          paginationHtml += '<ul class="pagination justify-content-center">';
+          paginationHtml += '<li class="page-item ' + (currentPage == 1 ? 'disabled' : '') + '">';
+          paginationHtml += '<a class="page-link" href="#" aria-label="Previous">';
+          paginationHtml += '<span aria-hidden="true">&laquo;</span>';
+          paginationHtml += '</a></li>';
+          for (var page = 1; page <= totalPages; page++) {
+              paginationHtml += '<li class="page-item ' + (page == currentPage ? 'active' : '') + '">';
+              paginationHtml += '<a class="page-link" href="#">' + page + '</a></li>';
+          }
+          paginationHtml += '<li class="page-item ' + (currentPage == totalPages ? 'disabled' : '') + '">';
+          paginationHtml += '<a class="page-link" href="#" aria-label="Next">';
+          paginationHtml += '<span aria-hidden="true">&raquo;</span>';
+          paginationHtml += '</a></li></ul></nav>';
+
+          // Update the pagination HTML
+          $('#pagination-container').html(paginationHtml);
+      }
+
+      $('#all_blogs').on('click', '.readBlogButton', function() {
+       
+        var blogId = $(this).data('blog_id');
+        var writers_name = $(this).data('writers_name');
+        var blog_headline = $(this).data('blog_headline');
+        var topic = $(this).data('topic');
+        var blog_details = $(this).data('blog_details');
+        var created_at = $(this).data('created_at');
+        var image = $(this).data('image');
+        openModalPag(blogId, writers_name, blog_headline, topic, blog_details, created_at, image);
+
+
+      function openModalPag(blogId, writers_name, blog_headline, topic, blog_details, created_at, image) {
+
+         
+
+          var image= {
+            blogId: blogId,
+            writers_name: writers_name,
+            blog_headline: blog_headline,
+            topic: topic,
+            blog_details: blog_details,
+            image: image,
+            created_at: created_at
+          };
+
+          console.log(image);
+
+          // Call the function to fill the form with JSON data
+          fillFormWithData(image);
+
+          }
+          });
+
+
+</script>
+
+</body>
+</html>

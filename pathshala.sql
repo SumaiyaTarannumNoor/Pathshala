@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2024 at 07:44 AM
+-- Generation Time: Apr 20, 2024 at 08:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -270,7 +270,9 @@ INSERT INTO `blogs` (`blog_id`, `writers_name`, `topic`, `blog_headline`, `blog_
 (11, 'DFSBVDFBV', 'Developmentzdfbv', 'Random AI is GAINING Popularity', 'FXDGDFGHGFXDH', '2024-03-25 08:16:37', '6201-SeriesHeaders_NARSHP_2000x800.jpg'),
 (13, 'Sumaiya', 'Development', 'Naruto Is Over, Accept It', 'Tarty giant letter generator uses text symbols ▓▒░▄█▀▌▐─. █▀█ █▄█ ▀█▀ / █▬█ █ ▀█▀ font (no, not ▟▛ █▬█ █ ▜▛ font) uses a different bunch of symbols to fonm letters. By the way, check out my collection of text drawings. ≧^◡^≦ When you\'ll find a copy of my big text generators around the internet - there\'s plenty of copies, please know that this is the actual original and we actually designed all of these big letters with my friends, including ASCII Text Art Generator and 𝗧𝗲𝘅𝘁 font copy paste. Proud and angry!', '2024-03-25 08:46:57', '6201-SeriesHeaders_NARSHP_2000x800.jpg'),
 (14, 'Sumaiya', 'Development', 'Naruto Is Over, Accept It', 'Tarty giant letter generator uses text symbols ▓▒░▄█▀▌▐─. █▀█ █▄█ ▀█▀ / █▬█ █ ▀█▀ font (no, not ▟▛ █▬█ █ ▜▛ font) uses a different bunch of symbols to fonm letters. By the way, check out my collection of text drawings. ≧^◡^≦ When you\'ll find a copy of my big text generators around the internet - there\'s plenty of copies, please know that this is the actual original and we actually designed all of these big letters with my friends, including ASCII Text Art Generator and 𝗧𝗲𝘅𝘁 font copy paste. Proud and angry!', '2024-03-25 08:47:44', '6201-SeriesHeaders_NARSHP_2000x800.jpg'),
-(15, 'Sumaiya', 'Development', 'Naruto Rules Forever', 'The plot of the Naruto series is told across several different time periods, known as Part I, Part II, the Blank Period, New Era: Part I, and New Era: Part II. These time periods are themselves broken into several story arcs comprised of manga chapters, anime episodes, and/or other media types. This article attempts to present these sections of the story in order, though the chronology sometimes differs between different adaptations of the same material.', '2024-03-27 06:10:46', 'custom-3d-wallpaper-naruto-photo-wallpaper.jpg');
+(15, 'Sumaiya', 'Development', 'Naruto Rules Forever', 'The plot of the Naruto series is told across several different time periods, known as Part I, Part II, the Blank Period, New Era: Part I, and New Era: Part II. These time periods are themselves broken into several story arcs comprised of manga chapters, anime episodes, and/or other media types. This article attempts to present these sections of the story in order, though the chronology sometimes differs between different adaptations of the same material.', '2024-03-27 06:10:46', 'custom-3d-wallpaper-naruto-photo-wallpaper.jpg'),
+(16, 'Fluffy', 'Anime', 'Naruto', 'Naruto vs Sasuke soon to be seen.', '2024-04-20 06:46:53', '6201-SeriesHeaders_NARSHP_2000x800.jpg'),
+(17, 'Fluffy', 'Anime', 'Naruto ', 'We are going to re watch the season.', '2024-04-20 06:49:01', 'custom-3d-wallpaper-naruto-photo-wallpaper.jpg');
 
 -- --------------------------------------------------------
 
@@ -390,7 +392,7 @@ INSERT INTO `trainees` (`trainee_id`, `full_name`, `email`, `phone_number`, `add
 (30, 'koli', 'koli.koli@email.com', '402834', 'Dhanmondi, Dhaka', 'Graphic Design', 'HSC', NULL, NULL, '1-3 years', '{\"upwork\": \"dfqeferf\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, fvfv', 'Copywriting, Data Entry, SEO', 'Copywriting, Data Entry, SEO', '', '2024-03-31 06:06:03'),
 (31, 'wefrf', 'ffefewf@gmail.com', '4', 'dfv', 'ASDASD', 'SSC', NULL, NULL, '0-1 year', '{}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'fdsfdfvd', 'Bangla', '', '', '12345', '2024-03-31 06:06:03'),
 (32, 'fregfe', 'srewrf@gmail.com', '645676', 'Dhaka', 'deigning', 'HSC', NULL, NULL, '0-1 year', '{\"fiverr\": \"v nvbn vbn\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla', '', '', 'weer', '2024-03-31 06:06:03'),
-(33, 'Fluffy', 'fluffy@email.com', '3424355', 'Dhanmondi, Dhaka', 'Graphic Design', 'MSc', NULL, NULL, '1-3 years', '{\"fiverr\": \"ddjsdkc\", \"other\": \"cdscvjhasbdncvlk\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, Japanese', 'Copywriting', 'Copywriting, dwfawdfae', '12345', '2024-03-31 06:06:03'),
+(33, 'Fluffy', 'fluffy@email.com', '3424355', 'Dhanmondi, Dhaka', 'Graphic Design, Video Editting', 'SSC', NULL, NULL, '0-1 year', '{\"fiverr\": \"Fiverr login\", \"other\": \"Other\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', 'UX/UI Design', 'Copywriting, Hello', '12345', '2024-03-31 06:06:03'),
 (34, 'Fluffy', 'fluffy1@email.com', '334244534', 'Dhanmondi, Dhaka', '', 'BSc', NULL, NULL, '3-5 years', '{\"fiverr\": \"wfgrwbrgb\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', 'UX/UI Design, gdfgfb', 'UX/UI Design', '12345', '2024-03-31 06:06:03'),
 (35, 'Nihar', 'nihar@gmail.com', '354646', 'Dhanmondi, Dhaka', 'Graphic Design', 'BSc', NULL, NULL, '1-3 years', '{\"fiverr\": \"Fiverr\", \"other\": \"Nothing\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', 'Copywriting, Graphic Design, UX/UI Design', 'Copywriting, Graphic Design, UX/UI Design', 'nihar', '2024-03-31 08:03:05'),
 (36, 'Nitu', 'nitu@gmail.com', '5465767', 'Dhanmondi, Dhaka', 'Graphic Design', 'BSc', NULL, NULL, '3-5 years', '{\"fiverr\": \"Fiverr\"}', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', 'TKG', 'Bangla, English', 'Copywriting, Video Editing', 'Copywriting', '1234', '2024-04-02 04:21:03'),
@@ -529,7 +531,7 @@ ALTER TABLE `ahm_testimonial`
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `hide_show`

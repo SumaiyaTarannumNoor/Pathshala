@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Barrio&family=Cabin+Sketch:wght@400;700&family=Castoro+Titling&family=Chilanka&family=Finger+Paint&family=Kranky&family=Reggae+One&family=Ribeye+Marrow&family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.maateen.me/solaiman-lipi/font.css');@import url('https://fonts.maateen.me/siyam-rupali/font.css');@import url('https://fonts.maateen.me/kalpurush/font.css');@import url('https://fonts.maateen.me/charukola-ultra-light/font.css');@import url('https://fonts.maateen.me/adorsho-lipi/font.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Chakma&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@100;300;400;500;700;800&family=Carrois+Gothic+SC&family=Julius+Sans+One&family=Marcellus+SC&family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100;200;300;400;500;600;700;800&display=swap');@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
+.font-barrio{
+    font-family:'AdorshoLipi', 'Barrio', cursive;
+}
+.font-cabin-sketch{
+    font-family: 'Cabin Sketch','AdorshoLipi', cursive;
+}
+.font-castoro{
+    font-family: 'Castoro Titling','AdorshoLipi', cursive;
+}
+.font-chilanka{
+    font-family: 'Chilanka','AdorshoLipi', cursive;
+}
+.font-finger-print{
+    font-family: 'Finger Paint','AdorshoLipi', cursive;
+}
+.font-kranky{
+    font-family: 'Kranky','AdorshoLipi', cursive;
+}
+.font-reggae-one{
+    font-family: 'Reggae One','AdorshoLipi', cursive;
+}
+.font-ribeye-marrow{
+    font-family: 'Ribeye Marrow','AdorshoLipi', cursive;
+}
+.font-shadows-into-light{
+    font-family: 'Shadows Into Light','AdorshoLipi', cursive;
+}
+.font-inter{
+    font-family: 'Inter','AdorshoLipi', sans-serif;
+}
+.font-bebas{
+    font-family: 'Bebas Neue','AdorshoLipi', sans-serif;
+}
+.font-alegreya{
+    font-family: 'Alegreya Sans SC','AdorshoLipi', sans-serif;
+}
+.font-carrois-gothic{
+    font-family: 'Carrois Gothic SC','AdorshoLipi', sans-serif;
+}
+.font-julis-sans{
+    font-family: 'Julius Sans One','AdorshoLipi', sans-serif;
+}
+.font-marcellus{
+    font-family: 'Marcellus SC','AdorshoLipi', serif;
+}
+.font-staatliches{
+    font-family: 'Staatliches','AdorshoLipi', cursive;
+}
+
+/*Bangla Webfont Section */
+.font-solaimanlipi{
+    font-family: 'SolaimanLipi', sans-serif;
+}
+.font-siyam-rupali{
+    font-family: 'SiyamRupali', sans-serif;
+}
+.font-kalpurush{
+    font-family: 'Kalpurush', sans-serif;
+}
+.font-charukola{
+    font-family: 'CharukolaUltraLight', "IBM Plex Sans", sans-serif;
+}
+.font-adorsholipi{
+    font-family: 'AdorshoLipi', sans-serif;
+}
+.font-anek-bangla{
+    font-family: 'Anek Bangla', sans-serif;
+}
+.font-hind-siliguri{
+    font-family: 'Hind Siliguri', sans-serif;
+}
+
+
+.font-chakma{
+    font-family: 'Noto Sans Chakma', sans-serif;
+}

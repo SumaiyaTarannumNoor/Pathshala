@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+    <html
+    lang="en"
+    class="light-style customizer-hide"
+    dir="ltr"
+    data-theme="theme-default"
+    data-assets-path="../assets/"
+    data-template="vertical-menu-template-free"
+  >
+    <head>
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+      />
+  
+      <title>Trainee Registration</title>
+  
+      <meta name="description" content="" />
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/img/favicon/favicon.ico') }}" />
+      <!-- Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
+  
+      <!-- Icons. Uncomment required icon fonts -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/pages/page-auth.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/fonts/boxicons.css') }}" />
+      <!-- Core CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/demo.css') }}" />
+      <!-- Vendors CSS -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+      <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+      <!-- Page CSS -->
+      <!-- Helpers -->
+      <script src="{{ url_for('static', filename='assets/vendor/js/helpers.js') }}"></script>
+      <script src="{{ url_for('static', filename='assets/js/config.js') }}"></script>
+      <!-- Page CSS -->
+      <!-- Page -->
+  
+    </head>
+    <style>
+        .logo a:hover {
+
+    border-bottom: 1px solid #fff; /* Add underline on hover */
+    color: #000; /* Change text color on hover */
+    }
+
+    </style>
+<body>
+    <div class="container-xxl" >
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner">
+            <!-- Register -->
+                <div class="card">
+                    <div class="card-body">
+                    <!-- Logo -->
+                    <div class="app-brand justify-content-center" style="margin-bottom: 5px;">
+                        <span class="logo">
+                            <a href="https://freelancingpathshala.com/" title="Go back to home page">
+                                <img src="{{ url_for('static', filename='mainassets/images/logos/logo_aa.jpg') }}" alt="Logo" style="height: 100px; width: auto;">
+                            </a>
+                        </span>
+                    </div>
+                        <form id="registrationForm" method="POST" action="/registration">
+                            <h6 style="color: rebeccapurple; margin-top: 1rem;">The fields containing (*) are required.</h6>
+                           <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="full_name">Full Name </label>
+                                    <label for="full_name" style="color: rebeccapurple;">*</label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name" required placeholder="Enter your Full Name" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="email">Email 
+                                        (The email address should be unique to the user.)
+                                    </label>
+                                    <label for="email" style="color: rebeccapurple;">*</label>
+                                    <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="organization">Organization</label>
+                                    <input type="text" class="form-control" id="organization" name="organization" placeholder="Enter your organization name" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="phone_number">Phone Number</label>
+                                    <label for="phone_number" style="color: rebeccapurple;">*</label>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" required placeholder="Enter your phone number" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                
+                                <div class="mb-3">
+                                    <label for="address">Address</label>
+                                    <label for="address" style="color: rebeccapurple;">*</label>
+                                    <input type="text" class="form-control" id="address" name="address" required placeholder="Enter your address" autofocus>
+                                </div>
+                            </div>
+                            
+                           </div>
+                            
+                           <div class="mb-3">
+                            <label for="educational_level">Educational Level</label>
+                            <label for="educational_level" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
+                            <select class="form-control" id="educational_level" name="educational_level" required autofocus>
+                                <option value="SSC">SSC</option>
+                                <option value="HSC">HSC</option>
+                                <option value="BSc">BSc</option>
+                                <option value="MSc">MSc</option>
+                                <!-- You can add more options here if needed -->
+                            </select>
+                        </div>
+                        
+                            
+                            
+                            <!-- <div class="mb-3">
+                                <label for="educational_level">Educational Level</label>
+                                <label for="educational_level" style="color: rebeccapurple;">*</label>
+                                <input type="text" class="form-control" id="educational_level" name="educational_level" required placeholder="Enter your educational level: SSC, HSC, BSc, MSc etc" autofocus>
+                            </div> -->
+                            <div class="mb-3">
+                                <label for="skills">Skills</label>
+                                <input type="text" class="form-control" id="skills" name="skills" placeholder="Enter your skills" autofocus>
+                            </div>
+                            <!-- <div class="mb-3">
+                                <label for="institution">Institution</label>
+                                <label for="full_name" style="color: rebeccapurple;">*</label>
+                                <input type="text" class="form-control" id="institution" name="institution" required placeholder="Enter your institution" autofocus>
+                            </div> -->
+                            <!-- <div class="mb-3">
+                                <label for="educational_certificates">Educational Certificates</label>
+                                <label for="full_name" style="color: rebeccapurple;">*</label>
+                                <input type="text" class="form-control" id="educational_certificates" name="educational_certificates" required placeholder="Enter your educational certificates" autofocus>
+                            </div>  -->
+
+                            <div class="mb-3">
+                                <label for="freelancing_experience">Freelancing Experience</label>
+                                <label for="freelancing_experience" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
+                                <select class="form-control" id="freelancing_experience" name="freelancing_experience" required autofocus>
+                                    <option value="0-1 year">0-1 Year</option>
+                                    <option value="1-3 years">1-3 Years</option>
+                                    <option value="3-5 years">3-5 Years</option>
+                                    <option value="more than 5 years">More Than Five Years</option>
+                                    <!-- You can add more options here if needed -->
+                                </select>
+                            </div>
+                            <!-- <div class="mb-3">
+                                <label for="portfolio_link">Portfolio Link</label>
+                                <input type="text" class="form-control" id="portfolio_link" name="portfolio_link" placeholder="Enter your portfolio link (if any)" autofocus>
+                            </div> -->
+                            <div class="mb-3">
+                                <label>Portfolio Links</label><br>
+                                <input type="checkbox" id="fiverr" name="fiverr" value="Fiverr">
+                                <label for="fiverr"> Fiverr</label><br>
+                                <input type="text" id="fiverr_link" name="fiverr_link" placeholder="Enter Fiverr Link" style="display: none; width: 600px; height: 40px;">
+                            
+                                <input type="checkbox" id="upwork" name="upwork" value="Upwork">
+                                <label for="upwork"> Upwork</label><br>
+                                <input type="text" id="upwork_link" name="upwork_link" placeholder="Enter Upwork Link" style="display: none; width: 600px; height: 40px;">
+
+                                <input type="checkbox" id="freelancer" name="freelancer" value="Freelancer">
+                                <label for="freelancer"> Freelancer</label><br>
+                                <input type="text" id="freelancer_link" name="freelancer_link" placeholder="Enter Freelancer Link" style="display: none; width: 600px; height: 40px;">
+
+                                <input type="checkbox" id="toptal" name="toptal" value="Toptal">
+                                <label for="toptal"> Toptal</label><br>
+                                <input type="text" id="toptal_link" name="toptal_link" placeholder="Enter Toptal Link" style="display: none; width: 600px; height: 40px;">
+
+                                <input type="checkbox" id="guru" name="guru" value="Guru">
+                                <label for="guru"> Guru</label><br>
+                                <input type="text" id="guru_link" name="guru_link" placeholder="Enter Guru Link" style="display: none; width: 600px; height: 40px;">
+                            
+                                <input type="checkbox" id="other" name="other" value="Other">
+                                <label for="other"> Other</label><br>
+                                <input type="text" id="other_link" name="other_link" placeholder="Enter Other link" style="display: none;width: 600px; height: 40px;">
+                            </div>
+                            
+                            <script>
+                                // Function to toggle the visibility of the input field based on checkbox state
+                                function toggleInput(checkboxId, inputId) {
+                                    var checkbox = document.getElementById(checkboxId);
+                                    var input = document.getElementById(inputId);
+                                    
+                                    checkbox.addEventListener("change", function() {
+                                        if (this.checked) {
+                                            input.style.display = "block";
+                                            input.focus();
+                                        } else {
+                                            input.style.display = "none";
+                                        }
+                                    });
+                                }
+                            
+                                // Call the toggleInput function for each checkbox and its corresponding input
+                                toggleInput("fiverr", "fiverr_link");
+                                toggleInput("upwork", "upwork_link");
+                                toggleInput("freelancer", "freelancer_link");
+                                toggleInput("toptal", "toptal_link");
+                                toggleInput("guru", "guru_link");
+                                toggleInput("other", "other_link");
+                            </script>
+                            
+                            <!-- <div class="mb-3">
+                                <label for="availability">Availability</label>
+                                <label for="full_name" style="color: rebeccapurple;">*</label>
+                                <input type="text" class="form-control" id="availability" name="availability" required placeholder="Enter your availability (When can you start to work?)" autofocus>
+                            </div> -->
+                            <!-- <div class="mb-3">
+                                <label for="preferred_work_type">Preferred Work Type</label>
+                                <input type="text" class="form-control" id="preferred_work_type" name="preferred_work_type" placeholder="Enter your preferred work type (part-time/full-time/on-contarct)" autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label for="hourly_rate">Hourly Rate</label>
+                                <input type="text" class="form-control" id="hourly_rate" name="hourly_rate" placeholder="Enter your hourly rate in BDT" autofocus>
+                            </div> -->
+                            <!-- <div class="mb-3">
+                                <label for="language_proficiency">Language Proficiency</label>
+                                <input type="text" class="form-control" id="language_proficiency" name="language_proficiency" placeholder="Enter your language proficiency (e.g: Bangla(Native), English(Intermediate))" autofocus>
+                            </div> -->
+
+                            <div class="mb-3">
+                                <label for="language_proficiency">Language Proficiency</label><br>
+                                <input type="checkbox" id="bangla" name="bangla" value="Bangla">
+                                <label for="bangla"> Bangla</label><br>
+                                <input type="checkbox" id="english" name="english" value="English">
+                                <label for="english"> English</label><br>
+                                <input type="checkbox" id="other_language_checkbox" name="other_language_checkbox" value="Other">
+                                <label for="other_language_checkbox"> Other</label><br>
+                                <input type="text" id="other_language_input" name="other_language" placeholder="Enter other language" style="display: none; width: 600px; height: 40px;">
+                                
+                                <script>
+                                    document.getElementById("other_language_checkbox").addEventListener("change", function() {
+                                        var otherLanguageInput = document.getElementById("other_language_input");
+                                        if (this.checked) {
+                                            otherLanguageInput.style.display = "block";
+                                            otherLanguageInput.focus();
+                                        } else {
+                                            otherLanguageInput.style.display = "none";
+                                        }
+                                    });
+                                </script>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="done_trainings">Is there any training that you have done</label><br>
+                                <input type="checkbox" id="copywriting" name="copywriting" value="Copywriting">
+                                <label for="copywriting"> Copywriting</label><br>
+                                <input type="checkbox" id="digital_marketing" name="digital_marketing" value="Digital Marketing">
+                                <label for="digital_marketing"> Digital Marketing</label><br>
+                                <input type="checkbox" id="graphic_design" name="graphic_design" value="Graphic Design">
+                                <label for="graphic_design"> Graphic Design</label><br>
+                                <input type="checkbox" id="data_entry" name="data_entry" value="Data Entry">
+                                <label for="data_entry"> Data Entry</label><br>
+                                <input type="checkbox" id="seo" name="seo" value="SEO">
+                                <label for="seo"> SEO</label><br>
+                                <input type="checkbox" id="uxui" name="uxui" value="UX/UI Design">
+                                <label for="uxui"> UX/UI Design</label><br>
+                                <input type="checkbox" id="other_done_training_checkbox" name="other_done_training_checkbox" value="Other_Done_Training">
+                                <label for="other_done_training_checkbox"> Other</label><br>
+                                <input type="text" id="other_done_training_input" name="other_done_training" placeholder="Enter here if you have done any other trainings" style="display: none; width: 600px; height: 40px;">
+                                
+                                <script>
+                                    document.getElementById("other_done_training_checkbox").addEventListener("change", function() {
+                                        var otherDoneTrainingInput = document.getElementById("other_done_training_input");
+                                        if (this.checked) {
+                                            otherDoneTrainingInput.style.display = "block";
+                                            otherDoneTrainingInput.focus();
+                                        } else {
+                                            otherDoneTrainingInput.style.display = "none";
+                                        }
+                                    });
+                                </script>
+                            </div>    
+                            
+                            <div class="mb-3">
+                                <label for="wantTo_trainings">Is there any training you are interested to do</label><br>
+                                <input type="checkbox" id="copywriting" name="copywriting" value="Copywriting">
+                                <label for="copywriting"> Copywriting</label><br>
+                                <input type="checkbox" id="digital_marketing" name="digital_marketing" value="Digital Marketing">
+                                <label for="digital_marketing"> Digital Marketing</label><br>
+                                <input type="checkbox" id="graphic_design" name="graphic_design" value="Graphic Design">
+                                <label for="graphic_design"> Graphic Design</label><br>
+                                <input type="checkbox" id="data_entry" name="data_entry" value="Data Entry">
+                                <label for="data_entry"> Data Entry</label><br>
+                                <input type="checkbox" id="seo" name="seo" value="SEO">
+                                <label for="seo"> SEO</label><br>
+                                <input type="checkbox" id="uxui" name="uxui" value="UX/UI Design">
+                                <label for="uxui"> UX/UI Design</label><br>
+                                <input type="checkbox" id="other_wantTo_training_checkbox" name="other_wantTo_training_checkbox" value="Other_Want_To_Training">
+                                <label for="other_wantTo_training_checkbox"> Other</label><br>
+                                <input type="text" id="other_wantTo_training_input" name="other_wantTo_training" placeholder="Enter here if you want to do any other trainings" style="display: none; width: 600px; height: 40px;">
+                                
+                                <script>
+                                    document.getElementById("other_wantTo_training_checkbox").addEventListener("change", function() {
+                                        var otherWantToTrainingInput = document.getElementById("other_wantTo_training_input");
+                                        if (this.checked) {
+                                            otherWantToTrainingInput.style.display = "block";
+                                            otherWantToTrainingInput.focus();
+                                        } else {
+                                            otherWantToTrainingInput.style.display = "none";
+                                        }
+                                    });
+                                </script>
+                            </div>    
+                            
+
+                            <!-- <div class="mb-3">
+                                <label for="certifications">Certifications</label>
+                                <input type="text" class="form-control" id="certifications" name="certifications" placeholder="Enter your certifications (Corsera/Udemy etc)" autofocus>
+                            </div> -->
+                            <!-- <div class="mb-3">
+                                <label for="linkedIn_profile">LinkedIn Profile</label>
+                                <input type="text" class="form-control" id="linkedIn_profile" name="linkedIn_profile" placeholder="Enter your LinkedIn Profile" autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label for="github_profile">GitHub Profile</label>
+                                <input type="text" class="form-control" id="github_profile" name="github_profile" placeholder="Enter your GitHub Profile" autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label for="course_joining_date">Course Joining Date</label>
+                                <label for="full_name" style="color: rebeccapurple;">*</label>
+                                <input type="date" class="form-control" id="course_joining_date" name="course_joining_date" required placeholder="Enter your course starting date" autofocus>
+                            </div> -->
+                            <!-- <div class="mb-3">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                            <label for="confirm_password">Confirm Password:</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                            </div>     -->
+
+                            <div class="mb-3">
+                                <label for="password">Password:</label>
+                                <div class="password-field">
+                                    <input type="password" id="password" name="password" required style="width:400px; border-radius: 5px;" required autofocus>
+                                    <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                                <label for="confirm_password">Confirm Password:</label>
+                                <div class="password-field">
+                                    <input type="password" id="confirm_password" name="confirm_password" required style="width:400px; border-radius: 5px;" required autofocus>
+                                    <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            
+
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
+                            </div>
+                        </form>
+                    </div>
+            <!-- <form id="registrationForm" method="POST" action="/registration"> -->
+            
+        <!-- </form> -->
+
+               
+        <!-- <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Get the form element
+                var form = document.querySelector("form");
+        
+                // Add submit event listener to the form
+                form.addEventListener("submit", function(event) {
+                    // Prevent the default form submission
+                    event.preventDefault();
+        
+                    // Get the values of password and confirm password fields
+                    var password = document.getElementById("password").value;
+                    var confirm_password = document.getElementById("confirm_password").value;
+        
+                    // Check if passwords match
+                    if (password !== confirm_password) {
+                        alert("Passwords do not match");
+                        return false; // Prevent form submission
+                    }
+        
+                    // If passwords match, submit the form
+                    this.submit();
+                });
+            });
+        </script> -->
+        
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/registration', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            // Handle success response
+            console.log(data);
+            alert('Registration successful!');
+            // Redirect or perform other actions as needed
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error:', error);
+            alert('Registration failed! Please try again.');
+        });
+    });
+</script> -->
+<!-- <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        fetch('/registration', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show registration successful alert
+                alert('Registration successful!');
+                // Reload the page after a short delay (adjust the delay as needed)
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000); // Refresh after 2 seconds (adjust as needed)
+            }
+            else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Registration failed! Please try again.');
+        });
+    });
+</script> -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get the values of password and confirm password fields
+            var password = document.getElementById("password").value;
+            var confirm_password = document.getElementById("confirm_password").value;
+
+            // Check if passwords match
+            if (password !== confirm_password) {
+                alert("Passwords do not match");
+                return false; // Prevent form submission
+            }
+            else{
+                const formData = new FormData(this);
+                fetch('/registration', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Show registration successful alert
+                        alert('Registration successful!');
+                        // Reload the page after a short delay (adjust the delay as needed)
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000); // Refresh after 2 seconds (adjust as needed)
+                    }
+                    else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Registration failed! Please try again.');
+                });
+            }
+            
+        });
+    });
+</script>
+
+<script>
+    function togglePasswordVisibility(inputId) {
+        var input = document.getElementById(inputId);
+        var icon = input.parentElement.querySelector('.toggle-password i');
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
+
+
+
+</body>
+</html>
