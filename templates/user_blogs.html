@@ -118,7 +118,7 @@
     .heading-scrolled{
       color: #ffffff;
     }
-    
+
     .card_to{
       border-radius: 12px;
     }
@@ -147,7 +147,7 @@
           
           <li class="nav-item">
             <!-- <p style="display: flex; align-self: center; "><h1 style="color: #0c0c1a; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 2.5px 1px #292e4a">Blogs & Articles</h1></p> -->
-            <p style="display: flex;align-self: center;"><h1 style="color: #fff; font-style: bold; font-weight: 700; font-size: 40px; text-shadow: 4px 2px #6c5ffc">Blogs & Articles</h1></p>
+            <p style="display: flex; align-self: center;"><h1 style="color: #fff; font-style: bold; text-align: center; font-weight: 700; font-size: 40px; text-shadow: 4px 2px #6c5ffc">{{ session['name'] }}'s Blogs & Articles</h1></p>
           </li>
          
         </ul>
@@ -156,10 +156,9 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
         <div>
-          <button id="blogButton" style="width: 9rem; margin-right: 50px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#writeABlog">Write a Blog</button><br>
-          <button id="profileButton" style="width: 9rem; margin-right: 50px;" class="btn btn-primary">My Profile</button>
-       
-        </div> 
+            <button style="width: 9rem;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#writeABlog">Write a Blog</button><br> 
+            <button id="profileButton" style="width: 9rem; margin-right: 50px;" class="btn btn-primary">My Profile</button>
+           </div> 
       </div>
     </div>
   </nav>
@@ -170,7 +169,7 @@
     <div class="card-body">
     <div class="bg-image-landing section header_5_id" >
     <div class="container" style="padding-bottom: 40px; padding-top: 20px; margin-top: 100px;">
-      <h2 style="color:#6c5ffc; font-style: bold; font-weight: 700; font-size: 40px; text-align: center; margin-bottom: 40px;">Read Blogs from People around the world!</h2>
+      <h2 style="color:#6c5ffc; font-style: bold; font-weight: 700; font-size: 40px; text-align: center; margin-bottom: 40px; align-self: center;">Read Your Own Blogs!</h2>
     <!-- <div class="table">
         <h1 style="color:#6c5ffc;">Read Blogs from People around the world!</h1>
         <div class="table-responsive">
@@ -577,6 +576,7 @@
       navEl.classList.remove('navbar-scrolled');
     }
   });
+
  
   const headingEl = document.querySelector('.nav-item p h1');
 
@@ -724,48 +724,50 @@
 
 
 </script>
+
 <script>
-  document.getElementById('profileButton').addEventListener('click', function() {
-      fetch('{{ url_for('profile_dashboard') }}', {
-          method: 'GET',
-          credentials: 'same-origin'
-      })
-      .then(response => {
-          if (response.ok) {
-              window.location.href = response.url; // Redirect to the URL returned by the server
-          } else {
-              console.error('Failed to get to profile:', response.statusText);
-              // Handle logout failure
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          // Handle error
-      });
+    document.getElementById('profileButton').addEventListener('click', function() {
+        fetch('{{ url_for('profile_dashboard') }}', {
+            method: 'GET',
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = response.url; // Redirect to the URL returned by the server
+            } else {
+                console.error('Failed to get to profile:', response.statusText);
+                // Handle logout failure
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error
+        });
+    });
+    </script>
+
+<script>
+    const btnEl = document.querySelector('.btn.btn-primary');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      btnEl.classList.add('btn-scrolled');
+    } else {
+      btnEl.classList.remove('btn-scrolled');
+    }
   });
+  
+  const btn2El = document.querySelector('#profileButton');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= 56) {
+      btn2El.classList.add('btn-scrolled');
+    } else {
+      btn2El.classList.remove('btn-scrolled');
+    }
+  });
+  
   </script>
-<script>
-  const btnEl = document.querySelector('.btn.btn-primary');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY >= 56) {
-    btnEl.classList.add('btn-scrolled');
-  } else {
-    btnEl.classList.remove('btn-scrolled');
-  }
-});
-
-const btn2El = document.querySelector('#profileButton');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY >= 56) {
-    btn2El.classList.add('btn-scrolled');
-  } else {
-    btn2El.classList.remove('btn-scrolled');
-  }
-});
-</script>
-
 
 </body>
 </html>

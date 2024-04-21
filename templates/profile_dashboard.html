@@ -153,10 +153,84 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
-        <button id="logoutButton" style="width: 9rem; margin-right: 50px;" class="btn btn-primary">Log Out</button>
+        <div>
+          <button id="blogButton" style="width: 9rem; margin-right: 50px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#writeABlog">Write a Blog</button><br>
+          <button id="logoutButton" style="width: 9rem; margin-right: 50px;" class="btn btn-primary">Log Out</button>
+       
+        </div>
       </div>
     </div>
   </nav>
+
+  <!--Blog Writing Modal Starts-->
+  <div class="modal fade" id="writeABlog" tabindex="-1" aria-labelledby="modalToggleLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="modalToggleLabel">Write a Blog</h5> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+            
+          <h4 class="text-center fw-semibold mt-7 header_5_title"></h4>
+          <span class="landing-title"></span>
+          <h2 class="text-center fw-semibold mb-0 px-2">Create Your<span
+              class="text-primary mx-2">Blog & Article</span></h2>
+              <div class="">
+                <form class="form-horizontal reveal revealrotate m-t-20"
+                action="/blog_creation" method="POST" id="blogForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                    <div class="col-xs-12">
+                      <input class="form-control service_file_input" name="file_photo" type="file" id="formFile" required />
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <input class="form-control" type="text" required placeholder="Blog Headline*"
+                        name="blog_headline" id="blog_headline" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <input class="form-control" type="text" required="" placeholder="Writer's Name*"
+                        id="writers_name" name="writers_name" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <input class="form-control" type="text" required="" placeholder="Topic*"
+                        id="topic" name="topic" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <textarea class="form-control" name="blog_details" id="blog_details" style="overflow:auto;"
+                        placeholder="Blog Details*" required></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
+                      <div class="alt-send-button">
+                        <span class="send-text">Create</span>
+                      </div>
+                    </button>
+                  </div>
+                </form>
+              </div>
+                 
+          
+        </div>
+        <!-- Optionally, include a modal footer -->
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <!--Blog Writing Modal Ends-->
   
 <div class="container">
   
@@ -229,6 +303,18 @@
                     <!-- Portfolio links will be dynamically added here -->
                 </ul>
             </div>
+            <div class="card mt-3" style="margin:20px; background-image: linear-gradient(30deg, #ffffff, #99d5f1); align-items: center;">
+              <div class="card-body">
+                <h6 style="color: #fff; font-style: bold; font-weight: 600; font-size: 20px; text-shadow: 2px 1px #99d5f1">Read Your Own Blogs</h6>
+                 <a href="{{ url_for('user_blogs') }}"> <button id="blogButton" style="width: 9rem; margin-bottom: 10px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#writeABlog">Let's Go!</button></a>
+                <h6 style="color: #fff; font-style: bold; font-weight: 600; font-size: 20px; text-shadow: 2px 1px #99d5f1">Read Blogs Around the World!</h6>
+                <a href="{{ url_for('blogs') }}"><button id="blogButton" style="width: 9rem" class="btn btn-primary">Let's Go!</button></a>
+              </div>
+          </div>
+            <div class="card mt-3">
+              
+          </div>
+
             <div class="card mt-3">
               <div class="card h-100">
                 <div class="card-body">
@@ -867,6 +953,16 @@ window.addEventListener('scroll', () => {
   }
 });
 
+const btn2El = document.querySelector('#logoutButton');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY >= 56) {
+    btn2El.classList.add('btn-scrolled');
+  } else {
+    btn2El.classList.remove('btn-scrolled');
+  }
+});
+
 
 const headingEl = document.querySelector('.nav-item p h1');
 
@@ -1162,6 +1258,33 @@ window.onclick = function(event) {
   });
   </script>
   
+  <script>
+      document.getElementById('blogForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        fetch('/blog_creation', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show registration successful alert
+                alert('Blog Creation successful!');
+                // Reload the page after a short delay (adjust the delay as needed)
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000); // Refresh after 2 seconds (adjust as needed)
+            }
+            else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Blog Creation failed! Please try again.');
+        });
+    });
+  </script>
   
 </body>
 </html>
