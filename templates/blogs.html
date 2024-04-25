@@ -34,6 +34,7 @@
       <!-- Vendors CSS -->
       <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
       <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-JziMcsPw88Pw+xzJHfPk4QblVq9g/PBxXtAReDWV+pj1Ywe0+Z9Ud4cr5XyVKoBfg3Gv4c+U1vYRr9FbgxXfDg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <!-- Page CSS -->
       <!-- Helpers -->
       <script src="{{ url_for('static', filename='assets/vendor/js/helpers.js') }}"></script>
@@ -275,10 +276,11 @@
 
     
     <button>
-      <a href="#" class="scroll-to-top" style="color: #fff;">
-        <i class="fas fa-arrow-up" ></i>
+      <a href="#" class="scroll-to-top">
+        <i class="fas fa-angle-up" style="color: #fff;"></i>
       </a>
-      </button>
+    </button>
+      
       
 </div>
 </div>
@@ -526,7 +528,7 @@
     console.log(blog);
 
     // Call the function to fill the form with JSON data
-    fillFormWithData(blog);
+    (blog);
   }
 
   document.getElementById('blogForm').addEventListener('submit', function(event) {

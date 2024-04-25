@@ -402,14 +402,20 @@
             <div class="col-md-8" >
               <div class="card mb-3">
                 <div class="card-body">
-                  <!-- <div class="row">
+                  <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0" >Full Name</h6>
+                      <h6 class="mb-0" >Go to Home Page</h6>
                     </div>
-                    <div id="user_name_modal" class="col-sm-9 text-secondary">
-                      
+                    <div id="" class="col-sm-9 text-secondary">
+                      <a
+                      data-bs-toggle="slide"
+                      href="{{ url_for('home') }}"
+                      style="width: 7.5rem; margin-top: 10px;"
+                      class="btn btn-primary"
+                      >Home</a
+                    >
                     </div>
-                  </div> -->
+                  </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
@@ -1160,8 +1166,6 @@ function fillFormWithtraineeData() {
   
   // document.getElementById("educational_level").value = document.getElementById("educational_level_hidden").innerText;
   // document.getElementById("skills_input_update").value = document.getElementById("educational_level_hidden").innerText;
-  
-  
   
 }
 

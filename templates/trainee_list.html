@@ -32,6 +32,9 @@ endblock %} {% block content %}
                             <!-- <th>Preferred Work Type</th>
                             <th>Hourly Rate</th> -->
                             <th>Language Proficiency</th>
+                            <th>Done Trainings</th>
+                            <th>Willing to do</th>
+                            <th>Joined On</th>
                             <!-- <th scope="col">Certifications</th> -->
                             <!-- <th scope="col">LinkedIn Profile</th>
                             <th scope="col">GitHub Profile</th> -->
@@ -48,13 +51,48 @@ endblock %} {% block content %}
                             <td>{{ trainee.email }}</td>
                             <td>{{ trainee.phone_number }}</td>
                             <td>{{ trainee.address }}</td>
-                            <td>{{ trainee.skills }}</td>
+                            
                             <td>{{ trainee.educational_level }}</td>
+                            <td>{{ trainee.skills }}</td>
                             <td>{{ trainee.freelancing_experience }}</td>
-                            <td>{{ trainee.portfolio_link}}</td>
-                            <td>{{ trainee.language_proficiency}}</td>
-                            <td> 
-                              <button class="btn btn-sm btn-outline-info" onclick="openModal({{ trainee.trainee_id }})" data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>
+                            <td>{{ trainee.portfolio_link [:30]}}{{ '...' if trainee.portfolio_link|length > 30 else '' }}</td>
+                            <td>{{ trainee.language_proficiency [:30]}}{{ '...' if trainee.language_proficiency|length > 30 else '' }}</td>
+                            <td>{{ trainee.done_trainings}}</td>
+                            <td>{{ trainee.wantTo_trainings}}</td>
+                            <td id="joined_on">{{ trainee.joined_on}}</td>
+                            <script>
+                              function formatDate(dateString) {
+                              var created_at_date = new Date(dateString);
+                              var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                              return created_at_date.toLocaleDateString('en-UK', options);
+                              }
+
+                              // Get the date string from the table cell
+                              const createdDateCell = document.getElementById('joined_on');
+                              const dateString = createdDateCell.textContent.trim(); // Remove leading/trailing whitespaces
+
+                              // Format the date string and update the content of the cell
+                              createdDateCell.innerText = formatDate(dateString);
+                            </script>
+                            <td>
+                              <!-- <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editTrainree">Select</button>   -->
+                                
+                              <button class="btn btn-sm btn-outline-info openModalBtnClass" id="openModalBtn" 
+                              data-trainee_id="{{ trainee.trainee_id }}"
+                              data-full_name="{{ trainee.full_name }}"
+                              data-organization="{{ trainee.organization }}"
+                              data-email="{{ trainee.email }}"
+                              data-phone_number="{{ trainee.phone_number }}"
+                              data-address="{{trainee.address}}"
+                              data-skills="{{trainee.skills}}"
+                              data-educational_level="{{trainee.educational_level}}"
+                              data-freelancing_experience="{{trainee.freelancing_experience}}"
+                              data-portfolio_link="{{trainee.portfolio_link}}"
+                              data-done_trainings="{{trainee.done_trainings}}"
+                              data-want="{{trainee.wantTo_trainings}}"
+                              data-language_proficiency="{{trainee.language_proficiency}}"
+                              data-joined_on="{{ trainee.joined_on }}"
+                               data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>
 
                               <button href="javascript:void(0)" onclick="deleteTrainee({{ trainee.trainee_id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button></td>
                           </tbody>
@@ -64,6 +102,29 @@ endblock %} {% block content %}
                           <tbody class="education_table">
                           </tbody>
                       </table>
+
+                      <div class="row" id="pagination-container" style="margin-top: 40px;">
+                        <nav aria-label="Page navigation">
+                          <ul class="pagination justify-content-center">
+                              <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                                  <a class="page-link" href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                  </a>
+                              </li>
+                              {% for page in range(1, total_pages + 1) %}
+                              <li class="page-item {% if page == current_page %}active{% endif %}">
+                                  <a class="page-link" href="#">{{ page }}</a>
+                              </li>
+                              {% endfor %}
+                              <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                                  <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </nav>
+                      
+                      </div>
                   </div>
               </div>
           </div>
@@ -77,7 +138,7 @@ endblock %} {% block content %}
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form id="edit_trainee" method="POST" action="/trainee_list_edit">
+                  <form id="edit_Modal" method="POST" action="/trainee_list_edit">
                     <div class="mb-3">
                       <label class="form-label" for="full_name_input_update">Trainee ID</label>
                       <input type="text" name="trainee_id" id="trainee_id_input_update" value="YOUR_TRAINEE_ID_HERE">
@@ -85,50 +146,209 @@ endblock %} {% block content %}
                    
                         <div class="mb-3">
                             <label class="form-label" for="full_name_input_update">Full Name</label>
-                            <input type="text" class="form-control full_name_input_update" name="full_name" id="full_name">
+                            <input type="text" class="form-control full_name_input_update" name="full_name" id="user_name__edit_modal">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="organization_input_update">Organization</label>
-                            <input type="text" class="form-control organization_input_update" name="organization" id="organization_input_update">
+                            <input type="text" class="form-control organization_input_update" name="organization" id="organization_edit_modal">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="email_input_update">Email</label>
-                            <input type="email" class="form-control email_input_update" name="email" id="email">
+                            <input type="email" class="form-control email_input_update" name="email" id="email__edit_modal">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="phone_number_input_update">Phone Number</label>
-                            <input type="tel" class="form-control phone_number_input_update" name="phone_number" id="phone_number">
+                            <input type="tel" class="form-control phone_number_input_update" name="phone_number" id="phone_number_edit_modal">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="address_input_update">Address</label>
-                            <input type="text" class="form-control address_input_update" name="address" id="address">
+                            <input type="text" class="form-control address_input_update" name="address" id="address_edit_modal">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="educational_level_input_update">Educational Level</label>
-                            <input type="text" class="form-control educational_level_input_update" name="educational_level" id="educational_level">
-                        </div>
+                          <label for="educational_level">Educational Level</label>
+                          <label for="educational_level" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
+                          <select class="form-control" id="educational_level" name="educational_level" required autofocus>
+                              <option value="SSC">SSC</option>
+                              <option value="HSC">HSC</option>
+                              <option value="BSc">BSc</option>
+                              <option value="MSc">MSc</option>
+                              <!-- You can add more options here if needed -->
+                          </select>
+                      </div>
                         <div class="mb-3">
                             <label class="form-label" for="skills_input_update">Skills</label>
-                            <input type="text" class="form-control skills_input_update" name="skills" id="skills_input_update">
+                            <input type="text" class="form-control skills_input_update" name="skills" id="skills_edit_modal">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="freelancing_experience_input_update">Freelancing Experience</label>
-                            <input type="text" class="form-control freelancing_experience_input_update" name="freelancing_experience" id="freelancing_experience">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="portfolio_link_input_update">Portfolio Link</label>
-                            <input type="text" class="form-control portfolio_link_input_update" name="portfolio_link" id="portfolio_link">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="language_proficiency_input_update">Language Proficiency</label>
-                            <input type="text" class="form-control language_proficiency_input_update" name="language_proficiency" id="language_proficiency">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send</button>
+                          <label for="freelancing_experience">Freelancing Experience</label>
+                          <label for="freelancing_experience" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
+                          <select class="form-control" id="freelancing_experience" name="freelancing_experience" required autofocus>
+                              <option value="0-1 year">0-1 Year</option>
+                              <option value="1-3 years">1-3 Years</option>
+                              <option value="3-5 years">3-5 Years</option>
+                              <option value="more than 5 years">More Than Five Years</option>
+                              <!-- You can add more options here if needed -->
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                        <label>Portfolio Links</label><br>
+                        <input type="checkbox" id="fiverr" name="fiverr" value="Fiverr">
+                        <label for="fiverr"> Fiverr</label><br>
+                        <input type="text" id="fiverr_link" name="fiverr_link" placeholder="Enter Fiverr Link" style="display: none; width: 600px; height: 40px;">
+                    
+                        <input type="checkbox" id="upwork" name="upwork" value="Upwork">
+                        <label for="upwork"> Upwork</label><br>
+                        <input type="text" id="upwork_link" name="upwork_link" placeholder="Enter Upwork Link" style="display: none; width: 600px; height: 40px;">
+      
+                        <input type="checkbox" id="freelancer" name="freelancer" value="Freelancer">
+                        <label for="freelancer"> Freelancer</label><br>
+                        <input type="text" id="freelancer_link" name="freelancer_link" placeholder="Enter Freelancer Link" style="display: none; width: 600px; height: 40px;">
+      
+                        <input type="checkbox" id="toptal" name="toptal" value="Toptal">
+                        <label for="toptal"> Toptal</label><br>
+                        <input type="text" id="toptal_link" name="toptal_link" placeholder="Enter Toptal Link" style="display: none; width: 600px; height: 40px;">
+      
+                        <input type="checkbox" id="guru" name="guru" value="Guru">
+                        <label for="guru"> Guru</label><br>
+                        <input type="text" id="guru_link" name="guru_link" placeholder="Enter Guru Link" style="display: none; width: 600px; height: 40px;">
+                    
+                        <input type="checkbox" id="other" name="other" value="Other">
+                        <label for="other"> Other</label><br>
+                        <input type="text" id="other_link" name="other_link" placeholder="Enter Other link" style="display: none;width: 600px; height: 40px;">
+                    </div>
+                    
+                    <script>
+                        // Function to toggle the visibility of the input field based on checkbox state
+                        function toggleInput(checkboxId, inputId) {
+                            var checkbox = document.getElementById(checkboxId);
+                            var input = document.getElementById(inputId);
+                            
+                            checkbox.addEventListener("change", function() {
+                                if (this.checked) {
+                                    input.style.display = "block";
+                                    input.focus();
+                                } else {
+                                    input.style.display = "none";
+                                }
+                            });
+                        }
+                    
+                        // Call the toggleInput function for each checkbox and its corresponding input
+                        toggleInput("fiverr", "fiverr_link");
+                        toggleInput("upwork", "upwork_link");
+                        toggleInput("freelancer", "freelancer_link");
+                        toggleInput("toptal", "toptal_link");
+                        toggleInput("guru", "guru_link");
+                        toggleInput("other", "other_link");
+      
+                        
+                    </script>
+      
+                   
+                                <div class="mb-3">
+                                  <label for="language_proficiency">Language Proficiency</label><br>
+                                  <input type="checkbox" id="bangla" name="bangla" value="Bangla">
+                                  <label for="bangla"> Bangla</label><br>
+                                  <input type="checkbox" id="english" name="english" value="English">
+                                  <label for="english"> English</label><br>
+                                  <input type="checkbox" id="other_language_checkbox" name="other_language_checkbox" value="Other">
+                                  <label for="other_language_checkbox"> Other</label><br>
+                                  <input type="text" id="other_language_input" name="other_language" placeholder="Enter other language" style="display: none; width: 600px; height: 40px;">
+                                  
+                                  <script>
+                                      document.getElementById("other_language_checkbox").addEventListener("change", function() {
+                                          var otherLanguageInput = document.getElementById("other_language_input");
+                                          if (this.checked) {
+                                              otherLanguageInput.style.display = "block";
+                                              otherLanguageInput.focus();
+                                          } else {
+                                              otherLanguageInput.style.display = "none";
+                                              otherLanguageInput.value= "";
+                                          }
+                                      });
+                                  </script>
+                                </div>
+      
+                                <div class="mb-3">
+                                  <label for="done_trainings">Is there any training that you have done</label><br>
+                                  <input type="checkbox" id="copywriting" name="copywriting" value="Copywriting">
+                                  <label for="copywriting"> Copywriting</label><br>
+                                  <input type="checkbox" id="digital_marketing" name="digital_marketing" value="Digital Marketing">
+                                  <label for="digital_marketing"> Digital Marketing</label><br>
+                                  <input type="checkbox" id="graphic_design" name="graphic_design" value="Graphic Design">
+                                  <label for="graphic_design"> Graphic Design</label><br>
+                                  <input type="checkbox" id="data_entry" name="data_entry" value="Data Entry">
+                                  <label for="data_entry"> Data Entry</label><br>
+                                  <input type="checkbox" id="seo" name="seo" value="SEO">
+                                  <label for="seo"> SEO</label><br>
+                                  <input type="checkbox" id="ux/ui_design" name="uxui" value="UX/UI Design">
+                                  <label for="uxui"> UX/UI Design</label><br>
+                                  <input type="checkbox" id="other_done_training_checkbox" name="other_done_training_checkbox" value="Other_Done_Training">
+                                  <label for="other_done_training_checkbox"> Other</label><br>
+                                  <input type="text" id="other_done_training_input" name="other_done_training" placeholder="Enter here if you have done any other trainings" style="display: none; width: 600px; height: 40px;">
+                                  
+                                  <script>
+                                      document.getElementById("other_done_training_checkbox").addEventListener("change", function() {
+                                          var otherDoneTrainingInput = document.getElementById("other_done_training_input");
+                                          if (this.checked) {
+                                              otherDoneTrainingInput.style.display = "block";
+                                              otherDoneTrainingInput.focus();
+                                          } else {
+                                              otherDoneTrainingInput.style.display = "none";
+                                              otherDoneTrainingInput.value= "";
+                                          }
+                                      });
+                                  </script>
+                              </div>    
+                              
+                              <div class="mb-3">
+                                  <label for="wantTo_trainings">Is there any training you are interested to do</label><br>
+                                  <input type="checkbox" id="copywriting_want" name="copywriting_want" value="Copywriting">
+                                  <label for="copywriting_want"> Copywriting</label><br>
+                                  <input type="checkbox" id="digital_marketing_want" name="digital_marketing_want" value="Digital Marketing">
+                                  <label for="digital_marketing_want"> Digital Marketing</label><br>
+                                  <input type="checkbox" id="graphic_design_want" name="graphic_design_want" value="Graphic Design">
+                                  <label for="graphic_design_want"> Graphic Design</label><br>
+                                  <input type="checkbox" id="data_entry_want" name="data_entry_want" value="Data Entry">
+                                  <label for="data_entry_want"> Data Entry</label><br>
+                                  <input type="checkbox" id="seo_want" name="seo_want" value="SEO">
+                                  <label for="seo_want"> SEO</label><br>
+                                  <input type="checkbox" id="ux/ui_design_want" name="uxui_want" value="UX/UI Design">
+                                  <label for="uxui_want"> UX/UI Design</label><br>
+                                  <input type="checkbox" id="other_wantTo_training_checkbox" name="other_wantTo_training_checkbox" value="Other_Want_To_Training">
+                                  <label for="other_wantTo_training_checkbox"> Other</label><br>
+                                  <input type="text" id="other_wantTo_training_input" name="other_wantTo_training" placeholder="Enter here if you want to do any other trainings" style="display: none; width: 600px; height: 40px;">
+                                
+                                  <script>
+                                    document.getElementById("other_wantTo_training_checkbox").addEventListener("change", function() {
+                                        var otherWantToTrainingInput = document.getElementById("other_wantTo_training_input");
+                                        if (this.checked) {
+                                          otherWantToTrainingInput.style.display = "block";
+                                          otherWantToTrainingInput.focus();
+                                        } else {
+                                          otherWantToTrainingInput.style.display = "none";
+                                          otherWantToTrainingInput.value= "";
+                                        }
+                                    });
+                                </script>
+                              </div>   
+                              
+                              <!-- <div class="mb-3">
+                                <label for="password">Password:</label>
+                                <div class="password-field">
+                                    <input type="password" id="password" name="password" style="width:400px; border-radius: 5px;" autofocus>
+                                    <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                                
+                            </div> -->
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+      </div>
 
 <script>    
 
@@ -362,20 +582,21 @@ endblock %} {% block content %}
   // Function to fill the form with JSON data
   function fillFormWithData(data) {
             document.getElementById("trainee_id_input_update").value = data.trainee_id;
-            document.getElementById("full_name").value = data.full_name;
-            document.getElementById("organization_input_update").value = data.organization;
-            document.getElementById("email").value = data.email;
-            document.getElementById("phone_number").value = data.phone_number;
-            document.getElementById("address").value = data.address;
+            document.getElementById("user_name__edit_modal").value = data.full_name;
+            document.getElementById("organization_edit_modal").value = data.organization;
+            document.getElementById("email__edit_modal").value = data.email;
+            document.getElementById("phone_number_edit_modal").value = data.phone_number;
+            document.getElementById("address_edit_modal").value = data.address;
             document.getElementById("educational_level").value = data.educational_level;
-            document.getElementById("skills_input_update").value = data.skills;
+            document.getElementById("skills_edit_modal").value = data.skills;
             document.getElementById("freelancing_experience").value = data.freelancing_experience;
-            document.getElementById("portfolio_link").value = data.portfolio_link;
-            document.getElementById("language_proficiency").value = data.language_proficiency;
+            // document.getElementById("portfolio_link").value = data.portfolio_link;
+            // document.getElementById("language_proficiency").value = data.language_proficiency;
+
+            fillFormWithtraineeData(data.portfolio_link, data.language_proficiency, data.done_trainings, data.wantTo_trainings)
         }
 
   function openModal(traineeId) {
-   ;
     console.log(traineeId);
     var trainees= {{ trainees | tojson }};
 
@@ -421,43 +642,33 @@ endblock %} {% block content %}
   }
 
 
- 
-  document.getElementById('edit_trainee').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        var traineeIdElement = document.getElementById("trainee_id_input_update");
-        var traineeId = traineeIdElement.value;
-        console.log("trainee", traineeId);
-        fetch('/trainee_list_edit/'+traineeId, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json(); // Parse the JSON response
-            } else {
-                throw new Error('Network response was not ok.');
-            }
-        })
-        .then(data => {
-            // Check if the response contains 'success' key
-            if (data && data.success) {
-                // Show registration successful alert
-                alert(data.success);
-                // Reload the page after a short delay (adjust the delay as needed)
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000); // Refresh after 2 seconds (adjust as needed)
-            } else {
-                throw new Error('Invalid response from the server.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Updating failed! Please try again.');
-        });
-    });
-
+  document.addEventListener("DOMContentLoaded", function() {
+      var editTraineeForm = document.getElementById('editTrainree').querySelector('form'); // Correct form selection
+      editTraineeForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+  
+          var formData = new FormData(this);
+  
+          fetch('/trainee_list_edit/' + formData.get('trainee_id'), {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => {
+              if (response.ok) {
+                  alert('Trainee updated successfully!');
+                  setTimeout(() => {
+                      window.location.reload();
+                  }, 2000);
+              } else {
+                  throw new Error('Network response was not ok.');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Trainee Edit failed! Please try again.');
+          });
+      });
+  });
 
 </script>
 <script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
@@ -479,6 +690,335 @@ endblock %} {% block content %}
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<script>
+    // function fillFormWithData(data) {
+
+
+        
+    //     document.getElementById("user_id").value = data.trainee_id;
+    //     document.getElementById("user_name_modal").innerText = data.full_name;
+    //     document.getElementById("organization_modal").innerText = data.organization; 
+    //     document.getElementById("email_modal").innerText = data.email;
+    //     document.getElementById("phone_number_modal").innerText = data.phone_number;
+    //     document.getElementById("address_modal").innerText = data.address;
+    //     document.getElementById("skills_modal").innerText = data.skills;
+    //     document.getElementById("languages_modal").innerText = data.language_proficiency;
+    //     document.getElementById("experience_modal").innerText = data.freelancing_experience;
+    //     document.getElementById("done_training_modal").innerText = data.done_trainings;
+    //     document.getElementById("wantTo_trainings_modal").innerText = data.wantTo_trainings;
+       
+
+    //     var created_at_date = new Date(data.joined_on);
+    //     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //     var formatted_date = created_at_date.toLocaleDateString('en-UK', options);
+    //     document.getElementById("joined_on").innerText = formatted_date;
+          
+
+        
+
+
+    // }
+</script>
+
+<script>
+    // Extracted and converted JSON data
+    // var json_data = '{"fiverr":"https://fiverr.com/username","upwork":"https://upwork.com/username","freelancer":"https://freelancer.com/username","toptal":"https://toptal.com/username","guru":"https://guru.com/username","other":"https://example.com"}';
+
+    function populatePortfolios(json_data) {
+     
+    // Parse JSON data
+    var portfolio_links = JSON.parse(json_data);
+    
+    var hidden_portfolios= document.getElementById("hidden_portfolios");
+
+    
+    
+    hidden_portfolios.value= json_data;
+    
+
+    // Get the container where portfolio links will be added
+    var portfolioContainer = document.getElementById('portfolio-links');
+
+    // Loop through the portfolio_links object and create list items
+    for (var platform in portfolio_links) {
+        if (portfolio_links.hasOwnProperty(platform)) {
+            var listItem = document.createElement('li');
+            listItem.className = 'list-group-item d-flex justify-content-between align-items-center flex-wrap';
+
+            var platformIcon = document.createElement('h6');
+            platformIcon.className = 'mb-0';
+            platformIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' + platform.charAt(0).toUpperCase() + platform.slice(1);
+            
+            console.log("platform= ", platform);
+
+            var linkText = document.createElement('span');
+            linkText.className = 'text-secondary';
+            linkText.textContent = portfolio_links[platform];
+
+            listItem.appendChild(platformIcon);
+            listItem.appendChild(linkText);
+
+            portfolioContainer.querySelector('ul').appendChild(listItem);
+        }
+    }
+
+  }
+
+    function populateLanguages(lang_string) {
+      var language_proficiency= document.getElementById("hidden_language_proficiency");
+      language_proficiency.value= lang_string;
+    }
+
+    function populatedonetrainings(done_string) {
+      var done_trainings= document.getElementById("hidden_done_trainings");
+      done_trainings.value= done_string;
+    }
+
+    function populatewantTotrainings(wanTo_string) {
+
+      var wantTo_trainings= document.getElementById("hidden_wantTo_trainings");
+      wantTo_trainings.value= wanTo_string;
+    }
+</script>
+<script>
+//           $(document).ready(function() {
+//     function getTraineeData() {
+     
+//         // Send an AJAX request to the server
+//         $.ajax({
+//             url: '/profile',
+//             type: 'GET',
+//             contentType: 'application/json',
+//             xhrFields: {
+//                 withCredentials: true // Include cookies in the request
+//             },
+//             success: function(data) {
+//                 // Render the trainee data on the webpage
+//                 populatePortfolios(data.portfolio_link);
+//                 fillFormWithData(data);
+//                 populateLanguages(data.language_proficiency);
+//                 populatedonetrainings(data.done_trainings);
+//                 populatewantTotrainings(data.wantTo_trainings);
+                
+//                 // document.getElementById("");
+
+                
+
+                
+//             },
+//             error: function(jqXHR, textStatus, errorThrown) {
+//                 console.error('Error:', errorThrown);
+//                 // Handle errors appropriately (e.g., display an error message)
+//             }
+//         });
+//     }
+
+//     getTraineeData();
+// });
+
+function createEvent(checkboxId, inputId, inputVal) {
+
+var checkbox = document.getElementById(checkboxId);
+// Set the checked attribute to true
+checkbox.checked = true;
+
+if (inputId) {
+  var input = document.getElementById(inputId);
+  input.value= inputVal;
+
+  input.style.display = "block";
+  input.focus();
+}
+
+
+}
+
+
+// Function to fill form fields with data
+function fillFormWithtraineeData(portfolios, language_proficiency, done_trainings, wantTo_trainings) {
+    
+    
+    /////////////////////////////////////////////////////////////
+  ///////// Code for Portfolio Checkboxes Checked & Value Set//
+  ////////////////////////////////////////////////////////////
+  debugger;
+  var json_data= portfolios;
+   // Parse JSON data
+  //  var portfolio_links = JSON.parse(json_data);
+   var portfolio_links = json_data;
+   
+   for (var platform in portfolio_links) {
+	    createEvent(platform, platform+"_link", portfolio_links[platform]);
+   }
+
+  /////////////////////////////////////////////////////////////
+  ///////// Code for Portfolio Checkboxes Checked & Value Set//
+  ////////////////////////////////////////////////////////////
+
+  ///Languages checkbox checked
+  var lang_string= language_proficiency;
+
+  debugger;
+  
+  var lang_array= lang_string.split(", ");
+
+
+   for (let i = 0; i < lang_array.length; i++) {
+    const element = lang_array[i];
+    // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+    if (element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english') {
+      createEvent(element.toLowerCase(), null, null);
+    } else {
+      createEvent("other_language_checkbox", "other_language_input", element);
+    }
+    
+   }
+
+   //Done Trainings Checkbox checked
+    var done_string= done_trainings;
+
+   
+
+    var done_array= done_string.split(", ");
+
+    
+
+    for (let i = 0; i < done_array.length; i++) {
+      const element = done_array[i];
+      // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+      if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
+        const words= element.trim().toLowerCase().split(" ")
+        if (words.length>1) {
+          createEvent(words.join("_"), null, null);
+        } else {
+          createEvent(element.toLowerCase(), null, null);
+        }
+        
+      } else {
+        createEvent("other_done_training_checkbox", "other_done_training_input", element);
+      }
+      
+    }
+
+
+    // Want to trainings checkbox checked.
+    var wantTo_string= wantTo_trainings;
+
+    debugger;
+
+   
+
+    var wantTo_array= wantTo_string.split(", ");
+
+   
+
+    for (let i = 0; i < wantTo_array.length; i++) {
+      const element = wantTo_array[i];
+      // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+      if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
+        const words= element.trim().toLowerCase().split(" ")
+        if (words.length>1) {
+          createEvent(words.join("_")+"_want", null, null);
+        } else {
+          createEvent(element.toLowerCase()+"_want", null, null);
+        }
+      } else {
+        createEvent("other_wantTo_training_checkbox", "other_wantTo_training_input", element);
+      }
+      
+    }
+
+    // console.log("user id value", document.getElementById("user_id").value);
+    
+  document.getElementById("trainee_id_input_update_pass").value = document.getElementById("user_id").value;
+  document.getElementById("trainee_id_input_update").value = document.getElementById("user_id").value;
+  document.getElementById("user_name__edit_modal").value = document.getElementById("user_name_modal").innerText;
+  document.getElementById("organization_edit_modal").value = document.getElementById("organization_modal").innerText;
+  document.getElementById("email__edit_modal").value = document.getElementById("email_modal").innerText;
+  document.getElementById("phone_number_edit_modal").value = document.getElementById("phone_number_modal").innerText;
+  document.getElementById("address_edit_modal").value = document.getElementById("address_modal").innerText;
+  document.getElementById("skills_edit_modal").value = document.getElementById("skills_modal").innerText;
+  // document.getElementById("languages_edit_modal").value = document.getElementById("languages_modal").innerText;
+  // document.getElementById("experience_edit_modal").value = document.getElementById("experience_modal").innerText;
+  // document.getElementById("done_training_edit_modal").value = document.getElementById("done_training_modal").innerText;
+  // document.getElementById("wantTo_trainings_edit_modal").value = document.getElementById("wantTo_trainings_modal").innerText;
+  
+  // document.getElementById("educational_level").value = document.getElementById("educational_level_hidden").innerText;
+  // document.getElementById("skills_input_update").value = document.getElementById("educational_level_hidden").innerText;
+  
+  
+  
+}
+
+
+function openModal() {
+  
+  var modal = document.getElementById("edit_Modal");
+  modal.style.display = "block";
+  // Call your function to fill data
+  fillFormWithtraineeData(); // assuming 'data' is available
+}
+
+var btn = document.getElementById("openModalBtn");
+
+span.onclick = function() {
+  closeModal();
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  var modal = document.getElementById("edit_Modal");
+  if (event.target == modal) {
+    closeModal();
+  }
+}
+</script>
+
+<script>
+  $(document).ready(function() {
+    $(".openModalBtnClass").click(function() {
+      var trainee_id= $(this).data("trainee_id");
+      var full_name= $(this).data("full_name");
+      var organization= $(this).data("organization");
+      var email= $(this).data("email");
+      var phone_number= $(this).data("phone_number");
+      var address= $(this).data("address");
+      var skills= $(this).data("skills");
+      var educational_level= $(this).data("educational_level");
+      var freelancing_experience= $(this).data("freelancing_experience");
+      var portfolio_link= $(this).data("portfolio_link");
+      var language_proficiency= $(this).data("language_proficiency");
+      var done_trainings= $(this).data("done_trainings");
+      var wantTo_trainings= $(this).data("want");
+      var joined_on= $(this).data("joined_on");
+
+      debugger;
+
+
+      var trainee= {
+        trainee_id: trainee_id,
+        full_name: full_name,
+        organization: organization,
+        email: email,
+        phone_number: phone_number,
+        address: address,
+        skills: skills,
+        educational_level: educational_level,
+        freelancing_experience: freelancing_experience,
+        portfolio_link: portfolio_link,
+        language_proficiency: language_proficiency,
+        done_trainings: done_trainings,
+        wantTo_trainings: wantTo_trainings,
+        joined_on: joined_on,
+      }
+
+      fillFormWithData(trainee);
+
+
+    });
+  });
+</script>
  
   {% endblock %} {% set active_page = 'trainee_list' %}
 

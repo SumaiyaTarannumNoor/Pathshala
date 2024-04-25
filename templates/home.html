@@ -166,11 +166,10 @@
         transition: transform 0.4s ease;
       }
       
- 
       @media(min-width: 1200px) {
-        .blog{
+        {
           padding-left: 25px; 
-          
+          color:#23272b;
         }
       }
 
@@ -225,16 +224,14 @@
               <div class="container">
                 <div class="row">
                   <div class="main-sidemenu navbar px-0">
-                    
-                    <ul class="side-menu">
-                      <li class="slide">
-                        <a
+                    <a
                       class="navbar-brand ps-2 d-none d-lg-block"
                       href="{{url_for('index')}}"
                     >
-                      <img alt="" class="logo-2" style="height:100px; width: auto;" />
+                      <img alt="" class="logo-2" width="150px" />
+                      <img alt="logo" class="logo-3" width="150px" />
                     </a>
-                      </li>
+                    <ul class="side-menu">
                       <li class="slide">
                         <a
                           class="side-menu__item active header_1_link"
@@ -275,30 +272,21 @@
                           <span class="side-menu__label header_5"></span>
                         </a>
                       </li>
-                      <li>
-                      <div class="blog" style="margin-top: 18px; font-weight: 500;">
+                      <li class="slide contact_hide" style="@media(max-width: 1200px) {
+                        margin-left: 20px;
+                      }">
                         <a data-bs-toggle="slide" href="{{ url_for('blogs') }}">
-                          <span class="blog_article" style="color: #7b8191;" onmouseover="this.style.color='#6c5ffc'" onmouseout="this.style.color='#7b8191'">Blogs & Articles</span>
+                          <span class="side-menu__label header_5">Blogs & Articles</span>
                         </a>
-                      </div>
-                     </li>
+                      </li>
                       <li>
                         <div style="width: 10rem; margin-left: 20px;">
                         <a
                           data-bs-toggle="slide"
-                          href="{{ url_for('trainee_registration') }}"
+                          href="{{ url_for('profile_dashboard') }}"
                           style="width: 7.5rem; margin-top: 10px;"
                           class="btn btn-primary"
-                          >Registration</a
-                        >
-                      <!-- </li>
-                      <li> -->
-                        <a
-                          data-bs-toggle="slide"
-                          href="{{ url_for('trainee_login') }}"
-                          style="width: 7.5rem; margin-top: 10px;"
-                          class="btn btn-primary"
-                          > Log In</a
+                          >My Profile</a
                         >
                       </div>
                       </li>

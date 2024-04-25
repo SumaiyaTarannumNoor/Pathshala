@@ -7,19 +7,31 @@ from flask_mail import Mail, Message
 from urllib.parse import urlparse
 from tld import get_tld
 from flask import request, jsonify
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import render_template_string
+import base64
 import math
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'eer'
 
 # Mail configuration
-app.config['MAIL_SERVER'] = 'mail.ahmedul.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'contact@ahmedul.com'
-app.config['MAIL_PASSWORD'] = 'pZLZ4hh$?u.m'
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
+# app.config['MAIL_SERVER'] = 'mail.techknowgram.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USERNAME'] = 'naimul@techknowgram.com'
+# app.config['MAIL_PASSWORD'] = 'TechKnowGram$5'
+# app.config['MAIL_USE_TLS'] = True
+# # app.config['MAIL_USE_SSL'] = False
+# app.config['MAIL_DEFAULT_SENDER'] = 'naimul@techknowgram.com'
+# app.config['MAIL_DEBUG'] = True
+
+app.config['MAIL_SERVER'] = 'mail.techknowgram.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'naimul@techknowgram.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'naimul@techknowgram.com'
+app.config['MAIL_PASSWORD'] = 'TechKnowGram$5'
 mail = Mail(app)
 
 connection = pymysql.connect(
@@ -34,6 +46,13 @@ connection = pymysql.connect(
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/home')
+def home():
+    if 'loggedin' in session and session['loggedin']:
+        return render_template('home.html')
+    else:
+        return redirect(url_for('trainee_login'))
 
 @app.route('/login_user', methods=['POST'])
 def login_user():
@@ -73,7 +92,7 @@ def login_trainee():
             cursor.execute(sql, (usermail,))
             user = cursor.fetchone()
 
-            if user and password == user['password']:
+            if user and check_password_hash(user['password'], password):
                 session['loggedin'] = True
                 session['id'] = user['trainee_id']
                 session['email'] = user['email']
@@ -207,9 +226,9 @@ def registration():
                        
             wantTo_trainings = ', '.join(wantTo_trainings) 
             
-            password = request.form.get('password')
+            password = generate_password_hash(request.form.get('password'))
 
-        # Check for required fields
+            # Check for required fields
             if not ([full_name, email, phone_number, address, educational_level, password]):
                 return jsonify({"message": "You must fill up these required fields."}), 400
             
@@ -217,16 +236,66 @@ def registration():
             with connection.cursor() as cursor:
                 trainee_create_sql = "INSERT INTO trainees (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 cursor.execute(trainee_create_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings, password))
-                connection.commit()
+                connection.commit()    
+                
+            # send_registration_email(email, full_name)     
+            msg = Message('Welcome to Freelancing Pathshala!', recipients=[email])
+            
+            # filename = "FreelancingPathshalaWelcome.jpg"
+            # # url_for('static', filename='mainassets/images/welcome_message/FreelancingPathshalaWelcome.jpg', _external=True)
+            # path = os.path.join("static/mainassets/images/welcome_message", filename)
+            # with open(path, "rb") as f:
+            #     data = f.read()
+            # type = os.path.splitext(path)[1][1:]
+            # base64_data = base64.b64encode(data).decode("utf-8")
+            # base64_image = "data:image/" + type + ";base64," + base64_data
+
+
+            # Render the HTML template with the image file name passed as a keyword argument
+            msg.html = render_template("welcome_mail.html", full_name=full_name, msg=msg)
+
+            # Send the email
+            mail.send(msg)
 
             return jsonify({'success': 'Registration successful'}), 200
-        
+                
         elif request.method == 'GET':
             return jsonify({'message': 'GET request received'}), 200
 
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"}), 500
+    
+# def image_to_base64(image_path):
+#     try:
+#         response = requests.get(image_path)
+#         if response.status_code == 200:
+#             base64_str = base64.b64encode(response.content).decode('utf-8')
+#             return base64_str
+#         else:
+#             return None
+#     except Exception as e:
+#         print(f"Error downloading image: {e}")
+#         return None
+
+# def send_registration_email(email, full_name):
+#     try:
+#         msg = Message('Welcome to our platform!', recipients=[email])
+#        # Example usage:
+#         # image_path = url_for('static', filename='mainassets/images/welcome_message/FreelancingPathshalaWelcome.jpg', _external=True)
        
+#         # Render the HTML template with the image embedded
+        
+#         image_file= "FreelancingPathshalaWelcome.jpg"
+       
+#         # msg.html = 
+#         msg.html = render_template("welcome_mail.html", full_name=full_name, logo=image_file)
+
+#         mail.send(msg)    
+#         # pass  # Placeholder for sending email
+#     except Exception as e:
+#         # Log the error for debugging
+#         # print(f"Error sending registration email: {str(e)}")
+#         app.logger.error(f"Error sending mail: {str(e)}")
 
 @app.route('/all_data', methods=['GET','POST'])
 def all_data():
@@ -1056,14 +1125,79 @@ def trainee_list():
     if 'loggedin' in session and session['loggedin']:
         try:
             with connection.cursor() as cursor:
-                trainee_sql = "SELECT * FROM trainees"
+                trainee_sql = "SELECT * FROM trainees ORDER BY joined_on  DESC LIMIT 20"
                 cursor.execute(trainee_sql)
                 trainee_data = cursor.fetchall()
-                return render_template('trainee_list.html', trainees=trainee_data)
+
+                count_query = "SELECT COUNT(trainee_id ) FROM trainees"
+                cursor.execute(count_query)
+                total_records = cursor.fetchone()
+                count_value = total_records['COUNT(trainee_id )']
+
+            limit_per_page = 20
+            total_pages = (count_value + limit_per_page)    
+
+            total_pages = math.ceil(total_pages / limit_per_page)-1 
+
+            return render_template('trainee_list.html', trainees=trainee_data, current_page=1, total_pages=total_pages)
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"})
     else:
         return redirect(url_for('admin'))
+    
+
+PER_PAGE = 20  # Number of items per page
+START_PAGE = 2  # Starting page number        
+        
+@app.route('/trainee_list_pagination', methods=['GET'])
+def trainee_list_pagination():
+    try:
+        # Get the page number from the request arguments, default to START_PAGE if not provided
+        page = request.args.get('page', START_PAGE, type=int)
+        
+        # selected_year = request.args.get('selected_year')
+
+        # Calculate the OFFSET based on the page number and number of items per page
+        offset = (page - 1) * PER_PAGE
+
+        with connection.cursor() as cursor:
+            
+            # if selected_year:
+            #     # SQL query to fetch paginated data from the users table
+            #     users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s LIMIT %s OFFSET %s"
+            #     cursor.execute(users_gallary_sql, (selected_year, PER_PAGE, offset))
+            #     gallary_data = cursor.fetchall()
+                
+            #     count_query = f"SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s"
+            #     cursor.execute(count_query, (selected_year))
+            #     total_records = cursor.fetchone()
+            #     count_value = total_records['COUNT(g_p_id)']
+            # else:
+                 # SQL query to fetch paginated data from the users table
+                trainee_sql = f"SELECT * FROM trainees LIMIT %s OFFSET %s"
+                cursor.execute(trainee_sql, (PER_PAGE, offset))
+                blog_data = cursor.fetchall()
+                
+                count_query = "SELECT COUNT(trainee_id) FROM trainees"
+                cursor.execute(count_query)
+                total_records = cursor.fetchone()
+                count_value = total_records['COUNT(trainee_id )']
+            
+            
+           
+            
+        limit_per_page = 20
+        total_pages = (count_value + limit_per_page)
+        
+        # print(gallary_data)
+        # sys.exit(1)
+        
+        total_pages = math.ceil(total_pages / limit_per_page)-1
+
+        return jsonify({'trainees': blog_data, 'page': page, 'total_pages': total_pages})
+
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})   
     
 
 
@@ -1211,7 +1345,7 @@ def trainee_list_edit(trainee_id):
 def trainee_password_edit(trainee_id):
     if request.method == 'POST':
         
-        password = request.form.get('password')
+        password = generate_password_hash(request.form.get('password'))
 
         # Perform database operations
         try:
@@ -1222,7 +1356,23 @@ def trainee_password_edit(trainee_id):
 
             return jsonify({'success': 'Trainee password updated successfully'}), 200
         except Exception as e:
-            return jsonify({'error': f"Request error: {str(e)}"}), 500        
+            return jsonify({'error': f"Request error: {str(e)}"}), 500     
+        
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = generate_password_hash(request.form.get('password'))
+        
+        try:
+            with connection.cursor() as cursor:
+                trainee_update_sql = "UPDATE trainees SET password = %s WHERE email = %s"
+                cursor.execute(trainee_update_sql, (password,email))
+                connection.commit()
+             
+            return jsonify({'success': 'Password updated successfully'}), 200
+        except Exception as e:
+            return jsonify({'error': f"Request error: {str(e)}"}), 500
 
 
 @app.route('/trainee_delete/<int:trainee_id>', methods=['GET','POST'])
@@ -1410,14 +1560,79 @@ def get_blogs_admin_panel():
     if 'loggedin' in session and session['loggedin']:
         try:
             with connection.cursor() as cursor:
-                blog_sql = "SELECT * FROM blogs"
+                blog_sql = "SELECT * FROM blogs ORDER BY created_at DESC LIMIT 20"
                 cursor.execute(blog_sql)
                 blog_data = cursor.fetchall()
-                return render_template('blogs_admin_panel.html', blogs=blog_data)
+
+                count_query = "SELECT COUNT(blog_id) FROM blogs"
+                cursor.execute(count_query)
+                total_records = cursor.fetchone()
+                count_value = total_records['COUNT(blog_id )']
+
+            limit_per_page = 20
+            total_pages = (count_value + limit_per_page)    
+
+            total_pages = math.ceil(total_pages / limit_per_page)-1 
+
+            return render_template('blogs_admin_panel.html', blogs=blog_data, current_page=1, total_pages=total_pages)
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"})   
     else:
-        return redirect(url_for('admin'))             
+        return redirect(url_for('admin'))       
+
+
+PER_PAGE = 20  # Number of items per page
+START_PAGE = 2  # Starting page number        
+        
+@app.route('/blogs_admin_panel_pagination', methods=['GET'])
+def blogs_admin_panel_pagination():
+    try:
+        # Get the page number from the request arguments, default to START_PAGE if not provided
+        page = request.args.get('page', START_PAGE, type=int)
+        
+        # selected_year = request.args.get('selected_year')
+
+        # Calculate the OFFSET based on the page number and number of items per page
+        offset = (page - 1) * PER_PAGE
+
+        with connection.cursor() as cursor:
+            
+            # if selected_year:
+            #     # SQL query to fetch paginated data from the users table
+            #     users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s LIMIT %s OFFSET %s"
+            #     cursor.execute(users_gallary_sql, (selected_year, PER_PAGE, offset))
+            #     gallary_data = cursor.fetchall()
+                
+            #     count_query = f"SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s"
+            #     cursor.execute(count_query, (selected_year))
+            #     total_records = cursor.fetchone()
+            #     count_value = total_records['COUNT(g_p_id)']
+            # else:
+                 # SQL query to fetch paginated data from the users table
+                blog_sql = f"SELECT * FROM blogs LIMIT %s OFFSET %s"
+                cursor.execute(blog_sql, (PER_PAGE, offset))
+                blog_data = cursor.fetchall()
+                
+                count_query = "SELECT COUNT(blog_id) FROM blogs"
+                cursor.execute(count_query)
+                total_records = cursor.fetchone()
+                count_value = total_records['COUNT(blog_id  )']
+            
+            
+           
+            
+        limit_per_page = 20
+        total_pages = (count_value + limit_per_page)
+        
+        # print(gallary_data)
+        # sys.exit(1)
+        
+        total_pages = math.ceil(total_pages / limit_per_page)-1
+
+        return jsonify({'blogs': blog_data, 'page': page, 'total_pages': total_pages})
+
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})             
 
 
 # @app.route('/blog_creation', methods=['GET', 'POST'])
@@ -1640,6 +1855,9 @@ def trainee_registration():
 def trainee_login():
     return render_template('login_trainee.html')
 
+@app.route('/user_forgot_password')
+def user_forgot_password():
+    return render_template('forgot_password.html')   
 
 @app.route('/blogs')
 def blogs():
