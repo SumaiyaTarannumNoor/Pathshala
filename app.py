@@ -1,17 +1,18 @@
 import json
 import os
+import sys
 from flask import Blueprint, Flask, current_app, jsonify, redirect, render_template, request, session, url_for
 import pymysql.cursors
 from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
-from urllib.parse import urlparse
+# from urllib.parse import urlparse
 from tld import get_tld
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import render_template_string
-import base64
+# import base64
 import math
-import requests
+# import requests
 
 app = Flask(__name__)
 app.secret_key = 'eer'
@@ -1162,26 +1163,16 @@ def trainee_list_pagination():
 
         with connection.cursor() as cursor:
             
-            # if selected_year:
-            #     # SQL query to fetch paginated data from the users table
-            #     users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s LIMIT %s OFFSET %s"
-            #     cursor.execute(users_gallary_sql, (selected_year, PER_PAGE, offset))
-            #     gallary_data = cursor.fetchall()
-                
-            #     count_query = f"SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s"
-            #     cursor.execute(count_query, (selected_year))
-            #     total_records = cursor.fetchone()
-            #     count_value = total_records['COUNT(g_p_id)']
-            # else:
-                 # SQL query to fetch paginated data from the users table
-                trainee_sql = f"SELECT * FROM trainees LIMIT %s OFFSET %s"
-                cursor.execute(trainee_sql, (PER_PAGE, offset))
-                blog_data = cursor.fetchall()
-                
-                count_query = "SELECT COUNT(trainee_id) FROM trainees"
-                cursor.execute(count_query)
-                total_records = cursor.fetchone()
-                count_value = total_records['COUNT(trainee_id )']
+          
+            # SQL query to fetch paginated data from the users table
+            trainee_sql = f"SELECT * FROM trainees LIMIT %s OFFSET %s"
+            cursor.execute(trainee_sql, (PER_PAGE, offset))
+            trainee_data = cursor.fetchall()
+            
+            count_query = "SELECT COUNT(trainee_id) FROM trainees"
+            cursor.execute(count_query)
+            total_records = cursor.fetchone()
+            count_value = total_records['COUNT(trainee_id)']
             
             
            
@@ -1194,7 +1185,7 @@ def trainee_list_pagination():
         
         total_pages = math.ceil(total_pages / limit_per_page)-1
 
-        return jsonify({'trainees': blog_data, 'page': page, 'total_pages': total_pages})
+        return jsonify({'trainees': trainee_data, 'page': page, 'total_pages': total_pages})
 
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})   

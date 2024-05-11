@@ -3,7 +3,11 @@ endblock %} {% block content %}
 
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="row">
+
       <div class="col-lg-12">
+        <button id="tester">
+          Hello
+         </button>
           <div class="card">
               <div class="card-header d-flex justify-content-between">
                   <h5 class="m-0">TRAINEE LIST</h5>
@@ -41,7 +45,7 @@ endblock %} {% block content %}
                             <th>Admin Action</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="all_trainees">
                           {% for trainee in trainees %}
                           <tr>
                             <td>{{ loop.index }}</td>
@@ -95,12 +99,12 @@ endblock %} {% block content %}
                                data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>
 
                               <button href="javascript:void(0)" onclick="deleteTrainee({{ trainee.trainee_id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button></td>
-                          </tbody>
                           </tr>
+                        </tbody>
                           {% endfor %}
                           
-                          <tbody class="education_table">
-                          </tbody>
+                          <!-- <tbody class="education_table">
+                          </tbody> -->
                       </table>
 
                       <div class="row" id="pagination-container" style="margin-top: 40px;">
@@ -125,6 +129,8 @@ endblock %} {% block content %}
                       </nav>
                       
                       </div>
+
+                    
                   </div>
               </div>
           </div>
@@ -691,131 +697,216 @@ endblock %} {% block content %}
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
+
+
 <script>
-    // function fillFormWithData(data) {
 
 
-        
-    //     document.getElementById("user_id").value = data.trainee_id;
-    //     document.getElementById("user_name_modal").innerText = data.full_name;
-    //     document.getElementById("organization_modal").innerText = data.organization; 
-    //     document.getElementById("email_modal").innerText = data.email;
-    //     document.getElementById("phone_number_modal").innerText = data.phone_number;
-    //     document.getElementById("address_modal").innerText = data.address;
-    //     document.getElementById("skills_modal").innerText = data.skills;
-    //     document.getElementById("languages_modal").innerText = data.language_proficiency;
-    //     document.getElementById("experience_modal").innerText = data.freelancing_experience;
-    //     document.getElementById("done_training_modal").innerText = data.done_trainings;
-    //     document.getElementById("wantTo_trainings_modal").innerText = data.wantTo_trainings;
+// Function to handle pagination clicks
+// $(document).on('click', '#pagination-container .pagination a.page-link', function(e) {
+//         e.preventDefault();
+
+//         debugger;
+//         // Get the page number from the link
+//         var page = $(this).text();
+//         // Load data for the selected page
+//         loadData(page);
+//     });
+
+
+//     function loadData(page) {
+       
        
 
-    //     var created_at_date = new Date(data.joined_on);
-    //     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    //     var formatted_date = created_at_date.toLocaleDateString('en-UK', options);
-    //     document.getElementById("joined_on").innerText = formatted_date;
-          
+//        $.ajax({
+//              url: '/trainee_list_pagination',
+//              type: 'GET',
+//              data: { page: page},
+//              success: function(response) {
+//                console.log("responseData", response);
+                 
+//                $('#all_trainees').empty();
+//                return;
+//                  $.each(response.trainees, function(index, trainee) {
+                 
+//                    var rowHtml = 
+//                       '<tr>' +
+//                          '<td>'+ index +'</td>'+
+//                          '<td>'+trainee.trainee_id+'</td>'+
+//                          '<td>'+trainee.full_name+'</td>' +
+//                          '<td>'+trainee.organization+'</td>' + 
+//                          '<td>'+trainee.email+'</td>' +
+//                          '<td>'+trainee.phone_number+'</td>' +
+//                          '<td>'+trainee.address+'</td>'+
+//                          '<td>'+trainee.educational_level+'</td>'+
+//                          '<td>'+trainee.skills+'</td>'+
+//                          '<td>'+trainee.freelancing_experience+'</td>'+
+//                          '<td>'+trainee.portfolio_link+'</td>'+
+//                          '<td>'+trainee.language_proficiency+'</td>'+
+//                          '<td>'+trainee.done_trainings+'</td>'+
+//                          '<td>'+trainee.wantTo_trainings+'</td>'+
+//                          '<td id="joined_on">'+trainee.joined_on+'</td>'+
+//                          '<button class="btn btn-sm btn-outline-info openModalBtnClass" id="openModalBtn" ' +
+//                          'data-trainee_id="' + trainee.trainee_id + '" ' +
+//                          'data-full_name="' + trainee.full_name + '" ' +
+//                          'data-organization="' + trainee.organization + '" ' +
+//                          'data-email="' + trainee.email + '" ' +
+//                          'data-phone_number="' + trainee.phone_number + '" ' +
+//                          'data-address="' + trainee.address + '" ' +
+//                          'data-skills="' + trainee.skills + '" ' +
+//                          'data-educational_level="' + trainee.educational_level + '" ' +
+//                          'data-freelancing_experience="' + trainee.freelancing_experience + '" ' +
+//                          'data-portfolio_link="' + trainee.portfolio_link + '" ' +
+//                          'data-done_trainings="' + trainee.done_trainings + '" ' +
+//                          'data-want="' + trainee.wantTo_trainings + '" ' +
+//                          'data-language_proficiency="' + trainee.language_proficiency + '" ' +
+//                          'data-joined_on="' + trainee.joined_on + '" ' +
+//                          'data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>' +
+//                          '<button href="javascript:void(0)" data-id="' + trainee.trainee_id + '" ' +
+//                          'class="btn btn-sm btn-outline-warning deleteBtn" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button>' +
+//                          '</td>'+
+//                          '</tr>'
+                   
+//                      $('#all_trainees').append(rowHtml);
+//                    });
+                
+//                  updatePagination(response.page, response.total_pages);
+//              },
+//              error: function(xhr, status, error) {
+//                  console.error('Error loading data:', error);
+//              }
+//          });
+//      }
 
-        
+$(document).ready(function() {
+    // Function to load trainee data
+    function loadTraineeData(page) {
+        $.ajax({
+            url: '/trainee_list_pagination',
+            type: 'GET',
+            data: { page: page },
+            success: function(response) {
+                $('#all_trainees').empty(); // Clear existing data
 
-
-    // }
-</script>
-
-<script>
-    // Extracted and converted JSON data
-    // var json_data = '{"fiverr":"https://fiverr.com/username","upwork":"https://upwork.com/username","freelancer":"https://freelancer.com/username","toptal":"https://toptal.com/username","guru":"https://guru.com/username","other":"https://example.com"}';
-
-    function populatePortfolios(json_data) {
-     
-    // Parse JSON data
-    var portfolio_links = JSON.parse(json_data);
-    
-    var hidden_portfolios= document.getElementById("hidden_portfolios");
-
-    
-    
-    hidden_portfolios.value= json_data;
-    
-
-    // Get the container where portfolio links will be added
-    var portfolioContainer = document.getElementById('portfolio-links');
-
-    // Loop through the portfolio_links object and create list items
-    for (var platform in portfolio_links) {
-        if (portfolio_links.hasOwnProperty(platform)) {
-            var listItem = document.createElement('li');
-            listItem.className = 'list-group-item d-flex justify-content-between align-items-center flex-wrap';
-
-            var platformIcon = document.createElement('h6');
-            platformIcon.className = 'mb-0';
-            platformIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' + platform.charAt(0).toUpperCase() + platform.slice(1);
-            
-            console.log("platform= ", platform);
-
-            var linkText = document.createElement('span');
-            linkText.className = 'text-secondary';
-            linkText.textContent = portfolio_links[platform];
-
-            listItem.appendChild(platformIcon);
-            listItem.appendChild(linkText);
-
-            portfolioContainer.querySelector('ul').appendChild(listItem);
-        }
+                // Loop through trainees and append rows to table
+                $.each(response.trainees, function(index, trainee) {
+                    var rowHtml = '<tr>' +
+                        '<td>' + (index + 1) + '</td>' +
+                        '<td>' + trainee.trainee_id + '</td>' +
+                        '<td>' + trainee.full_name + '</td>' +
+                        '<td>' + trainee.organization + '</td>' +
+                        '<td>' + trainee.email + '</td>' +
+                        '<td>' + trainee.phone_number + '</td>' +
+                        '<td>' + trainee.address + '</td>' +
+                        '<td>' + trainee.educational_level + '</td>' +
+                        '<td>' + trainee.skills + '</td>' +
+                        '<td>' + trainee.freelancing_experience + '</td>' +
+                        // '<td>' + (trainee.portfolio_link.substring(0, 30) + (trainee.portfolio_link.length > 30 ? '...' : '')) + '</td>' +
+                        // '<td>' + (trainee.language_proficiency.substring(0, 30) + (trainee.language_proficiency.length > 30 ? '...' : '')) + '</td>' +
+                        '<td>' + trainee.done_trainings + '</td>' +
+                        '<td>' + trainee.wantTo_trainings + '</td>' +
+                        '<td>' + trainee.joined_on + '</td>' +
+                        '<td>' +
+                        '<button class="btn btn-sm btn-outline-info openModalBtnClass" ' +
+                        'data-trainee_id="' + trainee.trainee_id + '" ' +
+                        'data-full_name="' + trainee.full_name + '" ' +
+                        'data-organization="' + trainee.organization + '" ' +
+                        'data-email="' + trainee.email + '" ' +
+                        'data-phone_number="' + trainee.phone_number + '" ' +
+                        'data-address="' + trainee.address + '" ' +
+                        'data-skills="' + trainee.skills + '" ' +
+                        'data-educational_level="' + trainee.educational_level + '" ' +
+                        'data-freelancing_experience="' + trainee.freelancing_experience + '" ' +
+                        'data-portfolio_link="' + trainee.portfolio_link + '" ' +
+                        'data-done_trainings="' + trainee.done_trainings + '" ' +
+                        'data-want="' + trainee.wantTo_trainings + '" ' +
+                        'data-language_proficiency="' + trainee.language_proficiency + '" ' +
+                        'data-joined_on="' + trainee.joined_on + '" ' +
+                        'data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>' +
+                        '<button onclick="deleteTrainee(' + trainee.trainee_id + ')" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button>' +
+                        '</td>' +
+                        '</tr>';
+                    $('#all_trainees').append(rowHtml);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading data:', error);
+            }
+        });
     }
 
+    // Initial load of trainee data
+    loadTraineeData(1);
+
+    // Pagination click event
+    $(document).on('click', '#pagination-container .pagination a.page-link', function(e) {
+        e.preventDefault();
+        var page = $(this).text(); // Get page number from link
+        $('#all_trainees').empty(); // Clear existing data
+        loadTraineeData(page); // Load data for the selected page
+    });
+});
+
+
+
+  function populatePortfolios(json_data) {
+   
+  // Parse JSON data
+  var portfolio_links = JSON.parse(json_data);
+  
+  var hidden_portfolios= document.getElementById("hidden_portfolios");
+
+  
+  
+  hidden_portfolios.value= json_data;
+  
+
+  // Get the container where portfolio links will be added
+  var portfolioContainer = document.getElementById('portfolio-links');
+
+  // Loop through the portfolio_links object and create list items
+  for (var platform in portfolio_links) {
+      if (portfolio_links.hasOwnProperty(platform)) {
+          var listItem = document.createElement('li');
+          listItem.className = 'list-group-item d-flex justify-content-between align-items-center flex-wrap';
+
+          var platformIcon = document.createElement('h6');
+          platformIcon.className = 'mb-0';
+          platformIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' + platform.charAt(0).toUpperCase() + platform.slice(1);
+          
+          console.log("platform= ", platform);
+
+          var linkText = document.createElement('span');
+          linkText.className = 'text-secondary';
+          linkText.textContent = portfolio_links[platform];
+
+          listItem.appendChild(platformIcon);
+          listItem.appendChild(linkText);
+
+          portfolioContainer.querySelector('ul').appendChild(listItem);
+      }
   }
 
-    function populateLanguages(lang_string) {
-      var language_proficiency= document.getElementById("hidden_language_proficiency");
-      language_proficiency.value= lang_string;
-    }
+}
 
-    function populatedonetrainings(done_string) {
-      var done_trainings= document.getElementById("hidden_done_trainings");
-      done_trainings.value= done_string;
-    }
+  function populateLanguages(lang_string) {
+    var language_proficiency= document.getElementById("hidden_language_proficiency");
+    language_proficiency.value= lang_string;
+  }
 
-    function populatewantTotrainings(wanTo_string) {
+  function populatedonetrainings(done_string) {
+    var done_trainings= document.getElementById("hidden_done_trainings");
+    done_trainings.value= done_string;
+  }
 
-      var wantTo_trainings= document.getElementById("hidden_wantTo_trainings");
-      wantTo_trainings.value= wanTo_string;
-    }
+  function populatewantTotrainings(wanTo_string) {
+
+    var wantTo_trainings= document.getElementById("hidden_wantTo_trainings");
+    wantTo_trainings.value= wanTo_string;
+  }
 </script>
 <script>
-//           $(document).ready(function() {
-//     function getTraineeData() {
-     
-//         // Send an AJAX request to the server
-//         $.ajax({
-//             url: '/profile',
-//             type: 'GET',
-//             contentType: 'application/json',
-//             xhrFields: {
-//                 withCredentials: true // Include cookies in the request
-//             },
-//             success: function(data) {
-//                 // Render the trainee data on the webpage
-//                 populatePortfolios(data.portfolio_link);
-//                 fillFormWithData(data);
-//                 populateLanguages(data.language_proficiency);
-//                 populatedonetrainings(data.done_trainings);
-//                 populatewantTotrainings(data.wantTo_trainings);
-                
-//                 // document.getElementById("");
 
-                
-
-                
-//             },
-//             error: function(jqXHR, textStatus, errorThrown) {
-//                 console.error('Error:', errorThrown);
-//                 // Handle errors appropriately (e.g., display an error message)
-//             }
-//         });
-//     }
-
-//     getTraineeData();
-// });
 
 function createEvent(checkboxId, inputId, inputVal) {
 
@@ -824,11 +915,11 @@ var checkbox = document.getElementById(checkboxId);
 checkbox.checked = true;
 
 if (inputId) {
-  var input = document.getElementById(inputId);
-  input.value= inputVal;
+var input = document.getElementById(inputId);
+input.value= inputVal;
 
-  input.style.display = "block";
-  input.focus();
+input.style.display = "block";
+input.focus();
 }
 
 
@@ -837,188 +928,276 @@ if (inputId) {
 
 // Function to fill form fields with data
 function fillFormWithtraineeData(portfolios, language_proficiency, done_trainings, wantTo_trainings) {
-    
-    
-    /////////////////////////////////////////////////////////////
-  ///////// Code for Portfolio Checkboxes Checked & Value Set//
-  ////////////////////////////////////////////////////////////
-  debugger;
-  var json_data= portfolios;
-   // Parse JSON data
-  //  var portfolio_links = JSON.parse(json_data);
-   var portfolio_links = json_data;
-   
-   for (var platform in portfolio_links) {
-	    createEvent(platform, platform+"_link", portfolio_links[platform]);
-   }
-
+  
+  
   /////////////////////////////////////////////////////////////
-  ///////// Code for Portfolio Checkboxes Checked & Value Set//
-  ////////////////////////////////////////////////////////////
+///////// Code for Portfolio Checkboxes Checked & Value Set//
+////////////////////////////////////////////////////////////
+debugger;
+var json_data= portfolios;
+ // Parse JSON data
+//  var portfolio_links = JSON.parse(json_data);
+ var portfolio_links = json_data;
+ 
+ for (var platform in portfolio_links) {
+    createEvent(platform, platform+"_link", portfolio_links[platform]);
+ }
 
-  ///Languages checkbox checked
-  var lang_string= language_proficiency;
+/////////////////////////////////////////////////////////////
+///////// Code for Portfolio Checkboxes Checked & Value Set//
+////////////////////////////////////////////////////////////
 
-  debugger;
+///Languages checkbox checked
+var lang_string= language_proficiency;
+
+debugger;
+
+var lang_array= lang_string.split(", ");
+
+
+ for (let i = 0; i < lang_array.length; i++) {
+  const element = lang_array[i];
+  // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+  if (element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english') {
+    createEvent(element.toLowerCase(), null, null);
+  } else {
+    createEvent("other_language_checkbox", "other_language_input", element);
+  }
   
-  var lang_array= lang_string.split(", ");
+ }
 
+ //Done Trainings Checkbox checked
+  var done_string= done_trainings;
 
-   for (let i = 0; i < lang_array.length; i++) {
-    const element = lang_array[i];
+ 
+
+  var done_array= done_string.split(", ");
+
+  
+
+  for (let i = 0; i < done_array.length; i++) {
+    const element = done_array[i];
     // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
-    if (element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english') {
-      createEvent(element.toLowerCase(), null, null);
+    if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
+      const words= element.trim().toLowerCase().split(" ")
+      if (words.length>1) {
+        createEvent(words.join("_"), null, null);
+      } else {
+        createEvent(element.toLowerCase(), null, null);
+      }
+      
     } else {
-      createEvent("other_language_checkbox", "other_language_input", element);
+      createEvent("other_done_training_checkbox", "other_done_training_input", element);
     }
     
-   }
+  }
 
-   //Done Trainings Checkbox checked
-    var done_string= done_trainings;
 
-   
+  // Want to trainings checkbox checked.
+  var wantTo_string= wantTo_trainings;
 
-    var done_array= done_string.split(", ");
 
-    
 
-    for (let i = 0; i < done_array.length; i++) {
-      const element = done_array[i];
-      // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
-      if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
-        const words= element.trim().toLowerCase().split(" ")
-        if (words.length>1) {
-          createEvent(words.join("_"), null, null);
-        } else {
-          createEvent(element.toLowerCase(), null, null);
-        }
-        
+ 
+
+  var wantTo_array= wantTo_string.split(", ");
+
+ 
+
+  for (let i = 0; i < wantTo_array.length; i++) {
+    const element = wantTo_array[i];
+    // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+    if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
+      const words= element.trim().toLowerCase().split(" ")
+      if (words.length>1) {
+        createEvent(words.join("_")+"_want", null, null);
       } else {
-        createEvent("other_done_training_checkbox", "other_done_training_input", element);
+        createEvent(element.toLowerCase()+"_want", null, null);
       }
-      
+    } else {
+      createEvent("other_wantTo_training_checkbox", "other_wantTo_training_input", element);
     }
-
-
-    // Want to trainings checkbox checked.
-    var wantTo_string= wantTo_trainings;
-
-    debugger;
-
-   
-
-    var wantTo_array= wantTo_string.split(", ");
-
-   
-
-    for (let i = 0; i < wantTo_array.length; i++) {
-      const element = wantTo_array[i];
-      // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
-      if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
-        const words= element.trim().toLowerCase().split(" ")
-        if (words.length>1) {
-          createEvent(words.join("_")+"_want", null, null);
-        } else {
-          createEvent(element.toLowerCase()+"_want", null, null);
-        }
-      } else {
-        createEvent("other_wantTo_training_checkbox", "other_wantTo_training_input", element);
-      }
-      
-    }
-
-    // console.log("user id value", document.getElementById("user_id").value);
     
-  document.getElementById("trainee_id_input_update_pass").value = document.getElementById("user_id").value;
-  document.getElementById("trainee_id_input_update").value = document.getElementById("user_id").value;
-  document.getElementById("user_name__edit_modal").value = document.getElementById("user_name_modal").innerText;
-  document.getElementById("organization_edit_modal").value = document.getElementById("organization_modal").innerText;
-  document.getElementById("email__edit_modal").value = document.getElementById("email_modal").innerText;
-  document.getElementById("phone_number_edit_modal").value = document.getElementById("phone_number_modal").innerText;
-  document.getElementById("address_edit_modal").value = document.getElementById("address_modal").innerText;
-  document.getElementById("skills_edit_modal").value = document.getElementById("skills_modal").innerText;
-  // document.getElementById("languages_edit_modal").value = document.getElementById("languages_modal").innerText;
-  // document.getElementById("experience_edit_modal").value = document.getElementById("experience_modal").innerText;
-  // document.getElementById("done_training_edit_modal").value = document.getElementById("done_training_modal").innerText;
-  // document.getElementById("wantTo_trainings_edit_modal").value = document.getElementById("wantTo_trainings_modal").innerText;
+  }
+
+  // console.log("user id value", document.getElementById("user_id").value);
   
-  // document.getElementById("educational_level").value = document.getElementById("educational_level_hidden").innerText;
-  // document.getElementById("skills_input_update").value = document.getElementById("educational_level_hidden").innerText;
-  
-  
-  
+document.getElementById("trainee_id_input_update_pass").value = document.getElementById("user_id").value;
+document.getElementById("trainee_id_input_update").value = document.getElementById("user_id").value;
+document.getElementById("user_name__edit_modal").value = document.getElementById("user_name_modal").innerText;
+document.getElementById("organization_edit_modal").value = document.getElementById("organization_modal").innerText;
+document.getElementById("email__edit_modal").value = document.getElementById("email_modal").innerText;
+document.getElementById("phone_number_edit_modal").value = document.getElementById("phone_number_modal").innerText;
+document.getElementById("address_edit_modal").value = document.getElementById("address_modal").innerText;
+document.getElementById("skills_edit_modal").value = document.getElementById("skills_modal").innerText;
+// document.getElementById("languages_edit_modal").value = document.getElementById("languages_modal").innerText;
+// document.getElementById("experience_edit_modal").value = document.getElementById("experience_modal").innerText;
+// document.getElementById("done_training_edit_modal").value = document.getElementById("done_training_modal").innerText;
+// document.getElementById("wantTo_trainings_edit_modal").value = document.getElementById("wantTo_trainings_modal").innerText;
+
+// document.getElementById("educational_level").value = document.getElementById("educational_level_hidden").innerText;
+// document.getElementById("skills_input_update").value = document.getElementById("educational_level_hidden").innerText;
+
+
+
 }
 
 
 function openModal() {
-  
-  var modal = document.getElementById("edit_Modal");
-  modal.style.display = "block";
-  // Call your function to fill data
-  fillFormWithtraineeData(); // assuming 'data' is available
+
+var modal = document.getElementById("edit_Modal");
+modal.style.display = "block";
+// Call your function to fill data
+fillFormWithtraineeData(); // assuming 'data' is available
 }
 
 var btn = document.getElementById("openModalBtn");
 
 span.onclick = function() {
-  closeModal();
+closeModal();
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  var modal = document.getElementById("edit_Modal");
-  if (event.target == modal) {
-    closeModal();
-  }
+var modal = document.getElementById("edit_Modal");
+if (event.target == modal) {
+  closeModal();
+}
 }
 </script>
 
 <script>
-  $(document).ready(function() {
-    $(".openModalBtnClass").click(function() {
-      var trainee_id= $(this).data("trainee_id");
-      var full_name= $(this).data("full_name");
-      var organization= $(this).data("organization");
-      var email= $(this).data("email");
-      var phone_number= $(this).data("phone_number");
-      var address= $(this).data("address");
-      var skills= $(this).data("skills");
-      var educational_level= $(this).data("educational_level");
-      var freelancing_experience= $(this).data("freelancing_experience");
-      var portfolio_link= $(this).data("portfolio_link");
-      var language_proficiency= $(this).data("language_proficiency");
-      var done_trainings= $(this).data("done_trainings");
-      var wantTo_trainings= $(this).data("want");
-      var joined_on= $(this).data("joined_on");
+$(document).ready(function() {
+  
+  $(".openModalBtnClass").click(function() {
+    var trainee_id= $(this).data("trainee_id");
+    var full_name= $(this).data("full_name");
+    var organization= $(this).data("organization");
+    var email= $(this).data("email");
+    var phone_number= $(this).data("phone_number");
+    var address= $(this).data("address");
+    var skills= $(this).data("skills");
+    var educational_level= $(this).data("educational_level");
+    var freelancing_experience= $(this).data("freelancing_experience");
+    var portfolio_link= $(this).data("portfolio_link");
+    var language_proficiency= $(this).data("language_proficiency");
+    var done_trainings= $(this).data("done_trainings");
+    var wantTo_trainings= $(this).data("want");
+    var joined_on= $(this).data("joined_on");
 
-      debugger;
 
+
+    var trainee= {
+      trainee_id: trainee_id,
+      full_name: full_name,
+      organization: organization,
+      email: email,
+      phone_number: phone_number,
+      address: address,
+      skills: skills,
+      educational_level: educational_level,
+      freelancing_experience: freelancing_experience,
+      portfolio_link: portfolio_link,
+      language_proficiency: language_proficiency,
+      done_trainings: done_trainings,
+      wantTo_trainings: wantTo_trainings,
+      joined_on: joined_on,
+    }
+
+    fillFormWithData(trainee);
+
+
+  });
+});
+</script>
+
+<script>
+
+
+    function updatePagination(currentPage, totalPages) {
+        var paginationHtml = '';
+        paginationHtml += '<nav aria-label="Page navigation">';
+        paginationHtml += '<ul class="pagination justify-content-center">';
+        paginationHtml += '<li class="page-item ' + (currentPage == 1 ? 'disabled' : '') + '">';
+        paginationHtml += '<a class="page-link" href="#" aria-label="Previous">';
+        paginationHtml += '<span aria-hidden="true">&laquo;</span>';
+        paginationHtml += '</a></li>';
+        for (var page = 1; page <= totalPages; page++) {
+            paginationHtml += '<li class="page-item ' + (page == currentPage ? 'active' : '') + '">';
+            paginationHtml += '<a class="page-link" href="#">' + page + '</a></li>';
+        }
+        paginationHtml += '<li class="page-item ' + (currentPage == totalPages ? 'disabled' : '') + '">';
+        paginationHtml += '<a class="page-link" href="#" aria-label="Next">';
+        paginationHtml += '<span aria-hidden="true">&raquo;</span>';
+        paginationHtml += '</a></li></ul></nav>';
+
+
+        
+        $('#pagination-container').html(paginationHtml);
+    }
+
+    $('#rowHtml').on('click', '.openModalBtn', function() {
+     
+    var trainee_id= $(this).data("trainee_id");
+    var full_name= $(this).data("full_name");
+    var organization= $(this).data("organization");
+    var email= $(this).data("email");
+    var phone_number= $(this).data("phone_number");
+    var address= $(this).data("address");
+    var skills= $(this).data("skills");
+    var educational_level= $(this).data("educational_level");
+    var freelancing_experience= $(this).data("freelancing_experience");
+    var portfolio_link= $(this).data("portfolio_link");
+    var language_proficiency= $(this).data("language_proficiency");
+    var done_trainings= $(this).data("done_trainings");
+    var wantTo_trainings= $(this).data("want");
+    var joined_on= $(this).data("joined_on");
+      openModalPag(trainee_id, full_name, organization, email, phone_number, address, skills, educational_level, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, joined_on);
+
+
+    function openModalPag(trainee_id, full_name, organization, email, phone_number, address, skills, educational_level, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, joined_on) {
+
+       
 
       var trainee= {
-        trainee_id: trainee_id,
-        full_name: full_name,
-        organization: organization,
-        email: email,
-        phone_number: phone_number,
-        address: address,
-        skills: skills,
-        educational_level: educational_level,
-        freelancing_experience: freelancing_experience,
-        portfolio_link: portfolio_link,
-        language_proficiency: language_proficiency,
-        done_trainings: done_trainings,
-        wantTo_trainings: wantTo_trainings,
-        joined_on: joined_on,
-      }
+      trainee_id: trainee_id,
+      full_name: full_name,
+      organization: organization,
+      email: email,
+      phone_number: phone_number,
+      address: address,
+      skills: skills,
+      educational_level: educational_level,
+      freelancing_experience: freelancing_experience,
+      portfolio_link: portfolio_link,
+      language_proficiency: language_proficiency,
+      done_trainings: done_trainings,
+      wantTo_trainings: wantTo_trainings,
+      joined_on: joined_on,
+    }
 
-      fillFormWithData(trainee);
+    fillFormWithData(trainee);
+
+        }
+        });
 
 
-    });
+///////////////////////////////
+////////for delete function////
+//////////////////////////////
+$(document).ready(function() {
+  $(".deleteBtn").click(function() {
+    alert("Delete button clicked")
+    var id= $(this).data("id");
+    console.log("id= ", id);
   });
+});
+
+
+
+
 </script>
+
  
   {% endblock %} {% set active_page = 'trainee_list' %}
 
