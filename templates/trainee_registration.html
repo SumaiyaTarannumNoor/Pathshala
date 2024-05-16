@@ -94,16 +94,16 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="phone_number">Phone Number</label>
-                                    <label for="phone_number" style="color: rebeccapurple;">*</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" required placeholder="Enter your phone number" autofocus>
+                                    <!-- <label for="phone_number" style="color: rebeccapurple;">*</label> -->
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" autofocus>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 
                                 <div class="mb-3">
                                     <label for="address">Address</label>
-                                    <label for="address" style="color: rebeccapurple;">*</label>
-                                    <input type="text" class="form-control" id="address" name="address" required placeholder="Enter your address" autofocus>
+                                    <!-- <label for="address" style="color: rebeccapurple;">*</label> -->
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address" autofocus>
                                 </div>
                             </div>
                             
@@ -111,8 +111,8 @@
                             
                            <div class="mb-3">
                             <label for="educational_level">Educational Level</label>
-                            <label for="educational_level" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
-                            <select class="form-control" id="educational_level" name="educational_level" required autofocus>
+                            <!-- <label for="educational_level" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label> -->
+                            <select class="form-control" id="educational_level" name="educational_level" autofocus>
                                 <option value="SSC">SSC</option>
                                 <option value="HSC">HSC</option>
                                 <option value="BSc">BSc</option>
@@ -337,7 +337,12 @@
                             <label for="confirm_password">Confirm Password:</label>
                             <input type="password" id="confirm_password" name="confirm_password" required>
                             </div>     -->
-
+                            <div class="form-group">
+                                <label for="trainee_image">Upload Your Image</label>
+                                <div class="col-xs-12">
+                                  <input class="form-control service_file_input" name="file_photo" type="file" id="formFile" />
+                                </div>
+                              </div> 
                             <div class="mb-3">
                                 <label for="password">Password:</label>
                                 <div class="password-field">
@@ -360,6 +365,14 @@
                                 <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
                             </div>
                         </form>
+                        <footer class="main-footer px-0 pb-0 text-center">
+                            <div class="row">
+                              <div class="col-md-12 col-sm-12">
+                                Powered By © <span id="year"></span>
+                                <a href="https://www.techknowgram.com/" target="_blank">TechKnowGram</a>
+                              </div>
+                            </div>
+                          </footer>
                     </div>
             <!-- <form id="registrationForm" method="POST" action="/registration"> -->
             

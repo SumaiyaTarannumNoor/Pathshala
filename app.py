@@ -106,6 +106,31 @@ def login_trainee():
                 return jsonify({'error': error})
     else:
         return jsonify({'error': 'Method not allowed'})
+    
+@app.route('/approve', methods=['POST'])
+def approve_trainee():
+    if request.method == 'POST':
+        # Get trainee_id and status from the request JSON body
+        data = request.get_json()
+        trainee_id = data.get('trainee_id')
+        status = data.get('status')
+
+        if trainee_id is None or status is None:
+            return jsonify({'error': "trainee_id or status not provided"})
+
+        try:
+            # Convert status to string ('true' or 'false')
+            status_str = 'true' if status else 'false'
+
+            # Update trainee status in the database
+            with connection.cursor() as cursor:
+                cursor.execute("UPDATE trainees SET status = CASE WHEN %s = 'true' THEN 1 WHEN %s = 'false' THEN 0 ELSE status END WHERE trainee_id = %s;", (status_str, status_str, int(trainee_id)))
+                connection.commit()
+                return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': f"Database error: {str(e)}"})
+    else:
+        return jsonify({'error': "Only POST requests are allowed for this endpoint"})    
 
 @app.route('/profile', methods=['GET', 'POST'])
 def get_trainee():
@@ -126,8 +151,6 @@ def get_trainee():
             return jsonify({'error': f"Request error: {str(e)}"})
     else:
         return redirect(url_for('index'))
-
-
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -233,10 +256,17 @@ def registration():
             if not ([full_name, email, phone_number, address, educational_level, password]):
                 return jsonify({"message": "You must fill up these required fields."}), 400
             
+            file_photo = request.files['file_photo']
+            if file_photo.filename != '':
+                # Generate a unique filename
+                unique_filename = str(uuid.uuid4()) + "_" + secure_filename(file_photo.filename)
+                file_path = os.path.join('static/mainassets/images/trainees_images', unique_filename)
+                file_photo.save(file_path)
+            
             # Perform database operations
             with connection.cursor() as cursor:
-                trainee_create_sql = "INSERT INTO trainees (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(trainee_create_sql, (full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings, password))
+                trainee_create_sql = "INSERT INTO trainees (trainee_image,full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(trainee_create_sql, (unique_filename, full_name, organization, email, phone_number, address, educational_level, skills, freelancing_experience, json_data,language_proficiency, done_trainings, wantTo_trainings, password))
                 connection.commit()    
                 
             # send_registration_email(email, full_name)     
@@ -872,7 +902,7 @@ def gallary():
     try:
         with connection.cursor() as cursor:
             # SQL query to fetch data from the users table
-            users_gallary_sql = "SELECT * FROM ahm_gallary_partners"
+            users_gallary_sql = "SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' ORDER BY create_at DESC"
             cursor.execute(users_gallary_sql)
             gallary_data = cursor.fetchall()
         # print(service_products_data)
@@ -886,7 +916,7 @@ def get_user_gallary():
         with connection.cursor() as cursor:
             # SQL query to fetch data from the users table
             # users_gallary_sql = "SELECT * FROM ahm_gallary_partners LIMIT 6"
-            users_gallary_sql = "SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' LIMIT 6"
+            users_gallary_sql = "SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' ORDER BY create_at DESC LIMIT 6"
             cursor.execute(users_gallary_sql)
             gallary_data = cursor.fetchall()
             
@@ -912,26 +942,27 @@ def get_user_gallary():
     
 
 # GET NEXT 10 IMAGES
-PER_PAGE = 6  # Number of items per page
-START_PAGE = 2  # Starting page number
+gallery_PER_PAGE = 6  # Number of items per page
+gallery_START_PAGE = 2  # Starting page number
 
 @app.route('/user_gallary_pagination', methods=['GET'])
 def user_gallary_pagination():
     try:
         # Get the page number from the request arguments, default to START_PAGE if not provided
-        page = request.args.get('page', START_PAGE, type=int)
+        # page = request.args.get('page', START_PAGE, type=int)
+        page = request.args.get('page', gallery_START_PAGE, type=int)
         
         selected_year = request.args.get('selected_year')
 
         # Calculate the OFFSET based on the page number and number of items per page
-        offset = (page - 1) * PER_PAGE
+        offset = (page - 1) * gallery_PER_PAGE
 
         with connection.cursor() as cursor:
             
             if selected_year:
                 # SQL query to fetch paginated data from the users table
                 users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s LIMIT %s OFFSET %s"
-                cursor.execute(users_gallary_sql, (selected_year, PER_PAGE, offset))
+                cursor.execute(users_gallary_sql, (selected_year, gallery_PER_PAGE, offset))
                 gallary_data = cursor.fetchall()
                 
                 count_query = f"SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s"
@@ -941,7 +972,7 @@ def user_gallary_pagination():
             else:
                  # SQL query to fetch paginated data from the users table
                 users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' LIMIT %s OFFSET %s"
-                cursor.execute(users_gallary_sql, (PER_PAGE, offset))
+                cursor.execute(users_gallary_sql, (gallery_PER_PAGE, offset))
                 gallary_data = cursor.fetchall()
                 
                 count_query = "SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary'"
@@ -1126,7 +1157,7 @@ def trainee_list():
     if 'loggedin' in session and session['loggedin']:
         try:
             with connection.cursor() as cursor:
-                trainee_sql = "SELECT * FROM trainees ORDER BY joined_on  DESC LIMIT 20"
+                trainee_sql = "SELECT * FROM trainees ORDER BY joined_on  DESC LIMIT 10"
                 cursor.execute(trainee_sql)
                 trainee_data = cursor.fetchall()
 
@@ -1135,7 +1166,7 @@ def trainee_list():
                 total_records = cursor.fetchone()
                 count_value = total_records['COUNT(trainee_id )']
 
-            limit_per_page = 20
+            limit_per_page = 10
             total_pages = (count_value + limit_per_page)    
 
             total_pages = math.ceil(total_pages / limit_per_page)-1 
@@ -1147,26 +1178,26 @@ def trainee_list():
         return redirect(url_for('admin'))
     
 
-PER_PAGE = 20  # Number of items per page
-START_PAGE = 2  # Starting page number        
+trainee_list_PER_PAGE = 10  # Number of items per page
+trainee_list_START_PAGE = 2  # Starting page number        
         
 @app.route('/trainee_list_pagination', methods=['GET'])
 def trainee_list_pagination():
     try:
         # Get the page number from the request arguments, default to START_PAGE if not provided
-        page = request.args.get('page', START_PAGE, type=int)
+        page = request.args.get('page', trainee_list_START_PAGE, type=int)
         
         # selected_year = request.args.get('selected_year')
 
         # Calculate the OFFSET based on the page number and number of items per page
-        offset = (page - 1) * PER_PAGE
+        offset = (page - 1) * trainee_list_PER_PAGE
 
         with connection.cursor() as cursor:
             
           
             # SQL query to fetch paginated data from the users table
             trainee_sql = f"SELECT * FROM trainees LIMIT %s OFFSET %s"
-            cursor.execute(trainee_sql, (PER_PAGE, offset))
+            cursor.execute(trainee_sql, (trainee_list_PER_PAGE, offset))
             trainee_data = cursor.fetchall()
             
             count_query = "SELECT COUNT(trainee_id) FROM trainees"
@@ -1177,7 +1208,7 @@ def trainee_list_pagination():
             
            
             
-        limit_per_page = 20
+        limit_per_page = 10
         total_pages = (count_value + limit_per_page)
         
         # print(gallary_data)
@@ -1385,11 +1416,11 @@ def trainee_delete(trainee_id):
 def get_blogs():
         try:
             with connection.cursor() as cursor:
-                blog_sql = "SELECT * FROM blogs ORDER BY created_at DESC LIMIT 6" 
+                blog_sql = "SELECT * FROM blogs WHERE status=1 ORDER BY created_at DESC LIMIT 6" 
                 cursor.execute(blog_sql)
                 blog_data = cursor.fetchall()
                 
-                count_query = "SELECT COUNT(blog_id) FROM blogs"
+                count_query = "SELECT COUNT(blog_id) FROM blogs WHERE status=1"
                 cursor.execute(count_query)
                 total_records = cursor.fetchone()
                 count_value = total_records['COUNT(blog_id)']
@@ -1407,19 +1438,19 @@ def get_blogs():
         except Exception as e:
             return jsonify({'error': f"Request error: {str(e)}"})   
         
-PER_PAGE = 6  # Number of items per page
-START_PAGE = 2  # Starting page number        
+blog_PER_PAGE = 6  # Number of items per page
+blog_START_PAGE = 2  # Starting page number        
         
 @app.route('/blog_pagination', methods=['GET'])
 def blog_pagination():
     try:
         # Get the page number from the request arguments, default to START_PAGE if not provided
-        page = request.args.get('page', START_PAGE, type=int)
+        page = request.args.get('page', blog_START_PAGE, type=int)
         
         # selected_year = request.args.get('selected_year')
 
         # Calculate the OFFSET based on the page number and number of items per page
-        offset = (page - 1) * PER_PAGE
+        offset = (page - 1) * blog_PER_PAGE
 
         with connection.cursor() as cursor:
             
@@ -1435,11 +1466,11 @@ def blog_pagination():
             #     count_value = total_records['COUNT(g_p_id)']
             # else:
                  # SQL query to fetch paginated data from the users table
-                blog_sql = f"SELECT * FROM blogs LIMIT %s OFFSET %s"
-                cursor.execute(blog_sql, (PER_PAGE, offset))
+                blog_sql = f"SELECT * FROM blogs WHERE status=1 ORDER BY created_at DESC LIMIT %s OFFSET %s"
+                cursor.execute(blog_sql, (blog_PER_PAGE, offset))
                 blog_data = cursor.fetchall()
                 
-                count_query = "SELECT COUNT(blog_id) FROM blogs"
+                count_query = "SELECT COUNT(blog_id) FROM blogs WHERE status=1"
                 cursor.execute(count_query)
                 total_records = cursor.fetchone()
                 count_value = total_records['COUNT(blog_id)']
@@ -1490,8 +1521,8 @@ def user_blogs():
      else:
         return redirect(url_for('trainee_login'))
     
-PER_PAGE = 6  # Number of items per page
-START_PAGE = 2  # Starting page number        
+user_blog_PER_PAGE = 6  # Number of items per page
+user_blog_START_PAGE = 2  # Starting page number        
         
 @app.route('/user_blog_pagination', methods=['GET'])
 def user_blog_pagination():
@@ -1499,12 +1530,12 @@ def user_blog_pagination():
         try:
             writers_name= session['name']
             # Get the page number from the request arguments, default to START_PAGE if not provided
-            page = request.args.get('page', START_PAGE, type=int)
+            page = request.args.get('page', user_blog_START_PAGE, type=int)
             
             # selected_year = request.args.get('selected_year')
 
             # Calculate the OFFSET based on the page number and number of items per page
-            offset = (page - 1) * PER_PAGE
+            offset = (page - 1) * user_blog_PER_PAGE
 
             with connection.cursor() as cursor:
                 
@@ -1520,8 +1551,8 @@ def user_blog_pagination():
                 #     count_value = total_records['COUNT(g_p_id)']
                 # else:
                     # SQL query to fetch paginated data from the users table
-                    blog_sql = f"SELECT * FROM blogs WHERE writers_name=%s LIMIT %s OFFSET %s"
-                    cursor.execute(blog_sql, (writers_name, PER_PAGE, offset))
+                    blog_sql = f"SELECT * FROM blogs WHERE writers_name=%s ORDER BY created_at DESC LIMIT %s OFFSET %s"
+                    cursor.execute(blog_sql, (writers_name, user_blog_PER_PAGE, offset))
                     blog_data = cursor.fetchall()
                     
                     count_query = "SELECT COUNT(blog_id) FROM blogs WHERE writers_name = %s"
@@ -1558,7 +1589,7 @@ def get_blogs_admin_panel():
                 count_query = "SELECT COUNT(blog_id) FROM blogs"
                 cursor.execute(count_query)
                 total_records = cursor.fetchone()
-                count_value = total_records['COUNT(blog_id )']
+                count_value = total_records['COUNT(blog_id)']
 
             limit_per_page = 20
             total_pages = (count_value + limit_per_page)    
@@ -1572,58 +1603,68 @@ def get_blogs_admin_panel():
         return redirect(url_for('admin'))       
 
 
-PER_PAGE = 20  # Number of items per page
+PER_PAGE = 10  # Number of items per page
 START_PAGE = 2  # Starting page number        
         
-@app.route('/blogs_admin_panel_pagination', methods=['GET'])
+# @app.route('/blogs_admin_panel_pagination', methods=['GET'])
+# def blogs_admin_panel_pagination():
+#     try:
+#         # Get the page number from the request arguments, default to START_PAGE if not provided
+#         page = request.args.get('page', START_PAGE, type=int)
+        
+#         # Calculate the OFFSET based on the page number and number of items per page
+#         offset = (page - 1) * PER_PAGE
+
+#         with connection.cursor() as cursor:
+#             # SQL query to fetch paginated data from the blogs table
+#             blog_sql = "SELECT * FROM blogs LIMIT %s OFFSET %s"
+#             cursor.execute(blog_sql, (PER_PAGE, offset))
+#             blog_data = cursor.fetchall()
+            
+#             # Query to get the total number of records in the blogs table
+#             count_query = "SELECT COUNT(blog_id) FROM blogs"
+#             cursor.execute(count_query)
+#             total_records = cursor.fetchone()
+#             count_value = total_records['COUNT(blog_id)']
+            
+#             # Calculate the total number of pages based on the total number of records and items per page
+#             total_pages = math.ceil(count_value / PER_PAGE)
+
+#         return jsonify({'blogs': blog_data, 'page': page, 'total_pages': total_pages})
+
+#     except Exception as e:
+#         return jsonify({'error': f"Request error: {str(e)}"})     
+
+
+@app.route('/blogs_admin_panel_pagination', methods=['GET', 'POST'])
 def blogs_admin_panel_pagination():
     try:
-        # Get the page number from the request arguments, default to START_PAGE if not provided
+        # Get the page number and sort order from the request arguments
         page = request.args.get('page', START_PAGE, type=int)
+        sort_order = request.args.get('sort_order', 'desc')
         
-        # selected_year = request.args.get('selected_year')
-
         # Calculate the OFFSET based on the page number and number of items per page
         offset = (page - 1) * PER_PAGE
 
         with connection.cursor() as cursor:
+            # SQL query to fetch paginated data from the blogs table, sorted by created_at in descending order
+            blog_sql = f"SELECT * FROM blogs ORDER BY created_at {sort_order} LIMIT %s OFFSET %s"
+            cursor.execute(blog_sql, (PER_PAGE, offset))
+            blog_data = cursor.fetchall()
             
-            # if selected_year:
-            #     # SQL query to fetch paginated data from the users table
-            #     users_gallary_sql = f"SELECT * FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s LIMIT %s OFFSET %s"
-            #     cursor.execute(users_gallary_sql, (selected_year, PER_PAGE, offset))
-            #     gallary_data = cursor.fetchall()
-                
-            #     count_query = f"SELECT COUNT(g_p_id) FROM ahm_gallary_partners WHERE category = 'gallary' and year=%s"
-            #     cursor.execute(count_query, (selected_year))
-            #     total_records = cursor.fetchone()
-            #     count_value = total_records['COUNT(g_p_id)']
-            # else:
-                 # SQL query to fetch paginated data from the users table
-                blog_sql = f"SELECT * FROM blogs LIMIT %s OFFSET %s"
-                cursor.execute(blog_sql, (PER_PAGE, offset))
-                blog_data = cursor.fetchall()
-                
-                count_query = "SELECT COUNT(blog_id) FROM blogs"
-                cursor.execute(count_query)
-                total_records = cursor.fetchone()
-                count_value = total_records['COUNT(blog_id  )']
+            # Query to get the total number of records in the blogs table
+            count_query = "SELECT COUNT(blog_id) FROM blogs"
+            cursor.execute(count_query)
+            total_records = cursor.fetchone()
+            count_value = total_records['COUNT(blog_id)']
             
-            
-           
-            
-        limit_per_page = 20
-        total_pages = (count_value + limit_per_page)
-        
-        # print(gallary_data)
-        # sys.exit(1)
-        
-        total_pages = math.ceil(total_pages / limit_per_page)-1
+            # Calculate the total number of pages based on the total number of records and items per page
+            total_pages = math.ceil(count_value / PER_PAGE)
 
         return jsonify({'blogs': blog_data, 'page': page, 'total_pages': total_pages})
 
     except Exception as e:
-        return jsonify({'error': f"Request error: {str(e)}"})             
+        return jsonify({'error': f"Request error: {str(e)}"})         
 
 
 # @app.route('/blog_creation', methods=['GET', 'POST'])
@@ -1654,6 +1695,11 @@ def blogs_admin_panel_pagination():
 #     except Exception as e:
 #         return jsonify({'error': f"Request error: {str(e)}"}), 500
 
+
+
+import uuid
+from datetime import datetime
+
 @app.route('/blog_creation', methods=['POST'])
 def create_blogs():
     try:
@@ -1668,17 +1714,18 @@ def create_blogs():
             if not all([writers_name, topic, blog_headline, blog_details]):
                 return jsonify({"message": "You must fill up all required fields."}), 400
             
-            # Save the image file
+            # Save the image file with a unique filename
             file_photo = request.files['file_photo']
             if file_photo.filename != '':
-                image = secure_filename(file_photo.filename)
-                file_path = os.path.join('static/mainassets/images/blog_images', image)
+                # Generate a unique filename
+                unique_filename = str(uuid.uuid4()) + "_" + secure_filename(file_photo.filename)
+                file_path = os.path.join('static/mainassets/images/blog_images', unique_filename)
                 file_photo.save(file_path)
                 
             # Perform database operations
             with connection.cursor() as cursor:
                 blog_create_sql = "INSERT INTO blogs  (image, writers_name, topic, blog_headline, blog_details) VALUES (%s, %s, %s, %s, %s)"
-                cursor.execute(blog_create_sql, (image, writers_name, topic, blog_headline, blog_details))
+                cursor.execute(blog_create_sql, (unique_filename, writers_name, topic, blog_headline, blog_details))
                 connection.commit()
 
             return jsonify({'success': 'Blog Creation successful'}), 200
@@ -1686,7 +1733,62 @@ def create_blogs():
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"}), 500
 
+# @app.route('/blog_creation', methods=['POST'])
+# def create_blogs():
+#     try:
+#         if request.method == 'POST':
+#             # image = request.form['image']
+#             writers_name = request.form.get('writers_name')
+#             topic = request.form.get('topic')
+#             blog_headline = request.form.get('blog_headline')
+#             blog_details = request.form.get('blog_details')
 
+#             # Check for required fields
+#             if not all([writers_name, topic, blog_headline, blog_details]):
+#                 return jsonify({"message": "You must fill up all required fields."}), 400
+            
+#             # Save the image file
+#             file_photo = request.files['file_photo']
+#             if file_photo.filename != '':
+#                 image = secure_filename(file_photo.filename)
+#                 file_path = os.path.join('static/mainassets/images/blog_images', image)
+#                 file_photo.save(file_path)
+                
+#             # Perform database operations
+#             with connection.cursor() as cursor:
+#                 blog_create_sql = "INSERT INTO blogs  (image, writers_name, topic, blog_headline, blog_details) VALUES (%s, %s, %s, %s, %s)"
+#                 cursor.execute(blog_create_sql, (image, writers_name, topic, blog_headline, blog_details))
+#                 connection.commit()
+
+#             return jsonify({'success': 'Blog Creation successful'}), 200
+
+#     except Exception as e:
+#         return jsonify({'error': f"Request error: {str(e)}"}), 500
+
+@app.route('/blog_approve', methods=['POST'])
+def approve_blog():
+    if request.method == 'POST':
+        # Get trainee_id and status from the request JSON body
+        data = request.get_json()
+        blog_id = data.get('blog_id')
+        status = data.get('status')
+
+        if blog_id is None or status is None:
+            return jsonify({'error': "blog_id or status not provided"})
+
+        try:
+            # Convert status to string ('true' or 'false')
+            status_str = 'true' if status else 'false'
+
+            # Update trainee status in the database
+            with connection.cursor() as cursor:
+                cursor.execute("UPDATE blogs SET status = CASE WHEN %s = 'true' THEN 1 WHEN %s = 'false' THEN 0 ELSE status END WHERE blog_id = %s;", (status_str, status_str, int(blog_id)))
+                connection.commit()
+                return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': f"Database error: {str(e)}"})
+    else:
+        return jsonify({'error': "Only POST requests are allowed for this endpoint"})
 
 @app.route('/blog_delete/<int:blog_id>', methods=['GET','POST'])
 def blog_delete(blog_id):
@@ -1700,6 +1802,39 @@ def blog_delete(blog_id):
         return jsonify({'error': 'Invalid request'})
     except Exception as e:
         return jsonify({'error': f"Request error: {str(e)}"})
+
+
+
+# @app.route('/blog_delete/<int:blog_id>', methods=['POST'])
+# def blog_delete(blog_id):
+#     try:
+#         if request.method == 'POST':
+#             # Retrieve the image filename associated with the blog
+#             cursor = connection.cursor()
+#             cursor.execute("SELECT image FROM blogs WHERE blog_id = %s", (blog_id,))
+#             image_filename = cursor.fetchone()[0]  # Assuming 'image' is the column name
+
+#             # Delete the blog record from the database
+#             cursor.execute("DELETE FROM blogs WHERE blog_id = %s", (blog_id,))
+#             connection.commit()
+
+#             # Delete the image file from the folder
+#             if image_filename:
+#                 file_path = os.path.join('static/mainassets/images/blog_images', image_filename)
+#                 if os.path.exists(file_path):
+#                     os.remove(file_path)
+#                     print("Image file deleted successfully.")
+#                 else:
+#                     print("Image file not found.")
+
+#             return jsonify({'success': 'Delete Success'})
+
+    except Exception as e:
+        return jsonify({'error': f"Request error: {str(e)}"})
+
+
+
+
 
 @app.route('/email_send', methods=['GET','POST'])
 def email_send():

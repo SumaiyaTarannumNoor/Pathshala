@@ -1,1203 +1,1310 @@
 {% extends 'layout.html' %} {% block title %}AHM Profile - {{ super() }}{%
-endblock %} {% block content %}
-
-<div class="container-xxl flex-grow-1 container-p-y">
-  <div class="row">
-
-      <div class="col-lg-12">
-        <button id="tester">
-          Hello
-         </button>
-          <div class="card">
-              <div class="card-header d-flex justify-content-between">
-                  <h5 class="m-0">TRAINEE LIST</h5>
-                 
-              </div>
-              <div class="card-body">
-                  <div class="table-responsive text-nowrap">
-                      <table class="table table-bordered">
-                        <thead style="background-color: var(--transparent-primary)">
-                          <tr>
-                            <th>Serial No.</th>
-                            <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Organization Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Address</th>
-                            <th>Educational Level</th>
-                            <!-- <th>Institution</th>
-                            <th>Educational Certificates</th>
-                            <th>Availability</th>
-                            <th>Course Joining Date</th> -->
-                            <th>Skills</th>
-                            <th>Freelancing Experience</th>
-                            <th>Portfolio Link</th>
-                            <!-- <th>Preferred Work Type</th>
-                            <th>Hourly Rate</th> -->
-                            <th>Language Proficiency</th>
-                            <th>Done Trainings</th>
-                            <th>Willing to do</th>
-                            <th>Joined On</th>
-                            <!-- <th scope="col">Certifications</th> -->
-                            <!-- <th scope="col">LinkedIn Profile</th>
-                            <th scope="col">GitHub Profile</th> -->
-                            <th>Admin Action</th>
-                          </tr>
-                        </thead>
-                        <tbody id="all_trainees">
-                          {% for trainee in trainees %}
-                          <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ trainee.trainee_id}}</td>
-                            <td>{{ trainee.full_name }}</td>
-                            <td>{{ trainee.organization}}</td>
-                            <td>{{ trainee.email }}</td>
-                            <td>{{ trainee.phone_number }}</td>
-                            <td>{{ trainee.address }}</td>
-                            
-                            <td>{{ trainee.educational_level }}</td>
-                            <td>{{ trainee.skills }}</td>
-                            <td>{{ trainee.freelancing_experience }}</td>
-                            <td>{{ trainee.portfolio_link [:30]}}{{ '...' if trainee.portfolio_link|length > 30 else '' }}</td>
-                            <td>{{ trainee.language_proficiency [:30]}}{{ '...' if trainee.language_proficiency|length > 30 else '' }}</td>
-                            <td>{{ trainee.done_trainings}}</td>
-                            <td>{{ trainee.wantTo_trainings}}</td>
-                            <td id="joined_on">{{ trainee.joined_on}}</td>
-                            <script>
-                              function formatDate(dateString) {
-                              var created_at_date = new Date(dateString);
-                              var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                              return created_at_date.toLocaleDateString('en-UK', options);
-                              }
-
-                              // Get the date string from the table cell
-                              const createdDateCell = document.getElementById('joined_on');
-                              const dateString = createdDateCell.textContent.trim(); // Remove leading/trailing whitespaces
-
-                              // Format the date string and update the content of the cell
-                              createdDateCell.innerText = formatDate(dateString);
-                            </script>
-                            <td>
-                              <!-- <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editTrainree">Select</button>   -->
+    endblock %} {% block content %}
+  
+    <style>
+  .btn-purple {
+      background-color: #6c5ffc;
+      color: white; /* Text color */
+      /* Add any other styles you want for the btn-purple class */
+  }
+  
+  
+    </style>
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="row">
+    
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-header d-flex justify-content-between">
+                      <h5 class="m-0">TRAINEE LIST</h5>
+                     
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive text-nowrap">
+                          <table class="table table-bordered">
+                            <thead style="background-color: var(--transparent-primary)">
+                              <tr>
+                                <th>Serial No.</th>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Organization Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Address</th>
+                                <th>Educational Level</th>
+                                <!-- <th>Institution</th>
+                                <th>Educational Certificates</th>
+                                <th>Availability</th>
+                                <th>Course Joining Date</th> -->
+                                <th>Skills</th>
+                                <th>Freelancing Experience</th>
+                                <th>Portfolio Link</th>
+                                <!-- <th>Preferred Work Type</th>
+                                <th>Hourly Rate</th> -->
+                                <th>Language Proficiency</th>
+                                <th>Done Trainings</th>
+                                <th>Willing to do</th>
+                                <th>Joined On</th>
+                                <!-- <th scope="col">Certifications</th> -->
+                                <!-- <th scope="col">LinkedIn Profile</th>
+                                <th scope="col">GitHub Profile</th> -->
+                                <th>Admin Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="all_trainees">
+                              {% for trainee in trainees %}
+                              <tr>
+                                  <td>
+                                      <button class="btn btn-sm {% if trainee.status == 1 %}btn-purple{% else %}btn-outline-primary{% endif %}">Selected</button>
+                                      <button id="approveBTN" class="btn btn-sm btn-outline-primary" onclick="updateTraineeStatus({{ trainee.trainee_id }}, true)">Approve</button>
+                                      <button id="rejectBTN"class="btn btn-sm btn-outline-warning" onclick="updateTraineeStatus({{ trainee.trainee_id }}, false)">Reject</button>
+                                      <script>
+                                        function updateTraineeStatus(traineeId, status) {
+                                            const data = {
+                                                trainee_id: traineeId,
+                                                status: status
+                                            };
+                                    
+                                            fetch("/approve", {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json"
+                                                },
+                                                body: JSON.stringify(data)
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    alert("Trainee status updated successfully!");
+                                                    // You can update the UI here if needed
+                                                } else {
+                                                    alert("An error occurred: " + data.error);
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error("Error:", error);
+                                                alert("An error occurred: " + error.message);
+                                            });
+                                        }
+                                    </script>
+                                  
+                                      <!-- <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editTrainree">Select</button>   -->
+                                        
+                                      <button class="btn btn-sm btn-outline-info openModalBtnClass" id="openModalBtn" 
+                                      data-trainee_id="{{ trainee.trainee_id }}"
+                                      data-full_name="{{ trainee.full_name }}"
+                                      data-organization="{{ trainee.organization }}"
+                                      data-email="{{ trainee.email }}"
+                                      data-phone_number="{{ trainee.phone_number }}"
+                                      data-address="{{trainee.address}}"
+                                      data-skills="{{trainee.skills}}"
+                                      data-educational_level="{{trainee.educational_level}}"
+                                      data-freelancing_experience="{{trainee.freelancing_experience}}"
+                                      data-portfolio_link="{{trainee.portfolio_link}}"
+                                      data-done_trainings="{{trainee.done_trainings}}"
+                                      data-want="{{trainee.wantTo_trainings}}"
+                                      data-language_proficiency="{{trainee.language_proficiency}}"
+                                      data-joined_on="{{ trainee.joined_on }}"
+                                       data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>
+        
+                                      <button href="javascript:void(0)" onclick="deleteTrainee({{ trainee.trainee_id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button></td>
+                                  </td>  
+                                <td>{{ loop.index }}</td>
+                                <td>{{ trainee.trainee_id}}</td>
+                                <td>{{ trainee.full_name }}</td>
+                                <td>{{ trainee.organization}}</td>
+                                <td>{{ trainee.email }}</td>
+                                <td>{{ trainee.phone_number }}</td>
+                                <td>{{ trainee.address }}</td>
                                 
-                              <button class="btn btn-sm btn-outline-info openModalBtnClass" id="openModalBtn" 
-                              data-trainee_id="{{ trainee.trainee_id }}"
-                              data-full_name="{{ trainee.full_name }}"
-                              data-organization="{{ trainee.organization }}"
-                              data-email="{{ trainee.email }}"
-                              data-phone_number="{{ trainee.phone_number }}"
-                              data-address="{{trainee.address}}"
-                              data-skills="{{trainee.skills}}"
-                              data-educational_level="{{trainee.educational_level}}"
-                              data-freelancing_experience="{{trainee.freelancing_experience}}"
-                              data-portfolio_link="{{trainee.portfolio_link}}"
-                              data-done_trainings="{{trainee.done_trainings}}"
-                              data-want="{{trainee.wantTo_trainings}}"
-                              data-language_proficiency="{{trainee.language_proficiency}}"
-                              data-joined_on="{{ trainee.joined_on }}"
-                               data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>
-
-                              <button href="javascript:void(0)" onclick="deleteTrainee({{ trainee.trainee_id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button></td>
-                          </tr>
-                        </tbody>
-                          {% endfor %}
-                          
-                          <!-- <tbody class="education_table">
-                          </tbody> -->
-                      </table>
-
-                      <div class="row" id="pagination-container" style="margin-top: 40px;">
-                        <nav aria-label="Page navigation">
-                          <ul class="pagination justify-content-center">
-                              <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
-                                  <a class="page-link" href="#" aria-label="Previous">
-                                      <span aria-hidden="true">&laquo;</span>
-                                  </a>
-                              </li>
-                              {% for page in range(1, total_pages + 1) %}
-                              <li class="page-item {% if page == current_page %}active{% endif %}">
-                                  <a class="page-link" href="#">{{ page }}</a>
-                              </li>
+                                <td>{{ trainee.educational_level }}</td>
+                                <td>{{ trainee.skills }}</td>
+                                <td>{{ trainee.freelancing_experience }}</td>
+                                <td>{{ trainee.portfolio_link [:30]}}{{ '...' if trainee.portfolio_link|length > 30 else '' }}</td>
+                                <td>{{ trainee.language_proficiency [:30]}}{{ '...' if trainee.language_proficiency|length > 30 else '' }}</td>
+                                <td>{{ trainee.done_trainings}}</td>
+                                <td>{{ trainee.wantTo_trainings}}</td>
+                                <td id="joined_on">{{ trainee.joined_on}}</td>
+                                <script>
+                                  function formatDate(dateString) {
+                                  var created_at_date = new Date(dateString);
+                                  var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                                  return created_at_date.toLocaleDateString('en-UK', options);
+                                  }
+    
+                                  // Get the date string from the table cell
+                                  const createdDateCell = document.getElementById('joined_on');
+                                  const dateString = createdDateCell.textContent.trim(); // Remove leading/trailing whitespaces
+    
+                                  // Format the date string and update the content of the cell
+                                  createdDateCell.innerText = formatDate(dateString);
+                                </script>
+                               
+                              </tr>
+                            </tbody>
                               {% endfor %}
-                              <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
-                                  <a class="page-link" href="#" aria-label="Next">
-                                      <span aria-hidden="true">&raquo;</span>
-                                  </a>
-                              </li>
-                          </ul>
-                      </nav>
-                      
+                              
+                              <!-- <tbody class="education_table">
+                              </tbody> -->
+                          </table>
+    
+                          <div class="row" id="pagination-container" style="margin-top: 40px;">
+                            <nav aria-label="Page navigation">
+                              <ul class="pagination justify-content-center">
+                                  <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                                      <a class="page-link" href="#" aria-label="Previous">
+                                          <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                  </li>
+                                  {% for page in range(1, total_pages + 1) %}
+                                  <li class="page-item {% if page == current_page %}active{% endif %}">
+                                      <a class="page-link" href="#">{{ page }}</a>
+                                  </li>
+                                  {% endfor %}
+                                  <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                                      <a class="page-link" href="#" aria-label="Next">
+                                          <span aria-hidden="true">&raquo;</span>
+                                      </a>
+                                  </li>
+                              </ul>
+                          </nav>
+                          
+                          </div>
+    
+                        
                       </div>
-
-                    
                   </div>
               </div>
           </div>
-      </div>
-
-      <div class="modal fade" id="editTrainree" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content show_modal_content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalToggleLabel">Edit Trainee</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form id="edit_Modal" method="POST" action="/trainee_list_edit">
-                    <div class="mb-3">
-                      <label class="form-label" for="full_name_input_update">Trainee ID</label>
-                      <input type="text" name="trainee_id" id="trainee_id_input_update" value="YOUR_TRAINEE_ID_HERE">
-                  </div>
-                   
-                        <div class="mb-3">
-                            <label class="form-label" for="full_name_input_update">Full Name</label>
-                            <input type="text" class="form-control full_name_input_update" name="full_name" id="user_name__edit_modal">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="organization_input_update">Organization</label>
-                            <input type="text" class="form-control organization_input_update" name="organization" id="organization_edit_modal">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="email_input_update">Email</label>
-                            <input type="email" class="form-control email_input_update" name="email" id="email__edit_modal">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="phone_number_input_update">Phone Number</label>
-                            <input type="tel" class="form-control phone_number_input_update" name="phone_number" id="phone_number_edit_modal">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="address_input_update">Address</label>
-                            <input type="text" class="form-control address_input_update" name="address" id="address_edit_modal">
-                        </div>
-                        <div class="mb-3">
-                          <label for="educational_level">Educational Level</label>
-                          <label for="educational_level" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
-                          <select class="form-control" id="educational_level" name="educational_level" required autofocus>
-                              <option value="SSC">SSC</option>
-                              <option value="HSC">HSC</option>
-                              <option value="BSc">BSc</option>
-                              <option value="MSc">MSc</option>
-                              <!-- You can add more options here if needed -->
-                          </select>
-                      </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="skills_input_update">Skills</label>
-                            <input type="text" class="form-control skills_input_update" name="skills" id="skills_edit_modal">
-                        </div>
-                        <div class="mb-3">
-                          <label for="freelancing_experience">Freelancing Experience</label>
-                          <label for="freelancing_experience" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
-                          <select class="form-control" id="freelancing_experience" name="freelancing_experience" required autofocus>
-                              <option value="0-1 year">0-1 Year</option>
-                              <option value="1-3 years">1-3 Years</option>
-                              <option value="3-5 years">3-5 Years</option>
-                              <option value="more than 5 years">More Than Five Years</option>
-                              <!-- You can add more options here if needed -->
-                          </select>
-                      </div>
-                      <div class="mb-3">
-                        <label>Portfolio Links</label><br>
-                        <input type="checkbox" id="fiverr" name="fiverr" value="Fiverr">
-                        <label for="fiverr"> Fiverr</label><br>
-                        <input type="text" id="fiverr_link" name="fiverr_link" placeholder="Enter Fiverr Link" style="display: none; width: 600px; height: 40px;">
-                    
-                        <input type="checkbox" id="upwork" name="upwork" value="Upwork">
-                        <label for="upwork"> Upwork</label><br>
-                        <input type="text" id="upwork_link" name="upwork_link" placeholder="Enter Upwork Link" style="display: none; width: 600px; height: 40px;">
-      
-                        <input type="checkbox" id="freelancer" name="freelancer" value="Freelancer">
-                        <label for="freelancer"> Freelancer</label><br>
-                        <input type="text" id="freelancer_link" name="freelancer_link" placeholder="Enter Freelancer Link" style="display: none; width: 600px; height: 40px;">
-      
-                        <input type="checkbox" id="toptal" name="toptal" value="Toptal">
-                        <label for="toptal"> Toptal</label><br>
-                        <input type="text" id="toptal_link" name="toptal_link" placeholder="Enter Toptal Link" style="display: none; width: 600px; height: 40px;">
-      
-                        <input type="checkbox" id="guru" name="guru" value="Guru">
-                        <label for="guru"> Guru</label><br>
-                        <input type="text" id="guru_link" name="guru_link" placeholder="Enter Guru Link" style="display: none; width: 600px; height: 40px;">
-                    
-                        <input type="checkbox" id="other" name="other" value="Other">
-                        <label for="other"> Other</label><br>
-                        <input type="text" id="other_link" name="other_link" placeholder="Enter Other link" style="display: none;width: 600px; height: 40px;">
+    
+          <div class="modal fade" id="editTrainree" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content show_modal_content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalToggleLabel">Edit Trainee</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    
-                    <script>
-                        // Function to toggle the visibility of the input field based on checkbox state
-                        function toggleInput(checkboxId, inputId) {
-                            var checkbox = document.getElementById(checkboxId);
-                            var input = document.getElementById(inputId);
-                            
-                            checkbox.addEventListener("change", function() {
-                                if (this.checked) {
-                                    input.style.display = "block";
-                                    input.focus();
-                                } else {
-                                    input.style.display = "none";
-                                }
-                            });
-                        }
-                    
-                        // Call the toggleInput function for each checkbox and its corresponding input
-                        toggleInput("fiverr", "fiverr_link");
-                        toggleInput("upwork", "upwork_link");
-                        toggleInput("freelancer", "freelancer_link");
-                        toggleInput("toptal", "toptal_link");
-                        toggleInput("guru", "guru_link");
-                        toggleInput("other", "other_link");
-      
+                    <div class="modal-body">
+                      <form id="edit_Modal" method="POST" action="/trainee_list_edit">
+                        <div class="mb-3">
+                          <label class="form-label" for="full_name_input_update">Trainee ID</label>
+                          <input type="text" name="trainee_id" id="trainee_id_input_update" value="YOUR_TRAINEE_ID_HERE">
+                      </div>
+                       
+                            <div class="mb-3">
+                                <label class="form-label" for="full_name_input_update">Full Name</label>
+                                <input type="text" class="form-control full_name_input_update" name="full_name" id="user_name__edit_modal">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="organization_input_update">Organization</label>
+                                <input type="text" class="form-control organization_input_update" name="organization" id="organization_edit_modal">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="email_input_update">Email</label>
+                                <input type="email" class="form-control email_input_update" name="email" id="email__edit_modal">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="phone_number_input_update">Phone Number</label>
+                                <input type="tel" class="form-control phone_number_input_update" name="phone_number" id="phone_number_edit_modal">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="address_input_update">Address</label>
+                                <input type="text" class="form-control address_input_update" name="address" id="address_edit_modal">
+                            </div>
+                            <div class="mb-3">
+                              <label for="educational_level">Educational Level</label>
+                              <label for="educational_level" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
+                              <select class="form-control" id="educational_level" name="educational_level" required autofocus>
+                                  <option value="SSC">SSC</option>
+                                  <option value="HSC">HSC</option>
+                                  <option value="BSc">BSc</option>
+                                  <option value="MSc">MSc</option>
+                                  <!-- You can add more options here if needed -->
+                              </select>
+                          </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="skills_input_update">Skills</label>
+                                <input type="text" class="form-control skills_input_update" name="skills" id="skills_edit_modal">
+                            </div>
+                            <div class="mb-3">
+                              <label for="freelancing_experience">Freelancing Experience</label>
+                              <label for="freelancing_experience" style="color: rebeccapurple;"><i class="fa fa-arrow-down"></i> *</label>
+                              <select class="form-control" id="freelancing_experience" name="freelancing_experience" required autofocus>
+                                  <option value="0-1 year">0-1 Year</option>
+                                  <option value="1-3 years">1-3 Years</option>
+                                  <option value="3-5 years">3-5 Years</option>
+                                  <option value="more than 5 years">More Than Five Years</option>
+                                  <!-- You can add more options here if needed -->
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                            <label>Portfolio Links</label><br>
+                            <input type="checkbox" id="fiverr" name="fiverr" value="Fiverr">
+                            <label for="fiverr"> Fiverr</label><br>
+                            <input type="text" id="fiverr_link" name="fiverr_link" placeholder="Enter Fiverr Link" style="display: none; width: 600px; height: 40px;">
                         
-                    </script>
-      
-                   
-                                <div class="mb-3">
-                                  <label for="language_proficiency">Language Proficiency</label><br>
-                                  <input type="checkbox" id="bangla" name="bangla" value="Bangla">
-                                  <label for="bangla"> Bangla</label><br>
-                                  <input type="checkbox" id="english" name="english" value="English">
-                                  <label for="english"> English</label><br>
-                                  <input type="checkbox" id="other_language_checkbox" name="other_language_checkbox" value="Other">
-                                  <label for="other_language_checkbox"> Other</label><br>
-                                  <input type="text" id="other_language_input" name="other_language" placeholder="Enter other language" style="display: none; width: 600px; height: 40px;">
-                                  
-                                  <script>
-                                      document.getElementById("other_language_checkbox").addEventListener("change", function() {
-                                          var otherLanguageInput = document.getElementById("other_language_input");
-                                          if (this.checked) {
-                                              otherLanguageInput.style.display = "block";
-                                              otherLanguageInput.focus();
-                                          } else {
-                                              otherLanguageInput.style.display = "none";
-                                              otherLanguageInput.value= "";
-                                          }
-                                      });
-                                  </script>
-                                </div>
-      
-                                <div class="mb-3">
-                                  <label for="done_trainings">Is there any training that you have done</label><br>
-                                  <input type="checkbox" id="copywriting" name="copywriting" value="Copywriting">
-                                  <label for="copywriting"> Copywriting</label><br>
-                                  <input type="checkbox" id="digital_marketing" name="digital_marketing" value="Digital Marketing">
-                                  <label for="digital_marketing"> Digital Marketing</label><br>
-                                  <input type="checkbox" id="graphic_design" name="graphic_design" value="Graphic Design">
-                                  <label for="graphic_design"> Graphic Design</label><br>
-                                  <input type="checkbox" id="data_entry" name="data_entry" value="Data Entry">
-                                  <label for="data_entry"> Data Entry</label><br>
-                                  <input type="checkbox" id="seo" name="seo" value="SEO">
-                                  <label for="seo"> SEO</label><br>
-                                  <input type="checkbox" id="ux/ui_design" name="uxui" value="UX/UI Design">
-                                  <label for="uxui"> UX/UI Design</label><br>
-                                  <input type="checkbox" id="other_done_training_checkbox" name="other_done_training_checkbox" value="Other_Done_Training">
-                                  <label for="other_done_training_checkbox"> Other</label><br>
-                                  <input type="text" id="other_done_training_input" name="other_done_training" placeholder="Enter here if you have done any other trainings" style="display: none; width: 600px; height: 40px;">
-                                  
-                                  <script>
-                                      document.getElementById("other_done_training_checkbox").addEventListener("change", function() {
-                                          var otherDoneTrainingInput = document.getElementById("other_done_training_input");
-                                          if (this.checked) {
-                                              otherDoneTrainingInput.style.display = "block";
-                                              otherDoneTrainingInput.focus();
-                                          } else {
-                                              otherDoneTrainingInput.style.display = "none";
-                                              otherDoneTrainingInput.value= "";
-                                          }
-                                      });
-                                  </script>
-                              </div>    
-                              
-                              <div class="mb-3">
-                                  <label for="wantTo_trainings">Is there any training you are interested to do</label><br>
-                                  <input type="checkbox" id="copywriting_want" name="copywriting_want" value="Copywriting">
-                                  <label for="copywriting_want"> Copywriting</label><br>
-                                  <input type="checkbox" id="digital_marketing_want" name="digital_marketing_want" value="Digital Marketing">
-                                  <label for="digital_marketing_want"> Digital Marketing</label><br>
-                                  <input type="checkbox" id="graphic_design_want" name="graphic_design_want" value="Graphic Design">
-                                  <label for="graphic_design_want"> Graphic Design</label><br>
-                                  <input type="checkbox" id="data_entry_want" name="data_entry_want" value="Data Entry">
-                                  <label for="data_entry_want"> Data Entry</label><br>
-                                  <input type="checkbox" id="seo_want" name="seo_want" value="SEO">
-                                  <label for="seo_want"> SEO</label><br>
-                                  <input type="checkbox" id="ux/ui_design_want" name="uxui_want" value="UX/UI Design">
-                                  <label for="uxui_want"> UX/UI Design</label><br>
-                                  <input type="checkbox" id="other_wantTo_training_checkbox" name="other_wantTo_training_checkbox" value="Other_Want_To_Training">
-                                  <label for="other_wantTo_training_checkbox"> Other</label><br>
-                                  <input type="text" id="other_wantTo_training_input" name="other_wantTo_training" placeholder="Enter here if you want to do any other trainings" style="display: none; width: 600px; height: 40px;">
+                            <input type="checkbox" id="upwork" name="upwork" value="Upwork">
+                            <label for="upwork"> Upwork</label><br>
+                            <input type="text" id="upwork_link" name="upwork_link" placeholder="Enter Upwork Link" style="display: none; width: 600px; height: 40px;">
+          
+                            <input type="checkbox" id="freelancer" name="freelancer" value="Freelancer">
+                            <label for="freelancer"> Freelancer</label><br>
+                            <input type="text" id="freelancer_link" name="freelancer_link" placeholder="Enter Freelancer Link" style="display: none; width: 600px; height: 40px;">
+          
+                            <input type="checkbox" id="toptal" name="toptal" value="Toptal">
+                            <label for="toptal"> Toptal</label><br>
+                            <input type="text" id="toptal_link" name="toptal_link" placeholder="Enter Toptal Link" style="display: none; width: 600px; height: 40px;">
+          
+                            <input type="checkbox" id="guru" name="guru" value="Guru">
+                            <label for="guru"> Guru</label><br>
+                            <input type="text" id="guru_link" name="guru_link" placeholder="Enter Guru Link" style="display: none; width: 600px; height: 40px;">
+                        
+                            <input type="checkbox" id="other" name="other" value="Other">
+                            <label for="other"> Other</label><br>
+                            <input type="text" id="other_link" name="other_link" placeholder="Enter Other link" style="display: none;width: 600px; height: 40px;">
+                        </div>
+                        
+                        <script>
+                            // Function to toggle the visibility of the input field based on checkbox state
+                            function toggleInput(checkboxId, inputId) {
+                                var checkbox = document.getElementById(checkboxId);
+                                var input = document.getElementById(inputId);
                                 
-                                  <script>
-                                    document.getElementById("other_wantTo_training_checkbox").addEventListener("change", function() {
-                                        var otherWantToTrainingInput = document.getElementById("other_wantTo_training_input");
-                                        if (this.checked) {
-                                          otherWantToTrainingInput.style.display = "block";
-                                          otherWantToTrainingInput.focus();
-                                        } else {
-                                          otherWantToTrainingInput.style.display = "none";
-                                          otherWantToTrainingInput.value= "";
-                                        }
-                                    });
-                                </script>
-                              </div>   
-                              
-                              <!-- <div class="mb-3">
-                                <label for="password">Password:</label>
-                                <div class="password-field">
-                                    <input type="password" id="password" name="password" style="width:400px; border-radius: 5px;" autofocus>
-                                    <span class="toggle-password" onclick="togglePasswordVisibility('password')">
-                                        <i class="fas fa-eye"></i>
-                                    </span>
-                                </div>
-                                
-                            </div> -->
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
+                                checkbox.addEventListener("change", function() {
+                                    if (this.checked) {
+                                        input.style.display = "block";
+                                        input.focus();
+                                    } else {
+                                        input.style.display = "none";
+                                    }
+                                });
+                            }
+                        
+                            // Call the toggleInput function for each checkbox and its corresponding input
+                            toggleInput("fiverr", "fiverr_link");
+                            toggleInput("upwork", "upwork_link");
+                            toggleInput("freelancer", "freelancer_link");
+                            toggleInput("toptal", "toptal_link");
+                            toggleInput("guru", "guru_link");
+                            toggleInput("other", "other_link");
+          
+                            
+                        </script>
+          
+                       
+                                    <div class="mb-3">
+                                      <label for="language_proficiency">Language Proficiency</label><br>
+                                      <input type="checkbox" id="bangla" name="bangla" value="Bangla">
+                                      <label for="bangla"> Bangla</label><br>
+                                      <input type="checkbox" id="english" name="english" value="English">
+                                      <label for="english"> English</label><br>
+                                      <input type="checkbox" id="other_language_checkbox" name="other_language_checkbox" value="Other">
+                                      <label for="other_language_checkbox"> Other</label><br>
+                                      <input type="text" id="other_language_input" name="other_language" placeholder="Enter other language" style="display: none; width: 600px; height: 40px;">
+                                      
+                                      <script>
+                                          document.getElementById("other_language_checkbox").addEventListener("change", function() {
+                                              var otherLanguageInput = document.getElementById("other_language_input");
+                                              if (this.checked) {
+                                                  otherLanguageInput.style.display = "block";
+                                                  otherLanguageInput.focus();
+                                              } else {
+                                                  otherLanguageInput.style.display = "none";
+                                                  otherLanguageInput.value= "";
+                                              }
+                                          });
+                                      </script>
+                                    </div>
+          
+                                    <div class="mb-3">
+                                      <label for="done_trainings">Is there any training that you have done</label><br>
+                                      <input type="checkbox" id="copywriting" name="copywriting" value="Copywriting">
+                                      <label for="copywriting"> Copywriting</label><br>
+                                      <input type="checkbox" id="digital_marketing" name="digital_marketing" value="Digital Marketing">
+                                      <label for="digital_marketing"> Digital Marketing</label><br>
+                                      <input type="checkbox" id="graphic_design" name="graphic_design" value="Graphic Design">
+                                      <label for="graphic_design"> Graphic Design</label><br>
+                                      <input type="checkbox" id="data_entry" name="data_entry" value="Data Entry">
+                                      <label for="data_entry"> Data Entry</label><br>
+                                      <input type="checkbox" id="seo" name="seo" value="SEO">
+                                      <label for="seo"> SEO</label><br>
+                                      <input type="checkbox" id="ux/ui_design" name="uxui" value="UX/UI Design">
+                                      <label for="uxui"> UX/UI Design</label><br>
+                                      <input type="checkbox" id="other_done_training_checkbox" name="other_done_training_checkbox" value="Other_Done_Training">
+                                      <label for="other_done_training_checkbox"> Other</label><br>
+                                      <input type="text" id="other_done_training_input" name="other_done_training" placeholder="Enter here if you have done any other trainings" style="display: none; width: 600px; height: 40px;">
+                                      
+                                      <script>
+                                          document.getElementById("other_done_training_checkbox").addEventListener("change", function() {
+                                              var otherDoneTrainingInput = document.getElementById("other_done_training_input");
+                                              if (this.checked) {
+                                                  otherDoneTrainingInput.style.display = "block";
+                                                  otherDoneTrainingInput.focus();
+                                              } else {
+                                                  otherDoneTrainingInput.style.display = "none";
+                                                  otherDoneTrainingInput.value= "";
+                                              }
+                                          });
+                                      </script>
+                                  </div>    
+                                  
+                                  <div class="mb-3">
+                                      <label for="wantTo_trainings">Is there any training you are interested to do</label><br>
+                                      <input type="checkbox" id="copywriting_want" name="copywriting_want" value="Copywriting">
+                                      <label for="copywriting_want"> Copywriting</label><br>
+                                      <input type="checkbox" id="digital_marketing_want" name="digital_marketing_want" value="Digital Marketing">
+                                      <label for="digital_marketing_want"> Digital Marketing</label><br>
+                                      <input type="checkbox" id="graphic_design_want" name="graphic_design_want" value="Graphic Design">
+                                      <label for="graphic_design_want"> Graphic Design</label><br>
+                                      <input type="checkbox" id="data_entry_want" name="data_entry_want" value="Data Entry">
+                                      <label for="data_entry_want"> Data Entry</label><br>
+                                      <input type="checkbox" id="seo_want" name="seo_want" value="SEO">
+                                      <label for="seo_want"> SEO</label><br>
+                                      <input type="checkbox" id="ux/ui_design_want" name="uxui_want" value="UX/UI Design">
+                                      <label for="uxui_want"> UX/UI Design</label><br>
+                                      <input type="checkbox" id="other_wantTo_training_checkbox" name="other_wantTo_training_checkbox" value="Other_Want_To_Training">
+                                      <label for="other_wantTo_training_checkbox"> Other</label><br>
+                                      <input type="text" id="other_wantTo_training_input" name="other_wantTo_training" placeholder="Enter here if you want to do any other trainings" style="display: none; width: 600px; height: 40px;">
+                                    
+                                      <script>
+                                        document.getElementById("other_wantTo_training_checkbox").addEventListener("change", function() {
+                                            var otherWantToTrainingInput = document.getElementById("other_wantTo_training_input");
+                                            if (this.checked) {
+                                              otherWantToTrainingInput.style.display = "block";
+                                              otherWantToTrainingInput.focus();
+                                            } else {
+                                              otherWantToTrainingInput.style.display = "none";
+                                              otherWantToTrainingInput.value= "";
+                                            }
+                                        });
+                                    </script>
+                                  </div>   
+                                  
+                                  <!-- <div class="mb-3">
+                                    <label for="password">Password:</label>
+                                    <div class="password-field">
+                                        <input type="password" id="password" name="password" style="width:400px; border-radius: 5px;" autofocus>
+                                        <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                    
+                                </div> -->
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-      </div>
-
-<script>    
-
-    function showTrainee(){
-      var formData = new FormData();
-      fetch('/all_data', {
-          method: 'POST',
-          body: formData
-      })
-      .then(response => {
-          if (response.ok) {
-              return response.json();
-          }
-          throw new Error('Network response was not ok.');
-      })
-      .then(data => {
-          if(data.user_profile){
-              document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
-          }
-          console.log(data)
-          if(data.trainees && data.trainees.length > 0){
-              let trainee_count = 0;
-              data.trainees.forEach(trainee => {
-                  if(trainee.category == 'trainee'){
-
-                      const tr = document.createElement('tr');
-
-                      const tdshow = document.createElement('td');
-                      tdshow.className = 'text-center'
-
-                      if(trainee.show === 1){
-                          const showicon = document.createElement('i');
-                          showicon.style.fontSize = "12px";
-                          showicon.className = "bx bxs-circle text-success me-2";
-                          tdshow.appendChild(showicon);
-                      }
-                      else{
-                          const showicon = document.createElement('i');
-                          showicon.style.fontSize = "12px";
-                          showicon.className = "bx bxs-circle text-danger me-2";
-                          tdshow.appendChild(showicon);
-                      }
-
-                      const td = document.createElement("td");
-                      const trainee_name = document.createElement("strong");
-                      trainee_name.textContent = trainee.full_name;
-                      td.appendChild(trainee_name);
-
-                      const position2 = document.createElement('td');
-                      position2.textContent = trainee.organization;
-
-                      const position3 = document.createElement('td');
-                      position3.textContent = trainee.email;
-
-                      const position4 = document.createElement('td');
-                      position4.textContent = trainee.phone_number;
-
-                      const position5 = document.createElement('td');
-                      position5.textContent = trainee.address;
-
-                      const position6 = document.createElement('td');
-                      position6.textContent = trainee.skills;
-
-                      const position7 = document.createElement('td');
-                      position7.textContent = trainee.educational_level;
-
-                      const position8 = document.createElement('td');
-                      position8.textContent = trainee.freelancing_experience;
-
-                      const position9 = document.createElement('td');
-                      position9.textContent = trainee.portfolio_link;
-
-                      const position10 = document.createElement('td')
-                      position10.textContent = trainee.language_proficiency;
-
-
-
-                      const trainee_td = document.createElement("td");
-
-
-
-
-                      const action_td = document.createElement("td");
-
-                      const action_div = document.createElement('div');
-                      action_div.className = 'd-flex justify-content-center w-100';
-
-                      const edit_action_button = document.createElement('a');
-                      edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
-                      edit_action_button.href = 'javascript:void(0);';
-                      edit_action_button.setAttribute('data-bs-toggle','modal');
-                      edit_action_button.setAttribute('data-bs-target','#editTrainree');
-                      edit_action_button.addEventListener('click', function(){
-                          editTraineeData(trainee);
-                      })
-                      
-                      const edit_action_button_icon = document.createElement('i');
-                      edit_action_button_icon.className = 'bx bx-edit-alt me-1';
-
-                      edit_action_button.appendChild(edit_action_button_icon);
-
-                      const delete_action_button = document.createElement('a');
-                      delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
-                      delete_action_button.href = 'javascript:void(0);';
-                      delete_action_button.addEventListener('click', function(){
-                          deleteTraineeData(trainee);
-                      })
-
-                      const delete_action_button_icon = document.createElement('i');
-                      delete_action_button_icon.className = 'bx bx-trash me-1';
-
-                      delete_action_button.appendChild(delete_action_button_icon);
-                      action_div.appendChild(edit_action_button);
-                      action_div.appendChild(delete_action_button);
-                      action_td.appendChild(action_div);
-                      tr.appendChild(tdshow)
-                      tr.appendChild(td)
-                      tr.appendChild(position2)
-                      tr.appendChild(position3)
-                      tr.appendChild(position4)
-                      tr.appendChild(position5)
-                      tr.appendChild(position6)
-                      tr.appendChild(position7)
-                      tr.appendChild(position8)
-                      tr.appendChild(position9)
-                      tr.appendChild(position10)
-                      tr.appendChild(trainee_td)
-                      tr.appendChild(action_td);
-                      document.querySelector('.education_table').appendChild(tr)
-                      trainee_count++;
-                  }
-                  // if(gallary.category == 'partners'){
-                      
-                  //     const tr = document.createElement('tr');
-
-                  //     const tdshow = document.createElement('td');
-                  //     tdshow.className = 'text-center'
-
-                  //     if(gallary.show === 1){
-                  //         const showicon = document.createElement('i');
-                  //         showicon.style.fontSize = "12px";
-                  //         showicon.className = "bx bxs-circle text-success me-2";
-                  //         tdshow.appendChild(showicon);
-                  //     }
-                  //     else{
-                  //         const showicon = document.createElement('i');
-                  //         showicon.style.fontSize = "12px";
-                  //         showicon.className = "bx bxs-circle text-danger me-2";
-                  //         tdshow.appendChild(showicon);
-                  //     }
-
-                  //     const td = document.createElement("td");
-
-                  //     const gallary_image_title = document.createElement("strong");
-                  //     gallary_image_title.textContent = gallary.image_title;
-
-                  //     td.appendChild(gallary_image_title);
-
-                  //     const position = document.createElement('td');
-                  //     position.textContent = gallary.image_short_details;
-
-                  //     const image_td = document.createElement("td");
-
-                  //     const avatar_image_div = document.createElement("div");
-                  //     avatar_image_div.className = "d-flex justify-content-center align-items-center";
-
-                  //     const avatar_div = document.createElement('div');
-                  //     avatar_div.className = '';
-                      
-                  //     const avatar_image = document.createElement('img');
-                  //     avatar_image.className = '';
-                  //     avatar_image.style.maxWidth = '150px';
-                  //     const baseUrl = '../static/mainassets/images/media/'; // Replace with your base URL
-                  //     avatar_image.src = baseUrl + gallary.image_name;
-
-                  //     avatar_div.appendChild(avatar_image);
-                  //     avatar_image_div.appendChild(avatar_div);
-                  //     image_td.appendChild(avatar_image_div);
-
-                  //     const action_td = document.createElement("td");
-
-                  //     const action_div = document.createElement('div');
-                  //     action_div.className = 'd-flex justify-content-center w-100';
-
-                  //     const edit_action_button = document.createElement('a');
-                  //     edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
-                  //     edit_action_button.href = 'javascript:void(0);';
-                  //     edit_action_button.setAttribute('data-bs-toggle','modal');
-                  //     edit_action_button.setAttribute('data-bs-target','#editTrainree');
-                  //     edit_action_button.addEventListener('click', function(){
-                  //       editTrainreeData(trainee);
-                  //     })
-                      
-                  //     const edit_action_button_icon = document.createElement('i');
-                  //     edit_action_button_icon.className = 'bx bx-edit-alt me-1';
-
-                  //     edit_action_button.appendChild(edit_action_button_icon);
-
-                  //     const delete_action_button = document.createElement('a');
-                  //     delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
-                  //     delete_action_button.href = 'javascript:void(0);';
-                  //     delete_action_button.addEventListener('click', function(){
-                  //         deleteTraineeData(trainee);
-                  //     })
-
-                  //     const delete_action_button_icon = document.createElement('i');
-                  //     delete_action_button_icon.className = 'bx bx-trash me-1';
-
-                  //     delete_action_button.appendChild(delete_action_button_icon);
-                  //     action_div.appendChild(edit_action_button);
-                  //     action_div.appendChild(delete_action_button);
-                  //     action_td.appendChild(action_div);
-                  //     tr.appendChild(tdshow)
-                  //     tr.appendChild(td)
-                  //     tr.appendChild(position)
-                  //     tr.appendChild(image_td)
-                  //     tr.appendChild(action_td);
-                  //     document.querySelector('.work_table').appendChild(tr)
-                  //     trainee_count++
-                  // }
-              });
-          }
-      })
-      .catch(error => {
-          // Handle any errors that occurred during the fetch or processing
-          console.error('Error:', error);
-      });
-  }
-  showTrainee();
-
-  // Function to fill the form with JSON data
-  function fillFormWithData(data) {
-            document.getElementById("trainee_id_input_update").value = data.trainee_id;
-            document.getElementById("user_name__edit_modal").value = data.full_name;
-            document.getElementById("organization_edit_modal").value = data.organization;
-            document.getElementById("email__edit_modal").value = data.email;
-            document.getElementById("phone_number_edit_modal").value = data.phone_number;
-            document.getElementById("address_edit_modal").value = data.address;
-            document.getElementById("educational_level").value = data.educational_level;
-            document.getElementById("skills_edit_modal").value = data.skills;
-            document.getElementById("freelancing_experience").value = data.freelancing_experience;
-            // document.getElementById("portfolio_link").value = data.portfolio_link;
-            // document.getElementById("language_proficiency").value = data.language_proficiency;
-
-            fillFormWithtraineeData(data.portfolio_link, data.language_proficiency, data.done_trainings, data.wantTo_trainings)
-        }
-
-  function openModal(traineeId) {
-    console.log(traineeId);
-    var trainees= {{ trainees | tojson }};
-
-    var trainee= trainees.find(function (item) {
-        return item.trainee_id== traineeId;
-    });
-
-    console.log(trainee);
-
-    // Call the function to fill the form with JSON data
-    fillFormWithData(trainee);
-  }
-
-  function deleteTrainee(traineeId) {
-
-    fetch('/trainee_delete/'+ traineeId, {
-            method: 'POST',
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json(); // Parse the JSON response
-            } else {
-                throw new Error('Network response was not ok.');
-            }
-        })
-        .then(data => {
-            // Check if the response contains 'success' key
-            if (data && data.success) {
-                // Show registration successful alert
-                alert(data.success);
-                // Reload the page after a short delay (adjust the delay as needed)
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000); // Refresh after 2 seconds (adjust as needed)
-            } else {
-                throw new Error('Invalid response from the server.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Updating failed! Please try again.');
-        });
-  }
-
-
-  document.addEventListener("DOMContentLoaded", function() {
-      var editTraineeForm = document.getElementById('editTrainree').querySelector('form'); // Correct form selection
-      editTraineeForm.addEventListener('submit', function(event) {
-          event.preventDefault();
-  
-          var formData = new FormData(this);
-  
-          fetch('/trainee_list_edit/' + formData.get('trainee_id'), {
+          </div>
+    
+    <script>    
+    
+        function showTrainee(){
+          var formData = new FormData();
+          fetch('/all_data', {
               method: 'POST',
               body: formData
           })
           .then(response => {
               if (response.ok) {
-                  alert('Trainee updated successfully!');
-                  setTimeout(() => {
-                      window.location.reload();
-                  }, 2000);
-              } else {
-                  throw new Error('Network response was not ok.');
+                  return response.json();
+              }
+              throw new Error('Network response was not ok.');
+          })
+          .then(data => {
+              if(data.user_profile){
+                  document.querySelector('.header_image').src = '../static/mainassets/images/logos/'+data.user_profile.logo;
+              }
+              console.log(data)
+              if(data.trainees && data.trainees.length > 0){
+                  let trainee_count = 0;
+                  data.trainees.forEach(trainee => {
+                      if(trainee.category == 'trainee'){
+    
+                          const tr = document.createElement('tr');
+    
+                          const tdshow = document.createElement('td');
+                          tdshow.className = 'text-center'
+    
+                          if(trainee.show === 1){
+                              const showicon = document.createElement('i');
+                              showicon.style.fontSize = "12px";
+                              showicon.className = "bx bxs-circle text-success me-2";
+                              tdshow.appendChild(showicon);
+                          }
+                          else{
+                              const showicon = document.createElement('i');
+                              showicon.style.fontSize = "12px";
+                              showicon.className = "bx bxs-circle text-danger me-2";
+                              tdshow.appendChild(showicon);
+                          }
+    
+                          const td = document.createElement("td");
+                          const trainee_name = document.createElement("strong");
+                          trainee_name.textContent = trainee.full_name;
+                          td.appendChild(trainee_name);
+    
+                          const position2 = document.createElement('td');
+                          position2.textContent = trainee.organization;
+    
+                          const position3 = document.createElement('td');
+                          position3.textContent = trainee.email;
+    
+                          const position4 = document.createElement('td');
+                          position4.textContent = trainee.phone_number;
+    
+                          const position5 = document.createElement('td');
+                          position5.textContent = trainee.address;
+    
+                          const position6 = document.createElement('td');
+                          position6.textContent = trainee.skills;
+    
+                          const position7 = document.createElement('td');
+                          position7.textContent = trainee.educational_level;
+    
+                          const position8 = document.createElement('td');
+                          position8.textContent = trainee.freelancing_experience;
+    
+                          const position9 = document.createElement('td');
+                          position9.textContent = trainee.portfolio_link;
+    
+                          const position10 = document.createElement('td')
+                          position10.textContent = trainee.language_proficiency;
+    
+    
+    
+                          const trainee_td = document.createElement("td");
+    
+    
+    
+    
+                          const action_td = document.createElement("td");
+    
+                          const action_div = document.createElement('div');
+                          action_div.className = 'd-flex justify-content-center w-100';
+    
+                          const edit_action_button = document.createElement('a');
+                          edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                          edit_action_button.href = 'javascript:void(0);';
+                          edit_action_button.setAttribute('data-bs-toggle','modal');
+                          edit_action_button.setAttribute('data-bs-target','#editTrainree');
+                          edit_action_button.addEventListener('click', function(){
+                              editTraineeData(trainee);
+                          })
+                          
+                          const edit_action_button_icon = document.createElement('i');
+                          edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+    
+                          edit_action_button.appendChild(edit_action_button_icon);
+    
+                          const delete_action_button = document.createElement('a');
+                          delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
+                          delete_action_button.href = 'javascript:void(0);';
+                          delete_action_button.addEventListener('click', function(){
+                              deleteTraineeData(trainee);
+                          })
+    
+                          const delete_action_button_icon = document.createElement('i');
+                          delete_action_button_icon.className = 'bx bx-trash me-1';
+    
+                          delete_action_button.appendChild(delete_action_button_icon);
+                          action_div.appendChild(edit_action_button);
+                          action_div.appendChild(delete_action_button);
+                          action_td.appendChild(action_div);
+                          tr.appendChild(tdshow)
+                          tr.appendChild(td)
+                          tr.appendChild(position2)
+                          tr.appendChild(position3)
+                          tr.appendChild(position4)
+                          tr.appendChild(position5)
+                          tr.appendChild(position6)
+                          tr.appendChild(position7)
+                          tr.appendChild(position8)
+                          tr.appendChild(position9)
+                          tr.appendChild(position10)
+                          tr.appendChild(trainee_td)
+                          tr.appendChild(action_td);
+                          document.querySelector('.education_table').appendChild(tr)
+                          trainee_count++;
+                      }
+                      // if(gallary.category == 'partners'){
+                          
+                      //     const tr = document.createElement('tr');
+    
+                      //     const tdshow = document.createElement('td');
+                      //     tdshow.className = 'text-center'
+    
+                      //     if(gallary.show === 1){
+                      //         const showicon = document.createElement('i');
+                      //         showicon.style.fontSize = "12px";
+                      //         showicon.className = "bx bxs-circle text-success me-2";
+                      //         tdshow.appendChild(showicon);
+                      //     }
+                      //     else{
+                      //         const showicon = document.createElement('i');
+                      //         showicon.style.fontSize = "12px";
+                      //         showicon.className = "bx bxs-circle text-danger me-2";
+                      //         tdshow.appendChild(showicon);
+                      //     }
+    
+                      //     const td = document.createElement("td");
+    
+                      //     const gallary_image_title = document.createElement("strong");
+                      //     gallary_image_title.textContent = gallary.image_title;
+    
+                      //     td.appendChild(gallary_image_title);
+    
+                      //     const position = document.createElement('td');
+                      //     position.textContent = gallary.image_short_details;
+    
+                      //     const image_td = document.createElement("td");
+    
+                      //     const avatar_image_div = document.createElement("div");
+                      //     avatar_image_div.className = "d-flex justify-content-center align-items-center";
+    
+                      //     const avatar_div = document.createElement('div');
+                      //     avatar_div.className = '';
+                          
+                      //     const avatar_image = document.createElement('img');
+                      //     avatar_image.className = '';
+                      //     avatar_image.style.maxWidth = '150px';
+                      //     const baseUrl = '../static/mainassets/images/media/'; // Replace with your base URL
+                      //     avatar_image.src = baseUrl + gallary.image_name;
+    
+                      //     avatar_div.appendChild(avatar_image);
+                      //     avatar_image_div.appendChild(avatar_div);
+                      //     image_td.appendChild(avatar_image_div);
+    
+                      //     const action_td = document.createElement("td");
+    
+                      //     const action_div = document.createElement('div');
+                      //     action_div.className = 'd-flex justify-content-center w-100';
+    
+                      //     const edit_action_button = document.createElement('a');
+                      //     edit_action_button.className = 'btn btn-sm btn-outline-success me-2';
+                      //     edit_action_button.href = 'javascript:void(0);';
+                      //     edit_action_button.setAttribute('data-bs-toggle','modal');
+                      //     edit_action_button.setAttribute('data-bs-target','#editTrainree');
+                      //     edit_action_button.addEventListener('click', function(){
+                      //       editTrainreeData(trainee);
+                      //     })
+                          
+                      //     const edit_action_button_icon = document.createElement('i');
+                      //     edit_action_button_icon.className = 'bx bx-edit-alt me-1';
+    
+                      //     edit_action_button.appendChild(edit_action_button_icon);
+    
+                      //     const delete_action_button = document.createElement('a');
+                      //     delete_action_button.className = 'btn btn-sm btn-outline-warning me-2';
+                      //     delete_action_button.href = 'javascript:void(0);';
+                      //     delete_action_button.addEventListener('click', function(){
+                      //         deleteTraineeData(trainee);
+                      //     })
+    
+                      //     const delete_action_button_icon = document.createElement('i');
+                      //     delete_action_button_icon.className = 'bx bx-trash me-1';
+    
+                      //     delete_action_button.appendChild(delete_action_button_icon);
+                      //     action_div.appendChild(edit_action_button);
+                      //     action_div.appendChild(delete_action_button);
+                      //     action_td.appendChild(action_div);
+                      //     tr.appendChild(tdshow)
+                      //     tr.appendChild(td)
+                      //     tr.appendChild(position)
+                      //     tr.appendChild(image_td)
+                      //     tr.appendChild(action_td);
+                      //     document.querySelector('.work_table').appendChild(tr)
+                      //     trainee_count++
+                      // }
+                  });
               }
           })
           .catch(error => {
+              // Handle any errors that occurred during the fetch or processing
               console.error('Error:', error);
-              alert('Trainee Edit failed! Please try again.');
+          });
+      }
+      showTrainee();
+    
+      // Function to fill the form with JSON data
+      function fillFormWithData(data) {
+                document.getElementById("trainee_id_input_update").value = data.trainee_id;
+                document.getElementById("user_name__edit_modal").value = data.full_name;
+                document.getElementById("organization_edit_modal").value = data.organization;
+                document.getElementById("email__edit_modal").value = data.email;
+                document.getElementById("phone_number_edit_modal").value = data.phone_number;
+                document.getElementById("address_edit_modal").value = data.address;
+                document.getElementById("educational_level").value = data.educational_level;
+                document.getElementById("skills_edit_modal").value = data.skills;
+                document.getElementById("freelancing_experience").value = data.freelancing_experience;
+                // document.getElementById("portfolio_link").value = data.portfolio_link;
+                // document.getElementById("language_proficiency").value = data.language_proficiency;
+    
+                fillFormWithtraineeData(data.portfolio_link, data.language_proficiency, data.done_trainings, data.wantTo_trainings)
+            }
+    
+      function openModal(traineeId) {
+        console.log(traineeId);
+        var trainees= {{ trainees | tojson }};
+    
+        var trainee= trainees.find(function (item) {
+            return item.trainee_id== traineeId;
+        });
+    
+        console.log(trainee);
+    
+        // Call the function to fill the form with JSON data
+        fillFormWithData(trainee);
+      }
+    
+      function deleteTrainee(traineeId) {
+    
+        fetch('/trainee_delete/'+ traineeId, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse the JSON response
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                // Check if the response contains 'success' key
+                if (data && data.success) {
+                    // Show registration successful alert
+                    alert(data.success);
+                    // Reload the page after a short delay (adjust the delay as needed)
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000); // Refresh after 2 seconds (adjust as needed)
+                } else {
+                    throw new Error('Invalid response from the server.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Updating failed! Please try again.');
+            });
+      }
+    
+    
+      document.addEventListener("DOMContentLoaded", function() {
+          var editTraineeForm = document.getElementById('editTrainree').querySelector('form'); // Correct form selection
+          editTraineeForm.addEventListener('submit', function(event) {
+              event.preventDefault();
+      
+              var formData = new FormData(this);
+      
+              fetch('/trainee_list_edit/' + formData.get('trainee_id'), {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(response => {
+                  if (response.ok) {
+                      alert('Trainee updated successfully!');
+                      setTimeout(() => {
+                          window.location.reload();
+                      }, 2000);
+                  } else {
+                      throw new Error('Network response was not ok.');
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('Trainee Edit failed! Please try again.');
+              });
           });
       });
-  });
-
-</script>
-<script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
-<script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
-<script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
-<script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-
-<script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
-<!-- endbuild -->
-
-<!-- Vendors JS -->
-<script src="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
-
-<!-- Main JS -->
-<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
-
-
-<!-- Page JS -->
-
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-
-
-
-<script>
-
-
-// Function to handle pagination clicks
-// $(document).on('click', '#pagination-container .pagination a.page-link', function(e) {
-//         e.preventDefault();
-
-//         debugger;
-//         // Get the page number from the link
-//         var page = $(this).text();
-//         // Load data for the selected page
-//         loadData(page);
-//     });
-
-
-//     function loadData(page) {
-       
-       
-
-//        $.ajax({
-//              url: '/trainee_list_pagination',
-//              type: 'GET',
-//              data: { page: page},
-//              success: function(response) {
-//                console.log("responseData", response);
-                 
-//                $('#all_trainees').empty();
-//                return;
-//                  $.each(response.trainees, function(index, trainee) {
-                 
-//                    var rowHtml = 
-//                       '<tr>' +
-//                          '<td>'+ index +'</td>'+
-//                          '<td>'+trainee.trainee_id+'</td>'+
-//                          '<td>'+trainee.full_name+'</td>' +
-//                          '<td>'+trainee.organization+'</td>' + 
-//                          '<td>'+trainee.email+'</td>' +
-//                          '<td>'+trainee.phone_number+'</td>' +
-//                          '<td>'+trainee.address+'</td>'+
-//                          '<td>'+trainee.educational_level+'</td>'+
-//                          '<td>'+trainee.skills+'</td>'+
-//                          '<td>'+trainee.freelancing_experience+'</td>'+
-//                          '<td>'+trainee.portfolio_link+'</td>'+
-//                          '<td>'+trainee.language_proficiency+'</td>'+
-//                          '<td>'+trainee.done_trainings+'</td>'+
-//                          '<td>'+trainee.wantTo_trainings+'</td>'+
-//                          '<td id="joined_on">'+trainee.joined_on+'</td>'+
-//                          '<button class="btn btn-sm btn-outline-info openModalBtnClass" id="openModalBtn" ' +
-//                          'data-trainee_id="' + trainee.trainee_id + '" ' +
-//                          'data-full_name="' + trainee.full_name + '" ' +
-//                          'data-organization="' + trainee.organization + '" ' +
-//                          'data-email="' + trainee.email + '" ' +
-//                          'data-phone_number="' + trainee.phone_number + '" ' +
-//                          'data-address="' + trainee.address + '" ' +
-//                          'data-skills="' + trainee.skills + '" ' +
-//                          'data-educational_level="' + trainee.educational_level + '" ' +
-//                          'data-freelancing_experience="' + trainee.freelancing_experience + '" ' +
-//                          'data-portfolio_link="' + trainee.portfolio_link + '" ' +
-//                          'data-done_trainings="' + trainee.done_trainings + '" ' +
-//                          'data-want="' + trainee.wantTo_trainings + '" ' +
-//                          'data-language_proficiency="' + trainee.language_proficiency + '" ' +
-//                          'data-joined_on="' + trainee.joined_on + '" ' +
-//                          'data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>' +
-//                          '<button href="javascript:void(0)" data-id="' + trainee.trainee_id + '" ' +
-//                          'class="btn btn-sm btn-outline-warning deleteBtn" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button>' +
-//                          '</td>'+
-//                          '</tr>'
-                   
-//                      $('#all_trainees').append(rowHtml);
-//                    });
-                
-//                  updatePagination(response.page, response.total_pages);
-//              },
-//              error: function(xhr, status, error) {
-//                  console.error('Error loading data:', error);
-//              }
-//          });
-//      }
-
-$(document).ready(function() {
-    // Function to load trainee data
-    function loadTraineeData(page) {
-        $.ajax({
-            url: '/trainee_list_pagination',
-            type: 'GET',
-            data: { page: page },
-            success: function(response) {
-                $('#all_trainees').empty(); // Clear existing data
-
-                // Loop through trainees and append rows to table
-                $.each(response.trainees, function(index, trainee) {
-                    var rowHtml = '<tr>' +
-                        '<td>' + (index + 1) + '</td>' +
-                        '<td>' + trainee.trainee_id + '</td>' +
-                        '<td>' + trainee.full_name + '</td>' +
-                        '<td>' + trainee.organization + '</td>' +
-                        '<td>' + trainee.email + '</td>' +
-                        '<td>' + trainee.phone_number + '</td>' +
-                        '<td>' + trainee.address + '</td>' +
-                        '<td>' + trainee.educational_level + '</td>' +
-                        '<td>' + trainee.skills + '</td>' +
-                        '<td>' + trainee.freelancing_experience + '</td>' +
-                        // '<td>' + (trainee.portfolio_link.substring(0, 30) + (trainee.portfolio_link.length > 30 ? '...' : '')) + '</td>' +
-                        // '<td>' + (trainee.language_proficiency.substring(0, 30) + (trainee.language_proficiency.length > 30 ? '...' : '')) + '</td>' +
-                        '<td>' + trainee.done_trainings + '</td>' +
-                        '<td>' + trainee.wantTo_trainings + '</td>' +
-                        '<td>' + trainee.joined_on + '</td>' +
-                        '<td>' +
-                        '<button class="btn btn-sm btn-outline-info openModalBtnClass" ' +
-                        'data-trainee_id="' + trainee.trainee_id + '" ' +
-                        'data-full_name="' + trainee.full_name + '" ' +
-                        'data-organization="' + trainee.organization + '" ' +
-                        'data-email="' + trainee.email + '" ' +
-                        'data-phone_number="' + trainee.phone_number + '" ' +
-                        'data-address="' + trainee.address + '" ' +
-                        'data-skills="' + trainee.skills + '" ' +
-                        'data-educational_level="' + trainee.educational_level + '" ' +
-                        'data-freelancing_experience="' + trainee.freelancing_experience + '" ' +
-                        'data-portfolio_link="' + trainee.portfolio_link + '" ' +
-                        'data-done_trainings="' + trainee.done_trainings + '" ' +
-                        'data-want="' + trainee.wantTo_trainings + '" ' +
-                        'data-language_proficiency="' + trainee.language_proficiency + '" ' +
-                        'data-joined_on="' + trainee.joined_on + '" ' +
-                        'data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>' +
-                        '<button onclick="deleteTrainee(' + trainee.trainee_id + ')" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button>' +
-                        '</td>' +
-                        '</tr>';
-                    $('#all_trainees').append(rowHtml);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error loading data:', error);
-            }
-        });
-    }
-
-    // Initial load of trainee data
-    loadTraineeData(1);
-
-    // Pagination click event
-    $(document).on('click', '#pagination-container .pagination a.page-link', function(e) {
-        e.preventDefault();
-        var page = $(this).text(); // Get page number from link
-        $('#all_trainees').empty(); // Clear existing data
-        loadTraineeData(page); // Load data for the selected page
-    });
-});
-
-
-
-  function populatePortfolios(json_data) {
-   
-  // Parse JSON data
-  var portfolio_links = JSON.parse(json_data);
+    
+    </script>
+    <script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+    <!-- endbuild -->
+    
+    <!-- Vendors JS -->
+    <script src="{{ url_for('static', filename='assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    
+    <!-- Main JS -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    
+    
+    <!-- Page JS -->
+    
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+    
+    
+    <script>
+    
+    
+    // Function to handle pagination clicks
+    // $(document).on('click', '#pagination-container .pagination a.page-link', function(e) {
+    //         e.preventDefault();
+    
+    //         debugger;
+    //         // Get the page number from the link
+    //         var page = $(this).text();
+    //         // Load data for the selected page
+    //         loadData(page);
+    //     });
+    
+    
+    //     function loadData(page) {
+           
+           
+    
+    //        $.ajax({
+    //              url: '/trainee_list_pagination',
+    //              type: 'GET',
+    //              data: { page: page},
+    //              success: function(response) {
+    //                console.log("responseData", response);
+                     
+    //                $('#all_trainees').empty();
+    //                return;
+    //                  $.each(response.trainees, function(index, trainee) {
+                     
+    //                    var rowHtml = 
+    //                       '<tr>' +
+    //                          '<td>'+ index +'</td>'+
+    //                          '<td>'+trainee.trainee_id+'</td>'+
+    //                          '<td>'+trainee.full_name+'</td>' +
+    //                          '<td>'+trainee.organization+'</td>' + 
+    //                          '<td>'+trainee.email+'</td>' +
+    //                          '<td>'+trainee.phone_number+'</td>' +
+    //                          '<td>'+trainee.address+'</td>'+
+    //                          '<td>'+trainee.educational_level+'</td>'+
+    //                          '<td>'+trainee.skills+'</td>'+
+    //                          '<td>'+trainee.freelancing_experience+'</td>'+
+    //                          '<td>'+trainee.portfolio_link+'</td>'+
+    //                          '<td>'+trainee.language_proficiency+'</td>'+
+    //                          '<td>'+trainee.done_trainings+'</td>'+
+    //                          '<td>'+trainee.wantTo_trainings+'</td>'+
+    //                          '<td id="joined_on">'+trainee.joined_on+'</td>'+
+    //                          '<button class="btn btn-sm btn-outline-info openModalBtnClass" id="openModalBtn" ' +
+    //                          'data-trainee_id="' + trainee.trainee_id + '" ' +
+    //                          'data-full_name="' + trainee.full_name + '" ' +
+    //                          'data-organization="' + trainee.organization + '" ' +
+    //                          'data-email="' + trainee.email + '" ' +
+    //                          'data-phone_number="' + trainee.phone_number + '" ' +
+    //                          'data-address="' + trainee.address + '" ' +
+    //                          'data-skills="' + trainee.skills + '" ' +
+    //                          'data-educational_level="' + trainee.educational_level + '" ' +
+    //                          'data-freelancing_experience="' + trainee.freelancing_experience + '" ' +
+    //                          'data-portfolio_link="' + trainee.portfolio_link + '" ' +
+    //                          'data-done_trainings="' + trainee.done_trainings + '" ' +
+    //                          'data-want="' + trainee.wantTo_trainings + '" ' +
+    //                          'data-language_proficiency="' + trainee.language_proficiency + '" ' +
+    //                          'data-joined_on="' + trainee.joined_on + '" ' +
+    //                          'data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>' +
+    //                          '<button href="javascript:void(0)" data-id="' + trainee.trainee_id + '" ' +
+    //                          'class="btn btn-sm btn-outline-warning deleteBtn" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button>' +
+    //                          '</td>'+
+    //                          '</tr>'
+                       
+    //                      $('#all_trainees').append(rowHtml);
+    //                    });
+                    
+    //                  updatePagination(response.page, response.total_pages);
+    //              },
+    //              error: function(xhr, status, error) {
+    //                  console.error('Error loading data:', error);
+    //              }
+    //          });
+    //      }
+    
+    $(document).ready(function() {
+      // Function to load trainee data
+      function loadTraineeData(page) {
+          $.ajax({
+              url: '/trainee_list_pagination',
+              type: 'GET',
+              data: { page: page },
+              success: function(response) {
+                  $('#all_trainees').empty(); // Clear existing data
   
-  var hidden_portfolios= document.getElementById("hidden_portfolios");
-
-  
-  
-  hidden_portfolios.value= json_data;
-  
-
-  // Get the container where portfolio links will be added
-  var portfolioContainer = document.getElementById('portfolio-links');
-
-  // Loop through the portfolio_links object and create list items
-  for (var platform in portfolio_links) {
-      if (portfolio_links.hasOwnProperty(platform)) {
-          var listItem = document.createElement('li');
-          listItem.className = 'list-group-item d-flex justify-content-between align-items-center flex-wrap';
-
-          var platformIcon = document.createElement('h6');
-          platformIcon.className = 'mb-0';
-          platformIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' + platform.charAt(0).toUpperCase() + platform.slice(1);
-          
-          console.log("platform= ", platform);
-
-          var linkText = document.createElement('span');
-          linkText.className = 'text-secondary';
-          linkText.textContent = portfolio_links[platform];
-
-          listItem.appendChild(platformIcon);
-          listItem.appendChild(linkText);
-
-          portfolioContainer.querySelector('ul').appendChild(listItem);
+                  // Loop through trainees and append rows to table
+                  $.each(response.trainees, function(index, trainee) {
+                      var rowHtml = '<tr>' +
+                          '<td>' + (index + 1) + '</td>' +
+                          '<td>' + trainee.trainee_id + '</td>' +
+                          '<td>' + trainee.full_name + '</td>' +
+                          '<td>' + trainee.organization + '</td>' +
+                          '<td>' + trainee.email + '</td>' +
+                          '<td>' + trainee.phone_number + '</td>' +
+                          '<td>' + trainee.address + '</td>' +
+                          '<td>' + trainee.educational_level + '</td>' +
+                          '<td>' + trainee.skills + '</td>' +
+                          '<td>' + trainee.freelancing_experience + '</td>' +
+                          // '<td>' + (trainee.portfolio_link.substring(0, 30) + (trainee.portfolio_link.length > 30 ? '...' : '')) + '</td>' +
+                          // '<td>' + (trainee.language_proficiency.substring(0, 30) + (trainee.language_proficiency.length > 30 ? '...' : '')) + '</td>' +
+                          '<td>' + trainee.done_trainings + '</td>' +
+                          '<td>' + trainee.wantTo_trainings + '</td>' +
+                          '<td>' + trainee.joined_on + '</td>' +
+                          '<td>' +
+                          '<button class="btn btn-sm btn-outline-info openModalBtnClass" ' +
+                          'data-trainee_id="' + trainee.trainee_id + '" ' +
+                          'data-full_name="' + trainee.full_name + '" ' +
+                          'data-organization="' + trainee.organization + '" ' +
+                          'data-email="' + trainee.email + '" ' +
+                          'data-phone_number="' + trainee.phone_number + '" ' +
+                          'data-address="' + trainee.address + '" ' +
+                          'data-skills="' + trainee.skills + '" ' +
+                          'data-educational_level="' + trainee.educational_level + '" ' +
+                          'data-freelancing_experience="' + trainee.freelancing_experience + '" ' +
+                          'data-portfolio_link="' + trainee.portfolio_link + '" ' +
+                          'data-done_trainings="' + trainee.done_trainings + '" ' +
+                          'data-want="' + trainee.wantTo_trainings + '" ' +
+                          'data-language_proficiency="' + trainee.language_proficiency + '" ' +
+                          'data-joined_on="' + trainee.joined_on + '" ' +
+                          'data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>' +
+                          '<button onclick="deleteTrainee(' + trainee.trainee_id + ')" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button>' +
+                          '</td>' +
+                          '</tr>';
+                      $('#all_trainees').append(rowHtml);
+                  });
+              },
+              error: function(xhr, status, error) {
+                  console.error('Error loading data:', error);
+              }
+          });
       }
-  }
-
-}
-
-  function populateLanguages(lang_string) {
-    var language_proficiency= document.getElementById("hidden_language_proficiency");
-    language_proficiency.value= lang_string;
-  }
-
-  function populatedonetrainings(done_string) {
-    var done_trainings= document.getElementById("hidden_done_trainings");
-    done_trainings.value= done_string;
-  }
-
-  function populatewantTotrainings(wanTo_string) {
-
-    var wantTo_trainings= document.getElementById("hidden_wantTo_trainings");
-    wantTo_trainings.value= wanTo_string;
-  }
-</script>
-<script>
-
-
-function createEvent(checkboxId, inputId, inputVal) {
-
-var checkbox = document.getElementById(checkboxId);
-// Set the checked attribute to true
-checkbox.checked = true;
-
-if (inputId) {
-var input = document.getElementById(inputId);
-input.value= inputVal;
-
-input.style.display = "block";
-input.focus();
-}
-
-
-}
-
-
-// Function to fill form fields with data
-function fillFormWithtraineeData(portfolios, language_proficiency, done_trainings, wantTo_trainings) {
   
+      // Initial load of trainee data
+      loadTraineeData(1);
   
-  /////////////////////////////////////////////////////////////
-///////// Code for Portfolio Checkboxes Checked & Value Set//
-////////////////////////////////////////////////////////////
-debugger;
-var json_data= portfolios;
- // Parse JSON data
-//  var portfolio_links = JSON.parse(json_data);
- var portfolio_links = json_data;
- 
- for (var platform in portfolio_links) {
-    createEvent(platform, platform+"_link", portfolio_links[platform]);
- }
-
-/////////////////////////////////////////////////////////////
-///////// Code for Portfolio Checkboxes Checked & Value Set//
-////////////////////////////////////////////////////////////
-
-///Languages checkbox checked
-var lang_string= language_proficiency;
-
-debugger;
-
-var lang_array= lang_string.split(", ");
-
-
- for (let i = 0; i < lang_array.length; i++) {
-  const element = lang_array[i];
-  // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
-  if (element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english') {
-    createEvent(element.toLowerCase(), null, null);
-  } else {
-    createEvent("other_language_checkbox", "other_language_input", element);
-  }
-  
- }
-
- //Done Trainings Checkbox checked
-  var done_string= done_trainings;
-
- 
-
-  var done_array= done_string.split(", ");
-
-  
-
-  for (let i = 0; i < done_array.length; i++) {
-    const element = done_array[i];
-    // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
-    if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
-      const words= element.trim().toLowerCase().split(" ")
-      if (words.length>1) {
-        createEvent(words.join("_"), null, null);
-      } else {
+      // Pagination click event
+      $(document).on('click', '#pagination-container .pagination a.page-link', function(e) {
+          e.preventDefault();
+          var page = $(this).text(); // Get page number from link
+          $('#all_trainees').empty(); // Clear existing data
+          loadTraineeData(page); // Load data for the selected page
+      });
+  });
+    
+    
+      function populatePortfolios(json_data) {
+       
+      // Parse JSON data
+      var portfolio_links = JSON.parse(json_data);
+      
+      var hidden_portfolios= document.getElementById("hidden_portfolios");
+    
+      
+      
+      hidden_portfolios.value= json_data;
+      
+    
+      // Get the container where portfolio links will be added
+      var portfolioContainer = document.getElementById('portfolio-links');
+    
+      // Loop through the portfolio_links object and create list items
+      for (var platform in portfolio_links) {
+          if (portfolio_links.hasOwnProperty(platform)) {
+              var listItem = document.createElement('li');
+              listItem.className = 'list-group-item d-flex justify-content-between align-items-center flex-wrap';
+    
+              var platformIcon = document.createElement('h6');
+              platformIcon.className = 'mb-0';
+              platformIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' + platform.charAt(0).toUpperCase() + platform.slice(1);
+              
+              console.log("platform= ", platform);
+    
+              var linkText = document.createElement('span');
+              linkText.className = 'text-secondary';
+              linkText.textContent = portfolio_links[platform];
+    
+              listItem.appendChild(platformIcon);
+              listItem.appendChild(linkText);
+    
+              portfolioContainer.querySelector('ul').appendChild(listItem);
+          }
+      }
+    
+    }
+    
+      function populateLanguages(lang_string) {
+        var language_proficiency= document.getElementById("hidden_language_proficiency");
+        language_proficiency.value= lang_string;
+      }
+    
+      function populatedonetrainings(done_string) {
+        var done_trainings= document.getElementById("hidden_done_trainings");
+        done_trainings.value= done_string;
+      }
+    
+      function populatewantTotrainings(wanTo_string) {
+    
+        var wantTo_trainings= document.getElementById("hidden_wantTo_trainings");
+        wantTo_trainings.value= wanTo_string;
+      }
+    </script>
+    <script>
+    
+    
+    function createEvent(checkboxId, inputId, inputVal) {
+    
+    var checkbox = document.getElementById(checkboxId);
+    // Set the checked attribute to true
+    checkbox.checked = true;
+    
+    if (inputId) {
+    var input = document.getElementById(inputId);
+    input.value= inputVal;
+    
+    input.style.display = "block";
+    input.focus();
+    }
+    
+    
+    }
+    
+    
+    // Function to fill form fields with data
+    function fillFormWithtraineeData(portfolios, language_proficiency, done_trainings, wantTo_trainings) {
+      
+      
+      /////////////////////////////////////////////////////////////
+    ///////// Code for Portfolio Checkboxes Checked & Value Set//
+    ////////////////////////////////////////////////////////////
+    debugger;
+    var json_data= portfolios;
+     // Parse JSON data
+    //  var portfolio_links = JSON.parse(json_data);
+     var portfolio_links = json_data;
+     
+     for (var platform in portfolio_links) {
+        createEvent(platform, platform+"_link", portfolio_links[platform]);
+     }
+    
+    /////////////////////////////////////////////////////////////
+    ///////// Code for Portfolio Checkboxes Checked & Value Set//
+    ////////////////////////////////////////////////////////////
+    
+    ///Languages checkbox checked
+    var lang_string= language_proficiency;
+    
+    debugger;
+    
+    var lang_array= lang_string.split(", ");
+    
+    
+     for (let i = 0; i < lang_array.length; i++) {
+      const element = lang_array[i];
+      // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+      if (element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english') {
         createEvent(element.toLowerCase(), null, null);
+      } else {
+        createEvent("other_language_checkbox", "other_language_input", element);
       }
       
-    } else {
-      createEvent("other_done_training_checkbox", "other_done_training_input", element);
-    }
+     }
     
-  }
-
-
-  // Want to trainings checkbox checked.
-  var wantTo_string= wantTo_trainings;
-
-
-
- 
-
-  var wantTo_array= wantTo_string.split(", ");
-
- 
-
-  for (let i = 0; i < wantTo_array.length; i++) {
-    const element = wantTo_array[i];
-    // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
-    if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
-      const words= element.trim().toLowerCase().split(" ")
-      if (words.length>1) {
-        createEvent(words.join("_")+"_want", null, null);
-      } else {
-        createEvent(element.toLowerCase()+"_want", null, null);
-      }
-    } else {
-      createEvent("other_wantTo_training_checkbox", "other_wantTo_training_input", element);
-    }
+     //Done Trainings Checkbox checked
+      var done_string= done_trainings;
     
-  }
-
-  // console.log("user id value", document.getElementById("user_id").value);
-  
-document.getElementById("trainee_id_input_update_pass").value = document.getElementById("user_id").value;
-document.getElementById("trainee_id_input_update").value = document.getElementById("user_id").value;
-document.getElementById("user_name__edit_modal").value = document.getElementById("user_name_modal").innerText;
-document.getElementById("organization_edit_modal").value = document.getElementById("organization_modal").innerText;
-document.getElementById("email__edit_modal").value = document.getElementById("email_modal").innerText;
-document.getElementById("phone_number_edit_modal").value = document.getElementById("phone_number_modal").innerText;
-document.getElementById("address_edit_modal").value = document.getElementById("address_modal").innerText;
-document.getElementById("skills_edit_modal").value = document.getElementById("skills_modal").innerText;
-// document.getElementById("languages_edit_modal").value = document.getElementById("languages_modal").innerText;
-// document.getElementById("experience_edit_modal").value = document.getElementById("experience_modal").innerText;
-// document.getElementById("done_training_edit_modal").value = document.getElementById("done_training_modal").innerText;
-// document.getElementById("wantTo_trainings_edit_modal").value = document.getElementById("wantTo_trainings_modal").innerText;
-
-// document.getElementById("educational_level").value = document.getElementById("educational_level_hidden").innerText;
-// document.getElementById("skills_input_update").value = document.getElementById("educational_level_hidden").innerText;
-
-
-
-}
-
-
-function openModal() {
-
-var modal = document.getElementById("edit_Modal");
-modal.style.display = "block";
-// Call your function to fill data
-fillFormWithtraineeData(); // assuming 'data' is available
-}
-
-var btn = document.getElementById("openModalBtn");
-
-span.onclick = function() {
-closeModal();
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-var modal = document.getElementById("edit_Modal");
-if (event.target == modal) {
-  closeModal();
-}
-}
-</script>
-
-<script>
-$(document).ready(function() {
-  
-  $(".openModalBtnClass").click(function() {
-    var trainee_id= $(this).data("trainee_id");
-    var full_name= $(this).data("full_name");
-    var organization= $(this).data("organization");
-    var email= $(this).data("email");
-    var phone_number= $(this).data("phone_number");
-    var address= $(this).data("address");
-    var skills= $(this).data("skills");
-    var educational_level= $(this).data("educational_level");
-    var freelancing_experience= $(this).data("freelancing_experience");
-    var portfolio_link= $(this).data("portfolio_link");
-    var language_proficiency= $(this).data("language_proficiency");
-    var done_trainings= $(this).data("done_trainings");
-    var wantTo_trainings= $(this).data("want");
-    var joined_on= $(this).data("joined_on");
-
-
-
-    var trainee= {
-      trainee_id: trainee_id,
-      full_name: full_name,
-      organization: organization,
-      email: email,
-      phone_number: phone_number,
-      address: address,
-      skills: skills,
-      educational_level: educational_level,
-      freelancing_experience: freelancing_experience,
-      portfolio_link: portfolio_link,
-      language_proficiency: language_proficiency,
-      done_trainings: done_trainings,
-      wantTo_trainings: wantTo_trainings,
-      joined_on: joined_on,
-    }
-
-    fillFormWithData(trainee);
-
-
-  });
-});
-</script>
-
-<script>
-
-
-    function updatePagination(currentPage, totalPages) {
-        var paginationHtml = '';
-        paginationHtml += '<nav aria-label="Page navigation">';
-        paginationHtml += '<ul class="pagination justify-content-center">';
-        paginationHtml += '<li class="page-item ' + (currentPage == 1 ? 'disabled' : '') + '">';
-        paginationHtml += '<a class="page-link" href="#" aria-label="Previous">';
-        paginationHtml += '<span aria-hidden="true">&laquo;</span>';
-        paginationHtml += '</a></li>';
-        for (var page = 1; page <= totalPages; page++) {
-            paginationHtml += '<li class="page-item ' + (page == currentPage ? 'active' : '') + '">';
-            paginationHtml += '<a class="page-link" href="#">' + page + '</a></li>';
-        }
-        paginationHtml += '<li class="page-item ' + (currentPage == totalPages ? 'disabled' : '') + '">';
-        paginationHtml += '<a class="page-link" href="#" aria-label="Next">';
-        paginationHtml += '<span aria-hidden="true">&raquo;</span>';
-        paginationHtml += '</a></li></ul></nav>';
-
-
-        
-        $('#pagination-container').html(paginationHtml);
-    }
-
-    $('#rowHtml').on('click', '.openModalBtn', function() {
      
-    var trainee_id= $(this).data("trainee_id");
-    var full_name= $(this).data("full_name");
-    var organization= $(this).data("organization");
-    var email= $(this).data("email");
-    var phone_number= $(this).data("phone_number");
-    var address= $(this).data("address");
-    var skills= $(this).data("skills");
-    var educational_level= $(this).data("educational_level");
-    var freelancing_experience= $(this).data("freelancing_experience");
-    var portfolio_link= $(this).data("portfolio_link");
-    var language_proficiency= $(this).data("language_proficiency");
-    var done_trainings= $(this).data("done_trainings");
-    var wantTo_trainings= $(this).data("want");
-    var joined_on= $(this).data("joined_on");
-      openModalPag(trainee_id, full_name, organization, email, phone_number, address, skills, educational_level, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, joined_on);
-
-
-    function openModalPag(trainee_id, full_name, organization, email, phone_number, address, skills, educational_level, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, joined_on) {
-
-       
-
-      var trainee= {
-      trainee_id: trainee_id,
-      full_name: full_name,
-      organization: organization,
-      email: email,
-      phone_number: phone_number,
-      address: address,
-      skills: skills,
-      educational_level: educational_level,
-      freelancing_experience: freelancing_experience,
-      portfolio_link: portfolio_link,
-      language_proficiency: language_proficiency,
-      done_trainings: done_trainings,
-      wantTo_trainings: wantTo_trainings,
-      joined_on: joined_on,
-    }
-
-    fillFormWithData(trainee);
-
+    
+      var done_array= done_string.split(", ");
+    
+      
+    
+      for (let i = 0; i < done_array.length; i++) {
+        const element = done_array[i];
+        // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+        if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
+          const words= element.trim().toLowerCase().split(" ")
+          if (words.length>1) {
+            createEvent(words.join("_"), null, null);
+          } else {
+            createEvent(element.toLowerCase(), null, null);
+          }
+          
+        } else {
+          createEvent("other_done_training_checkbox", "other_done_training_input", element);
         }
-        });
-
-
-///////////////////////////////
-////////for delete function////
-//////////////////////////////
-$(document).ready(function() {
-  $(".deleteBtn").click(function() {
-    alert("Delete button clicked")
-    var id= $(this).data("id");
-    console.log("id= ", id);
+        
+      }
+    
+    
+      // Want to trainings checkbox checked.
+      var wantTo_string= wantTo_trainings;
+    
+    
+    
+     
+    
+      var wantTo_array= wantTo_string.split(", ");
+    
+     
+    
+      for (let i = 0; i < wantTo_array.length; i++) {
+        const element = wantTo_array[i];
+        // console.log("element", element.trim().toLowerCase()=='bangla' || element.trim().toLowerCase()=='english');
+        if (element.trim().toLowerCase()=='copywriting' || element.trim().toLowerCase()=='digital marketing' || element.trim().toLowerCase()=='graphic design' || element.trim().toLowerCase()=='data entry' || element.trim().toLowerCase()=='seo' || element.trim().toLowerCase()=='ux/ui design') {
+          const words= element.trim().toLowerCase().split(" ")
+          if (words.length>1) {
+            createEvent(words.join("_")+"_want", null, null);
+          } else {
+            createEvent(element.toLowerCase()+"_want", null, null);
+          }
+        } else {
+          createEvent("other_wantTo_training_checkbox", "other_wantTo_training_input", element);
+        }
+        
+      }
+    
+      // console.log("user id value", document.getElementById("user_id").value);
+      
+    document.getElementById("trainee_id_input_update_pass").value = document.getElementById("user_id").value;
+    document.getElementById("trainee_id_input_update").value = document.getElementById("user_id").value;
+    document.getElementById("user_name__edit_modal").value = document.getElementById("user_name_modal").innerText;
+    document.getElementById("organization_edit_modal").value = document.getElementById("organization_modal").innerText;
+    document.getElementById("email__edit_modal").value = document.getElementById("email_modal").innerText;
+    document.getElementById("phone_number_edit_modal").value = document.getElementById("phone_number_modal").innerText;
+    document.getElementById("address_edit_modal").value = document.getElementById("address_modal").innerText;
+    document.getElementById("skills_edit_modal").value = document.getElementById("skills_modal").innerText;
+    // document.getElementById("languages_edit_modal").value = document.getElementById("languages_modal").innerText;
+    // document.getElementById("experience_edit_modal").value = document.getElementById("experience_modal").innerText;
+    // document.getElementById("done_training_edit_modal").value = document.getElementById("done_training_modal").innerText;
+    // document.getElementById("wantTo_trainings_edit_modal").value = document.getElementById("wantTo_trainings_modal").innerText;
+    
+    // document.getElementById("educational_level").value = document.getElementById("educational_level_hidden").innerText;
+    // document.getElementById("skills_input_update").value = document.getElementById("educational_level_hidden").innerText;
+    
+    
+    
+    }
+    
+    
+    function openModal() {
+    
+    var modal = document.getElementById("edit_Modal");
+    modal.style.display = "block";
+    // Call your function to fill data
+    fillFormWithtraineeData(); // assuming 'data' is available
+    }
+    
+    var btn = document.getElementById("openModalBtn");
+    
+    span.onclick = function() {
+    closeModal();
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    var modal = document.getElementById("edit_Modal");
+    if (event.target == modal) {
+      closeModal();
+    }
+    }
+    </script>
+    
+    <script>
+    $(document).ready(function() {
+      
+      $(".openModalBtnClass").click(function() {
+        var trainee_id= $(this).data("trainee_id");
+        var full_name= $(this).data("full_name");
+        var organization= $(this).data("organization");
+        var email= $(this).data("email");
+        var phone_number= $(this).data("phone_number");
+        var address= $(this).data("address");
+        var skills= $(this).data("skills");
+        var educational_level= $(this).data("educational_level");
+        var freelancing_experience= $(this).data("freelancing_experience");
+        var portfolio_link= $(this).data("portfolio_link");
+        var language_proficiency= $(this).data("language_proficiency");
+        var done_trainings= $(this).data("done_trainings");
+        var wantTo_trainings= $(this).data("want");
+        var joined_on= $(this).data("joined_on");
+    
+    
+    
+        var trainee= {
+          trainee_id: trainee_id,
+          full_name: full_name,
+          organization: organization,
+          email: email,
+          phone_number: phone_number,
+          address: address,
+          skills: skills,
+          educational_level: educational_level,
+          freelancing_experience: freelancing_experience,
+          portfolio_link: portfolio_link,
+          language_proficiency: language_proficiency,
+          done_trainings: done_trainings,
+          wantTo_trainings: wantTo_trainings,
+          joined_on: joined_on,
+        }
+    
+        fillFormWithData(trainee);
+    
+    
+      });
+    });
+    </script>
+    
+    <script>
+    
+    
+        function updatePagination(currentPage, totalPages) {
+            var paginationHtml = '';
+            paginationHtml += '<nav aria-label="Page navigation">';
+            paginationHtml += '<ul class="pagination justify-content-center">';
+            paginationHtml += '<li class="page-item ' + (currentPage == 1 ? 'disabled' : '') + '">';
+            paginationHtml += '<a class="page-link" href="#" aria-label="Previous">';
+            paginationHtml += '<span aria-hidden="true">&laquo;</span>';
+            paginationHtml += '</a></li>';
+            for (var page = 1; page <= totalPages; page++) {
+                paginationHtml += '<li class="page-item ' + (page == currentPage ? 'active' : '') + '">';
+                paginationHtml += '<a class="page-link" href="#">' + page + '</a></li>';
+            }
+            paginationHtml += '<li class="page-item ' + (currentPage == totalPages ? 'disabled' : '') + '">';
+            paginationHtml += '<a class="page-link" href="#" aria-label="Next">';
+            paginationHtml += '<span aria-hidden="true">&raquo;</span>';
+            paginationHtml += '</a></li></ul></nav>';
+    
+    
+            
+            $('#pagination-container').html(paginationHtml);
+        }
+    
+        $('#rowHtml').on('click', '.openModalBtn', function() {
+         
+        var trainee_id= $(this).data("trainee_id");
+        var full_name= $(this).data("full_name");
+        var organization= $(this).data("organization");
+        var email= $(this).data("email");
+        var phone_number= $(this).data("phone_number");
+        var address= $(this).data("address");
+        var skills= $(this).data("skills");
+        var educational_level= $(this).data("educational_level");
+        var freelancing_experience= $(this).data("freelancing_experience");
+        var portfolio_link= $(this).data("portfolio_link");
+        var language_proficiency= $(this).data("language_proficiency");
+        var done_trainings= $(this).data("done_trainings");
+        var wantTo_trainings= $(this).data("want");
+        var joined_on= $(this).data("joined_on");
+          openModalPag(trainee_id, full_name, organization, email, phone_number, address, skills, educational_level, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, joined_on);
+    
+    
+        function openModalPag(trainee_id, full_name, organization, email, phone_number, address, skills, educational_level, freelancing_experience, portfolio_link, language_proficiency, done_trainings, wantTo_trainings, joined_on) {
+    
+           
+    
+          var trainee= {
+          trainee_id: trainee_id,
+          full_name: full_name,
+          organization: organization,
+          email: email,
+          phone_number: phone_number,
+          address: address,
+          skills: skills,
+          educational_level: educational_level,
+          freelancing_experience: freelancing_experience,
+          portfolio_link: portfolio_link,
+          language_proficiency: language_proficiency,
+          done_trainings: done_trainings,
+          wantTo_trainings: wantTo_trainings,
+          joined_on: joined_on,
+        }
+    
+        fillFormWithData(trainee);
+    
+            }
+            });
+    
+    
+    ///////////////////////////////
+    ////////for delete function////
+    //////////////////////////////
+    $(document).ready(function() {
+      $(".deleteBtn").click(function() {
+        alert("Delete button clicked")
+        var id= $(this).data("id");
+        console.log("id= ", id);
+      });
+    });
+  
+    </script>
+  <script>
+  $(document).ready(function() {
+      // Function to load trainee data
+      function loadTraineeData(page) {
+          $.ajax({
+              url: '/trainee_list_pagination',
+              type: 'GET',
+              data: { page: page },
+              success: function(response) {
+                  $('#all_trainees').empty(); // Clear existing data
+  
+                  // Loop through trainees and append rows to table
+                  $.each(response.trainees, function(index, trainee) {
+                      var rowHtml = '<tr>' +
+                          '<td>' + (index + 1) + '</td>' +
+                          '<td>' + trainee.trainee_id + '</td>' +
+                          '<td>' + trainee.full_name + '</td>' +
+                          '<td>' + trainee.organization + '</td>' +
+                          '<td>' + trainee.email + '</td>' +
+                          '<td>' + trainee.phone_number + '</td>' +
+                          '<td>' + trainee.address + '</td>' +
+                          '<td>' + trainee.educational_level + '</td>' +
+                          '<td>' + trainee.skills + '</td>' +
+                          '<td>' + trainee.freelancing_experience + '</td>' +
+                          // '<td>' + (trainee.portfolio_link.substring(0, 30) + (trainee.portfolio_link.length > 30 ? '...' : '')) + '</td>' +
+                          // '<td>' + (trainee.language_proficiency.substring(0, 30) + (trainee.language_proficiency.length > 30 ? '...' : '')) + '</td>' +
+                          '<td>' + trainee.done_trainings + '</td>' +
+                          '<td>' + trainee.wantTo_trainings + '</td>' +
+                          '<td>' + trainee.joined_on + '</td>' +
+                          '<td>' +
+                          '<button class="btn btn-sm btn-outline-info openModalBtnClass" ' +
+                          'data-trainee_id="' + trainee.trainee_id + '" ' +
+                          'data-full_name="' + trainee.full_name + '" ' +
+                          'data-organization="' + trainee.organization + '" ' +
+                          'data-email="' + trainee.email + '" ' +
+                          'data-phone_number="' + trainee.phone_number + '" ' +
+                          'data-address="' + trainee.address + '" ' +
+                          'data-skills="' + trainee.skills + '" ' +
+                          'data-educational_level="' + trainee.educational_level + '" ' +
+                          'data-freelancing_experience="' + trainee.freelancing_experience + '" ' +
+                          'data-portfolio_link="' + trainee.portfolio_link + '" ' +
+                          'data-done_trainings="' + trainee.done_trainings + '" ' +
+                          'data-want="' + trainee.wantTo_trainings + '" ' +
+                          'data-language_proficiency="' + trainee.language_proficiency + '" ' +
+                          'data-joined_on="' + trainee.joined_on + '" ' +
+                          'data-bs-toggle="modal" data-bs-target="#editTrainree">EDIT</button>' +
+                          '<button onclick="deleteTrainee(' + trainee.trainee_id + ')" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#uploadImage">DELETE</button>' +
+                          '</td>' +
+                          '</tr>';
+                      $('#all_trainees').append(rowHtml);
+                  });
+              },
+              error: function(xhr, status, error) {
+                  console.error('Error loading data:', error);
+              }
+          });
+        })
+  
+      // Initial load of trainee data
+      loadTraineeData(1);
+  
+      // Pagination click event
+  $(document).on('click', '#pagination-container .pagination a.page-link', function(e) {
+      e.preventDefault();
+      var page = $(this).data('page'); // Get page number from data attribute
+      $('#all_trainees').empty(); // Clear existing data
+      loadTraineeData(page); // Load data for the selected page
   });
-});
-
-
-
-
-</script>
-
- 
-  {% endblock %} {% set active_page = 'trainee_list' %}
-
+  </script>
+  
+     
+      {% endblock %} {% set active_page = 'trainee_list' %}
+    
